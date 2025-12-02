@@ -1,1 +1,8 @@
-/ressources
+#dépendance générale
+/ressources/
+/vendor/
+
+# fichier de configuration
+.env
+.env.local
+.vscode/
