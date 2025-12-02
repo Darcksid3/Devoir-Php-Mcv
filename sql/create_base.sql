@@ -1,8 +1,8 @@
 -- Crée la base de données si elle n'existe pas
-CREATE DATABASE IF NOT EXISTS `covoiturage_Interne`;
+CREATE DATABASE IF NOT EXISTS `covoiturage_interne`;
 
 -- Sélectionne la base de données pour les opérations suivantes
-USE `covoiturage_Interne`;
+USE `covoiturage_interne`;
 
 CREATE TABLE IF NOT EXISTS `ville` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,

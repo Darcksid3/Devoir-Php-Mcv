@@ -1,4 +1,4 @@
-USE `covoiturage_Interne`;
+USE `covoiturage_interne`;
 
 -- Insertion des villes (agences) dans la table ville
 INSERT INTO ville (nom) VALUES
