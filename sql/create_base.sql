@@ -1,5 +1,5 @@
 -- Crée la base de données si elle n'existe pas
-CREATE DATABASE IF NOT EXISTS `Covoiturage_Interne`;
+CREATE DATABASE IF NOT EXISTS `covoiturage_Interne`;
 
 -- Sélectionne la base de données pour les opérations suivantes
 USE `Covoiturage_Interne`;
@@ -12,10 +12,10 @@ CREATE TABLE IF NOT EXISTS `ville` (
 
 CREATE TABLE IF NOT EXISTS `utilisateur` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `email` VARCHAR(255) NOT NULL UNIQUE,
     `nom` VARCHAR(100) NOT NULL,
     `prenom` VARCHAR(100) NOT NULL,
-    `telephone` VARCHAR(20) NULL, -- Le numéro de téléphone peut être facultatif
+    `telephone` VARCHAR(20) NOT NULL,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
