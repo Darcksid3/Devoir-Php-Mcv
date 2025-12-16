@@ -1,16 +1,18 @@
 USE `covoiturage_interne`;
+/* Suppression des utilisateurs s'ils existent*/
+DROP USER IF EXISTS 'registration_service'@'localhost';
+DROP USER IF EXISTS 'utilisateur_app'@'localhost';
+DROP USER IF EXISTS 'admin_app'@'localhost';
+
 
 -- On s'assure que tous les comptes existent
-CREATE USER IF NOT EXISTS 'registration_service'@'localhost' IDENTIFIED BY 'motdepasse_service_fort';
-CREATE USER IF NOT EXISTS 'utilisateur_app'@'localhost' IDENTIFIED BY 'motdepasse_utilisateur_app';
-CREATE USER IF NOT EXISTS 'admin_app'@'localhost' IDENTIFIED BY 'motdepasse_admin_app';
+CREATE USER 'registration_service'@'localhost' IDENTIFIED BY 'motdepasse_service_fort';
+CREATE USER 'utilisateur_app'@'localhost' IDENTIFIED BY 'motdepasse_utilisateur_app';
+CREATE USER 'admin_app'@'localhost' IDENTIFIED BY 'motdepasse_admin_app';
 
 -- ----------------------------------------------------------------------
 -- 1. PRIVILÈGES DU SERVICE D'ENREGISTREMENT (Connexion 1)
 -- ----------------------------------------------------------------------
-
--- Révoque tout ce qui n'est pas nécessaire
-REVOKE ALL PRIVILEGES ON `covoiturage_interne`.* FROM 'registration_service'@'localhost';
 
 -- Accorde uniquement le droit de lecture sur la table de l'entreprise (utilisateur)
 GRANT SELECT ON `covoiturage_interne`.`utilisateur` TO 'registration_service'@'localhost';
@@ -24,9 +26,6 @@ GRANT INSERT ON `covoiturage_interne`.`utilisateur_enregistre` TO 'registration_
 -- 2. PRIVILÈGES DE L'ADMINISTRATEUR (Connexion 2)
 -- ----------------------------------------------------------------------
 
--- Révoque tout ce qui pourrait exister
-REVOKE ALL PRIVILEGES ON `covoiturage_interne`.* FROM 'admin_app'@'localhost';
-
 -- Confirme qu'AUCUN DROIT n'est donné sur utilisateur et utilisateur_enregistre
 -- L'admin est limité à l'administration du projet (trajets et villes)
 GRANT ALL PRIVILEGES ON `covoiturage_interne`.`ville` TO 'admin_app'@'localhost';
@@ -35,9 +34,6 @@ GRANT ALL PRIVILEGES ON `covoiturage_interne`.`trajet` TO 'admin_app'@'localhost
 -- ----------------------------------------------------------------------
 -- 3. PRIVILÈGES DE L'UTILISATEUR STANDARD (Connexion 3)
 -- ----------------------------------------------------------------------
-
--- Révoque tout ce qui pourrait exister
-REVOKE ALL PRIVILEGES ON `covoiturage_interne`.* FROM 'utilisateur_app'@'localhost';
 
 -- L'utilisateur standard a seulement besoin de SELECT (lecture) sur les tables du projet
 -- et de droits complets sur ses propres trajets.

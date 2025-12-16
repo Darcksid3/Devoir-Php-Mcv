@@ -5,4 +5,5 @@
 # fichier de configuration
 .env
 .env.local
+/sql/localUser.sql
 .vscode/

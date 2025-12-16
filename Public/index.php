@@ -1,12 +1,15 @@
 <?php 
-//TODO 
-// ----------------------------------------------------------------------
-// FICHIER: /www/devoir/Public/index.php
-// Rôle: Front Controller
-// ----------------------------------------------------------------------
 
-// Démarre l'application
+//* Démarrage l'application PHP apel de l'autoloader Composer
 require_once __DIR__ . '/../vendor/autoload.php';
+
+
+//* Chargement du fichier .env
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../'); 
+// Assurez-vous que le chemin est correct pour pointer vers le répertoire parent de Public
+$dotenv->safeLoad();
+
+use \Router\Router;
 // Exemple de récupération de l'URL demandée pour le routage
 $request_uri = $_SERVER['REQUEST_URI'] ?? '/';
 
@@ -30,18 +33,3 @@ echo "<p>L'URI passée au Routeur est: <code>" . htmlspecialchars($uri_to_route)
 
 
 ?>
-<html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>Devoir - Touche Pas Au Klaxon</title>
-
-    </head>
-    <body>
-        <!-- Insertion du HEADER -->
-
-        <!-- Insertion du FOOTER -->
-
-        <!-- Insertion des scripts Javascript Bootstrap et personel -->
-    </body>
-
-</html>
