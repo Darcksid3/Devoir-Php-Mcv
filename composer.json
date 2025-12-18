@@ -1,4 +1,11 @@
 {
+    "name": "root/devoir",
+    "authors": [
+        {
+            "name": "Darcksid3",
+            "email": "darcksid3.dev@gmail.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "src/"
