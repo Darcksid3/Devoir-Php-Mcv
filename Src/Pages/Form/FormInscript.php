@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Pages\Form;
 
 $content = 
     '<form action="/ValidFormInscript" method="POST">'

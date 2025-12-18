@@ -24,15 +24,15 @@ $callable = match($finalpath) {
         require __DIR__ . '/src/controllers/ValidFormInscript.php';
     },
     // Connexion
-    'GET:FormConnect' => function() {
-        require __DIR__ . '/src/pages/form/FormConnect.php';
+    'GET:/FormConnect' => function() {
+        require __DIR__ . '/src/pages/Form/FormConnect.php';
     },
     'POST:/ValidFormConnect' => function() {
         require __DIR__ . '/src/services/ValidFormConnect.php';
     },
     // Trajets
     'GET:/FormTrajet' => function() {
-        require __DIR__ . '/src/pages/form/FormTrajet.php';
+        require __DIR__ . '/src/pages/Form/FormTrajet.php';
     },
     'POST:/ValidFormTrajet' => function() {
         // 1. Récupèration l'action demandée via le bouton
@@ -49,7 +49,7 @@ $callable = match($finalpath) {
     //* Administration
     // Dashboard Admin
     'GET:/DashboardAdmin' => function() {
-        require __DIR__ . '/src/pages/admin/DashboardAdmin.php';
+        require __DIR__ . '/src/pages/Admin/DashboardAdmin.php';
     },
     // Gestion de success test des formulaires
     'GET:/Success' => function() {
