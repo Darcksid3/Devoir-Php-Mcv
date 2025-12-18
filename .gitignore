@@ -1,6 +1,9 @@
 #dépendance générale
 /ressources/
 /vendor/
+/test/
+/devoir/
+/old.www/
 
 # fichier de configuration
 .env
