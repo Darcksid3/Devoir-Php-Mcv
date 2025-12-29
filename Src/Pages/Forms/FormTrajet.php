@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Pages\Form;
+namespace App\Pages\Forms;
 
 $content ='formulaire des trajets';
 
