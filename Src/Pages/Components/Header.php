@@ -9,6 +9,7 @@ echo '<p>header.php</p><br>'
         .'<a href="/FormInscript">Inscription</a> | '
         .'<a href="/FormConnect">Connexion</a> | '
         .'<a href="/FormTrajet">Trajet</a> | '
+        .'<a href="/TestView">TestView</a>'
         .'</nav>'
         .'<hr>'
         ;

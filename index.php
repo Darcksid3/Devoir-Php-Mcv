@@ -1,5 +1,18 @@
 <?php 
 
+//chargement de l'autoload de composer
+require __DIR__ . '/vendor/autoload.php';
+
+//chargement des variables d'environement
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+//Démarrage de la session si pas déjà démarrée
+// utilité actuelle : gestion des messages erreur
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 //* Routeur simple utilisant la fonction match() de PHP 8
 //récupération de l'url demandée
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -18,21 +31,21 @@ $callable = match($finalpath) {
     //* FORMULAIRES
     // Inscription
     'GET:/FormInscript' => function() {
-        require __DIR__ . '/src/pages/form/formInscript.php';
+        require __DIR__ . '/src/pages/forms/formInscript.php';
     },
     'POST:/ValidFormInscript' => function() {;
-        require __DIR__ . '/src/controllers/ValidFormInscript.php';
+        require __DIR__ . '/src/Controllers/ValidFormInscript.php';
     },
     // Connexion
     'GET:/FormConnect' => function() {
-        require __DIR__ . '/src/pages/Form/FormConnect.php';
+        require __DIR__ . '/src/pages/Forms/FormConnect.php';
     },
     'POST:/ValidFormConnect' => function() {
-        require __DIR__ . '/src/services/ValidFormConnect.php';
+        require __DIR__ . '/src/Controllers/ValidFormConnect.php';
     },
     // Trajets
     'GET:/FormTrajet' => function() {
-        require __DIR__ . '/src/pages/Form/FormTrajet.php';
+        require __DIR__ . '/src/pages/Forms/FormTrajet.php';
     },
     'POST:/ValidFormTrajet' => function() {
         // 1. Récupèration l'action demandée via le bouton
@@ -54,6 +67,10 @@ $callable = match($finalpath) {
     // Gestion de success test des formulaires
     'GET:/Success' => function() {
         require __DIR__ . '/src/pages/Success.php';
+    },
+    // Pages d'affichage des test
+    'GET:/TestView' => function() {
+        require __DIR__ . '/src/pages/TestView.php';
     },
     default => function () {
         echo '404.php';

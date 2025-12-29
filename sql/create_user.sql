@@ -41,7 +41,7 @@ GRANT ALL PRIVILEGES ON `covoiturage_interne`.`trajet` TO 'admin_app'@'localhost
 -- L'utilisateur N'A PAS de droit sur utilisateur.
 -- Il a besoin de droits sur villes pour l'affichage des listes de villes
 GRANT SELECT ON `covoiturage_interne`.`ville` TO 'utilisateur_app'@'localhost';
-
+GRANT SELECT ON `covoiturage_interne`.`utilisateur_enregistre` TO 'utilisateur_app'@'localhost';
 -- Droits de base sur les trajets (gestion par le code PHP pour la condition 'si créateur')
 GRANT SELECT, INSERT, UPDATE, DELETE ON `covoiturage_interne`.`trajet` TO 'utilisateur_app'@'localhost';
 

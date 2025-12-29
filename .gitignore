@@ -4,10 +4,11 @@
 /test/
 /devoir/
 /old.www/
-/controllers/
+/controllers/test.php
 /services/
 /pages/form/formTrajet.php
 /pages/form/formConnect.php
+/pages/TestView.php
 
 # fichier de configuration
 .env

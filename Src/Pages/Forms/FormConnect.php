@@ -1,5 +1,5 @@
 <?php
-namespace App\Pages\Form;
+namespace App\Pages\Forms;
 
 $content = 'formumaire de connexion';
 require __DIR__ . '/../Layout.php';
