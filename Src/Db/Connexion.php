@@ -27,7 +27,7 @@ class Connexion {
         $this->adminPass = $_ENV['DB_PASSWORD_ADMIN'];
     }
     
-    
+    //* Connexion Register_Service
     public function rsConnect(){
         try {
             $connexion = new PDO("mysql:host=$this->host;dbname=$this->db;charset=utf8", $this->rsUser, $this->rsPass);
@@ -38,6 +38,7 @@ class Connexion {
             die("Erreur de connexion : " . $error->getMessage());
         }
     }
+    //* Connexion Utilisateur
     public function appConnect(){
         try {
             $connexion = new PDO("mysql:host=$this->host;dbname=$this->db;charset=utf8", $this->appUser, $this->appPass);
@@ -48,6 +49,7 @@ class Connexion {
             die("Erreur de connexion : " . $error->getMessage());
         }
     }
+    //* Connexion Admin
     public function adminConnect(){
         try {
             $connexion = new PDO("mysql:host=$this->host;dbname=$this->db;charset=utf8", $this->adminUser, $this->adminPass);

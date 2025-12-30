@@ -1,6 +1,22 @@
 <?php
 namespace App\Pages\Forms;
+$message = $_SESSION['message'] ?? '';
+unset($_SESSION['message']);
 
-$content = 'formumaire de connexion';
+$content = '<fieldset>'
+        .'<legend> Formulaire de connexion </legend>'
+        . '<form action="/ValidFormConnect" method="POST">'
+        .'<p>' . $message . '</p>'
+        .'<p>email a utiliser alexandre.martin@email.fr </p>'
+        .'<label for="email">Email :</label><br>'
+        .'<input type="email" id="email" name="email" required>'
+        .'<br>'
+        .'<label for="password">Mot de passe :</label><br>'
+        .'<input type="password" id="password" name="password" required>'
+        .'<br>'
+        .'<button type="submit">Connexion</button>'
+        .'</form>'
+        .'</fieldset>'
+    ;
 require __DIR__ . '/../Layout.php';
 ?>
