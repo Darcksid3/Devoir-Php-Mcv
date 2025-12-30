@@ -1,24 +1,20 @@
 <?php
 
 namespace App\Pages;
-
 use PDO;
 use PDOException;
 use App\Db\Connexion;
 use App\Controllers\test;
+use App\Service\PasswordVerif;
 
-
+//! récupération multi info pour liste des trajets
+/*
 function connect() {
-
 	try {
-
 		$connexion = new Connexion();
 		$pdo = $connexion->rsConnect();
 		$query = $pdo->query("SELECT id, email FROM utilisateur");
-		
-	
 		return $query;
-	
 	} catch (PDOException $e) {
 	die("Erreur de connexion : " . $e->getMessage());
 	}
@@ -34,7 +30,9 @@ foreach ($listEmail as $user) {
 		$option .= '<option value="'.$user['id'].'">'.$user['email'].'</option>';
 		
 }
-
+*/
+//! FIN récup multi info pour liste trajets
+//* test fonction native pdo
 function oneMail() {
 	$mailTest = 'laura.garnier@email.fr';
 
@@ -59,6 +57,8 @@ function oneMail() {
 	die("Erreur de connexion : " . $e->getMessage());
 	}
 }
+
+
 function idTest() {
 	$mailTest = 'pierre.fournier@email.fr';
 
@@ -85,6 +85,7 @@ $id = '';
 $testOne = var_dump(idTest());
 $testOneFetch = idTest();
 
+//! Test récupération du mot de passe hashé dans la DB pour comparaison / connexion
 function hashTest(){
 	$id = 1;
 	$connectDb = new Connexion();
@@ -97,7 +98,7 @@ $pass_hash = hashTest();
 $phash = $pass_hash['password_hash'];
 error_log('test error log');
 $test = new Test();
-
+//* fonction de vérification du mot de passe hashé
 function vp($phash) {
 	if(password_verify('azerty', $phash)) {
 		return 'true';
@@ -106,7 +107,9 @@ function vp($phash) {
 	}
 };
 $vpass = vp($phash);
+//! Fin test hash MDP
 
+//! Fonction de test utilisation des fonction native de la classe PDO ->prepare() ->execute() ->fetch()
 function testNconnect($id) {
 
 	$connect = new Connexion();
@@ -118,9 +121,15 @@ function testNconnect($id) {
 	return $resultat;
 
 }
-$testnco = testNconnect(5);
-var_dump($testnco);
+$testnco = testNconnect(1);
 
+//! FIN test utilisation PDO
+
+// apel à controller\test.php
+$test = new Test();
+$liste = $test->optionTestl();
+
+//! AFFICHAGE du résultat des test
 $content = '<h1>PAGE DE TEST</h1>'
 	. '<p>Ceci est le contenu de la page d\'accueil.</p>'
 	. '<hr>'
@@ -137,7 +146,7 @@ $content = '<h1>PAGE DE TEST</h1>'
 	. '<hr>'
 	. '<p>hash_test : '.$phash.' // vpas : '.$vpass.'</p>'
 	. '<p>test controler = '. $test->test() .'</p>'
-	. '<select>'.$option.'</select>'
+	. '<select>'.$liste.'</select>'
 	;
 
 require __DIR__ . '/Layout.php';

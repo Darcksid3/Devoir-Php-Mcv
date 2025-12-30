@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Db\Connexion;
 use App\Service\SearchEmail;
+use App\Service\PasswordVerif;
 
 
 //1) vérification que l'email existe chez les utilisateurs de l'entreprise 
@@ -25,11 +26,11 @@ function verifPass($pass1, $pass2) {
 }
 
 function verif($email, $password1, $password2) {
-    //$verifMail = $
+    
     $search = new SearchEmail();
     $verifMail = $search->searchEmail($email);
-
-    $verifMdp = verifPass($password1, $password2);
+    $verifPassword = new PasswordVerif();
+    $verifMdp = $verifPassword->verifPassword($password1, $password2);
 
     if (!$verifMail && !$verifMdp) {
         $_SESSION['message'] = 'email ou mot de passe incorect.';
@@ -38,7 +39,8 @@ function verif($email, $password1, $password2) {
     } else {
         
         $uid = (int) $verifMail['id'];
-        $pass_hash = password_hash($password1, PASSWORD_BCRYPT);
+        
+        $pass_hash = $verifPassword->hashPassword($password1);
         $connect = new Connexion();
         $connect->addUser($uid, $pass_hash);
         $_SESSION['message'] = 'Inscription réussit';
