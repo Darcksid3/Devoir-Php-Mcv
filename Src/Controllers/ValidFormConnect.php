@@ -35,8 +35,17 @@ function verif($email, $password) {
     $verifPass = $verifPassword->verifHash($password, $pass_hash['password_hash']);
 
     if ($serchMail && $verifPass) {
-        //* Si ok redirection page de succes
+        //* Si ok 
+        // mise en session des info de l'utilisateur
+        $_SESSION['utilisateur_id'] = $serchMail['id'];
+        $_SESSION['utilisateur_nom'] = $serchMail['nom'];
+        $_SESSION['utilisateur_prenom'] = $serchMail['prenom'];
+        $_SESSION['utilisateur_telephone'] = $serchMail['telephone'];
+        $_SESSION['utilisateur_email'] = $serchMail['email'];
+        $_SESSION['utilisateur_connect'] = true;
+        // Message de succes
         $_SESSION['message'] = "Utilisateur authentifié avec succés";
+        // redirection page de succes
         header('Location: /Success');
         exit();
 

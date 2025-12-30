@@ -68,6 +68,10 @@ $callable = match($finalpath) {
     'GET:/Success' => function() {
         require __DIR__ . '/src/pages/Success.php';
     },
+    // Gestion de la deconnexion
+    'GET:/Deconnexion' => function() {
+        require __DIR__ . '/src/Service/Deconnexion.php';
+    },
     // Pages d'affichage des test
     'GET:/TestView' => function() {
         require __DIR__ . '/src/pages/TestView.php';

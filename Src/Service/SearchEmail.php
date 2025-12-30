@@ -10,7 +10,7 @@ class SearchEmail {
         $pdo = $connexionDb->rsConnect();
 
         // Requête pour vérifier si l'email existe
-        $query = $pdo->prepare("SELECT id, email FROM utilisateur WHERE email = :email");
+        $query = $pdo->prepare("SELECT * FROM utilisateur WHERE email = :email");
         $query->execute(['email' => $email]);
         
         // Vérification du résultat
@@ -22,6 +22,7 @@ class SearchEmail {
             $_SESSION['message'] = "L'email n'existe pas dans la base de données.";
         }
     }
+
 }
 
 ?>

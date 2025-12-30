@@ -129,6 +129,11 @@ $testnco = testNconnect(1);
 $test = new Test();
 $liste = $test->optionTestl();
 
+
+$nom='';
+$prenom='';
+$telephone='';
+
 //! AFFICHAGE du résultat des test
 $content = '<h1>PAGE DE TEST</h1>'
 	. '<p>Ceci est le contenu de la page d\'accueil.</p>'
