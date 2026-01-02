@@ -26,26 +26,26 @@ $finalpath = "{$method}:{$path}";
 //* Mise en place du routeur
 $callable = match($finalpath) {
     'GET:/' => function() {
-        require __DIR__ . '/src/pages/Home.php';
+        require __DIR__ . '/src/Pages/Home.php';
     },
     //* FORMULAIRES
     // Inscription
     'GET:/FormInscript' => function() {
-        require __DIR__ . '/src/pages/forms/formInscript.php';
+        require __DIR__ . '/src/Pages/forms/formInscript.php';
     },
     'POST:/ValidFormInscript' => function() {;
         require __DIR__ . '/src/Controllers/ValidFormInscript.php';
     },
     // Connexion
     'GET:/FormConnect' => function() {
-        require __DIR__ . '/src/pages/Forms/FormConnect.php';
+        require __DIR__ . '/src/Pages/Forms/FormConnect.php';
     },
     'POST:/ValidFormConnect' => function() {
         require __DIR__ . '/src/Controllers/ValidFormConnect.php';
     },
     // Trajets
     'GET:/FormTrajet' => function() {
-        require __DIR__ . '/src/pages/Forms/FormTrajet.php';
+        require __DIR__ . '/src/Pages/Forms/FormTrajet.php';
     },
     'POST:/ValidFormTrajet' => function() {
         // 1. Récupèration l'action demandée via le bouton
@@ -62,11 +62,11 @@ $callable = match($finalpath) {
     //* Administration
     // Dashboard Admin
     'GET:/DashboardAdmin' => function() {
-        require __DIR__ . '/src/pages/Admin/DashboardAdmin.php';
+        require __DIR__ . '/src/Pages/Admin/DashboardAdmin.php';
     },
     // Gestion de success test des formulaires
     'GET:/Success' => function() {
-        require __DIR__ . '/src/pages/Success.php';
+        require __DIR__ . '/src/Pages/Success.php';
     },
     // Gestion de la deconnexion
     'GET:/Deconnexion' => function() {
@@ -74,7 +74,7 @@ $callable = match($finalpath) {
     },
     // Pages d'affichage des test
     'GET:/TestView' => function() {
-        require __DIR__ . '/src/pages/TestView.php';
+        require __DIR__ . '/src/Pages/TestView.php';
     },
     default => function () {
         echo '404.php';

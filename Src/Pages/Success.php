@@ -1,21 +1,23 @@
 <?php
 namespace App\Pages;
 
+$utilisateur = $_SESSION['utilisateur'] ?? ['connect' => false];
 $message = $_SESSION['message'] ?? '';
 unset($_SESSION['message']);
 
-var_dump($_SESSION['utilisateur_connect']);
+//var_dump($utilisateur['connect']);
 
-if ($_SESSION['utilisateur_connect']){
+if ($utilisateur['connect']){
     $content ='<h2>Pages De Succes</h2>' 
         . '<hr>'
         . '<p>' . $message . '</p>'
         . '<div>'
-        . '<p>'.$_SESSION['utilisateur_id'].'</p>'
-        . '<p>'.$_SESSION['utilisateur_nom'].'</p>'
-        . '<p>'.$_SESSION['utilisateur_prenom'].'</p>'
-        . '<p>'.$_SESSION['utilisateur_telephone'].'</p>'
-        . '<p>'.$_SESSION['utilisateur_email'].'</p>'
+        . '<p>'.$utilisateur['id'].'</p>'
+        . '<p>'.$utilisateur['nom'].'</p>'
+        . '<p>'.$utilisateur['prenom'].'</p>'
+        . '<p>'.$utilisateur['telephone'].'</p>'
+        . '<p>'.$utilisateur['email'].'</p>'
+        . '<p>'.$utilisateur['status'].'</p>'
         . '</div>'
         ;
 } else {
@@ -23,7 +25,12 @@ if ($_SESSION['utilisateur_connect']){
         . '<hr>'
         . '<p>' . $message . '</p>'
         ;
-        header('Location: /');
-        exit();
+        session_destroy();
+        
 }
 require __DIR__ . '/Layout.php';
+
+?>
+<script>
+    setTimeout(() => { window.location.href = "/"; }, 3000);
+</script>

@@ -1,7 +1,10 @@
 <?php
+namespace App\Service;
 
-session_destroy();
 $_SESSION['message'] = 'Déconnexion Réussit!!';
+$_SESSION['utilisateur'] = [
+    'connect' => false
+];
 header('Location: /Success');
 exit();
 

@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Pages;
+
 use PDO;
 use PDOException;
 use App\Db\Connexion;
 use App\Controllers\test;
-use App\Service\PasswordVerif;
+use App\Service\Trajet;
 
 //! récupération multi info pour liste des trajets
 /*
@@ -130,13 +130,33 @@ $test = new Test();
 $liste = $test->optionTestl();
 
 
-$nom='';
-$prenom='';
-$telephone='';
+//! Affichage des trajets
+function AffichageTrajet() {
+	$trajet = new Trajet();
+
+	$resultat = $trajet->afficheAll();
+	return $resultat;
+}
+$listeTrajet = AffichageTrajet();
+var_dump($listeTrajet);
+
+//! Test TheConnect
+function testTc($type){
+
+	$connexionDb = new Connexion();
+	$typeCo = $connexionDb->theConnect($type);
+	return $typeCo;
+}
+
+testTc(1);
+$tc = $_SESSION['typeCo'] ?? 'Pas de type défini';
+
 
 //! AFFICHAGE du résultat des test
 $content = '<h1>PAGE DE TEST</h1>'
 	. '<p>Ceci est le contenu de la page d\'accueil.</p>'
+	. '<hr>'
+	. '<p>Type de connexion test : '.$tc.'</p>'
 	. '<hr>'
 	. '<p>Liste des emails des utilisateurs enregistrés :</p>'
 	. '<p>'.$liste.'</p> '

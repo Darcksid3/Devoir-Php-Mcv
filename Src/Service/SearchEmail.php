@@ -7,7 +7,7 @@ class SearchEmail {
 	public function searchEmail($email) {
         //importation de la connexion à la BDD
         $connexionDb = new Connexion();
-        $pdo = $connexionDb->rsConnect();
+        $pdo = $connexionDb->theConnect(0);
 
         // Requête pour vérifier si l'email existe
         $query = $pdo->prepare("SELECT * FROM utilisateur WHERE email = :email");

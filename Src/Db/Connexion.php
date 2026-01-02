@@ -71,32 +71,43 @@ class Connexion {
     
 
     //! Tentative de simplification de connexion NE FONCTIONNE PAS EN CET ETAT
-    public function typeConnexion($type) {
-        match($type) {
-            'rs' => $this->theConnect($this->rsUser, $this->rsPass),
-            
-            
-            'user' => function() {
-                return $this->theConnect($this->appUser, $this->appPass);
-            },
-            'admin' => function() {
-                return $this->theConnect($this->adminUser, $this->adminPass);
-            },
-            default => function() {
-                return 'connexion non authorisé';
-            },
-        };
-    }
-    public function theConnect($user,$mdp) {
+
+    public function theConnect($type) {
         try {
-            $connexion = new PDO("mysql:host=$this->host;dbname=$this->db;charset=utf8", $user, $mdp);
+            $info = $this->typeConnexion($type);
+            if ($info === null) {
+                $_SESSION['typeCo'] = 'connexion non autorisé';
+                return null;
+            }
+
+            $connexion = new PDO(
+                "mysql:host=$this->host;dbname=$this->db;charset=utf8",
+                $info['user'], 
+                $info['pass']
+                );
+
             error_log("Connexion réussie à la base de données.");
             //echo 'connexion DB';
+            $_SESSION['typeCo'] = $info['user'];
+
             return $connexion ;
+
         } catch (PDOException $error) {
+            $_SESSION['typeCo'] = 'erreur typeCo';
             die("Erreur de connexion : " . $error->getMessage());
         }
     }
+
+    public function typeConnexion($type) {
+        return match($type) {
+            0 => ['user' => $this->rsUser, 'pass' => $this->rsPass],
+            1 => ['user' => $this->appUser, 'pass' => $this->appPass],
+            2 => ['user' => $this->adminUser, 'pass' => $this->adminPass],
+            default => null,
+        };
+    }
+
+    
     //! FIN Tentative de simplification
 
 
