@@ -4,9 +4,9 @@
 /test/
 /devoir/
 /old.www/
-/controllers/test.php
-/pages/form/formTrajet.php
-/pages/TestView.php
+/Controllers/Test.php
+/Service/ExternalServices.php
+/Pages/TestView.php
 
 # fichier de configuration
 .env

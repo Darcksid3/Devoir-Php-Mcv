@@ -1,12 +1,9 @@
 <?php
 namespace App\Pages\Forms;
-$message = $_SESSION['message'] ?? '';
-unset($_SESSION['message']);
 
 $content = '<fieldset>'
         .'<legend> Formulaire d\'inscription </legend>'
         .'<form action="/ValidFormInscript" method="POST">'
-            .'<p>' . $message . '</p>'
             .'<p>email a utiliser alexandre.martin@email.fr </p>'
             .'<label for="email">Email :</label><br>'
             .'<input type="email" id="email" name="email" required>'

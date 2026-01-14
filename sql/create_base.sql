@@ -47,6 +47,9 @@ CREATE TABLE IF NOT EXISTS `trajet` (
     
     `arrive_date` DATE NOT NULL,
     `arrive_heure` TIME NOT NULL,
+
+    `place_totale` INT NOT NULL,
+    `place_disponible` INT NOT NULL,
     
     -- Clé étrangère vers la table `utilisateurs` (le créateur du trajet)
     `createur_id` INT UNSIGNED NOT NULL, 

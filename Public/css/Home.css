@@ -1,0 +1,16 @@
+.btn {
+    width: 20px;
+    height:20px;
+    border-radius: 50%;
+    border-color:black;
+    background-image: url("../asset/");
+}
+    .btn-trash {
+        background-image: url("../asset/trash.png");
+    }
+    .btn-edit {
+        background-image: url("../asset/edit.png");
+    }
+    .btn-view {
+        background-image: url("../asset/eye.svg");
+    }

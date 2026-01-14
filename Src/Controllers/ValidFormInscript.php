@@ -1,52 +1,58 @@
 <?php
 namespace App\Controllers;
 
-use App\Db\Connexion;
-use App\Service\SearchEmail;
+use App\Db\DbSelectService;
+use App\Db\DbAddService;
 use App\Service\PasswordVerif;
 
 
-//1) vérification que l'email existe chez les utilisateurs de l'entreprise 
-// récupération des données du formulaire
+// récupération des données du formulaire.
 $email = $_POST['email'] ?? '';
 $password1 = $_POST['password1'] ?? '';
 $password2 = $_POST['password2'] ?? '';
 
+/**
+* Fonction de vérification du formulaire d'inscription.
+*
+* @param string $email email de l'utilisateur.
+* @param string $password1 1er mot de passe.
+* @param string $password2 confirmation du premier mot de passe.
+*  Redirection vers la page d'inscription en cas déerreur ou vers la page d'accueil en cas de succes.
+* @return void
+*/
+function verifFormInscription($email, $password1, $password2) {
 
-//TODO A exporter dans son propre fichier de gestion des mot de passe avec la vérification de Connexion Utilisateur
-function verifPass($pass1, $pass2) {
-    if ($pass1 !== $pass2) {
-        $_SESSION['message'] = 'Mot de passe incorect';
-        header('Location: /FormInscript');
-        exit();
-    } else {
-        return true;
-        
-    }
-}
-
-function verif($email, $password1, $password2) {
-    
-    $search = new SearchEmail();
-    $verifMail = $search->searchEmail($email);
+    //* Récupération des classes de services.
+    $dbSelectService = new DbSelectService();
     $verifPassword = new PasswordVerif();
+    
+    //* 1) Résultat de la vérification que l'email existe chez les employés de l'entreprise.
+    $verifMail = $dbSelectService->searchEmail($email);
+    var_dump($verifMail);
+    //* 2) Résultat de la vérification des mot de passe.
     $verifMdp = $verifPassword->verifPassword($password1, $password2);
-
-    if (!$verifMail && !$verifMdp) {
+    
+    //* 3) Analyse des résultats et affichage.
+    if (!$verifMail['status'] || !$verifMdp) {
         $_SESSION['message'] = 'email ou mot de passe incorect.';
         header('Location: /FormInscript');
         exit();
+
     } else {
-        
-        $uid = (int) $verifMail['id'];
-        
+        //* 1) récupération de l'id de l'utilisateur
+        $uid = (int) $verifMail['user']['id'];
+        //* 2) hash du mot de passe
         $pass_hash = $verifPassword->hashPassword($password1);
-        $connect = new Connexion();
-        $connect->addUser($uid, $pass_hash);
+        //* 3) ajout de l'utilistaueur dans la base de donnée des utilisteur enregistrés.
+        $add = new DbAddService();
+        $add->addUser($uid, $pass_hash);
+        //* 4) Message de succes et redirection.
         $_SESSION['message'] = 'Inscription réussit';
+        $_SESSION['inscription'] = true;
         header('Location: /Success');
         exit();
 
     }
+    
 }
-verif($email, $password1, $password2);
+verifFormInscription($email, $password1, $password2);
