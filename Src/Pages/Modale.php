@@ -1,12 +1,25 @@
 <?php
 namespace App\Pages;
-
+use App\Service\RecupId;
 use App\Db\DbSelectService;
 
-//Récupération de l'id du trajet
-$uri = $_SERVER['REQUEST_URI']; // Récupère "/Pages/id"
-$segments = explode('/', trim($uri, '/')); // Découpe par les "/"
-$id = end($segments); // Récupère le dernier élément : "id"
+//Récupération de l'id
+$recupId = new RecupId();
+$id = $recupId->recupId($_SERVER['REQUEST_URI']);
+
+if ($id === null) {
+    Header('Location: /');
+    exit();
+}
+
+//verification de la connexion de l'utilisateur
+$utilisateur = $_SESSION['utilisateur'] ?? [];
+if (($utilisateur['connect'] ?? false) === true ) {
+} else {
+    Header('Location: /');
+    exit();
+}
+
 
 // Classe Select
 $dbSelectService = new DbSelectService();

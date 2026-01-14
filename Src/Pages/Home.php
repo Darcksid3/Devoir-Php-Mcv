@@ -4,9 +4,9 @@ namespace App\Pages;
 use App\Db\DbSelectService;
 
 function actionButton($id) {
-	$btnView = '<button type="button" onclick="location.href=\'/Modale\'">Voir</button>';
-	$btnModif = '<button type="button" onclick="location.href=\'/Modale/'.$id.'\'">Modifier</button>';
-	$btnSupp = '<button>Supprimer</button>';
+	$btnView = '<button type="button" onclick="location.href=\'/Modale/'.$id.'\'">Voir</button>';
+	$btnModif = '<button type="button" onclick="location.href=\'/FormTrajet/'.$id.'\'">Modifier</button>';
+	$btnSupp = '<button type="button" onclick="location.href=\'/DeleteTrajet/'.$id.'\'">Supprimer</button>';
 
 	$affichageBouton = 'Option : '.$btnView.$btnModif.$btnSupp;
 	return $affichageBouton;

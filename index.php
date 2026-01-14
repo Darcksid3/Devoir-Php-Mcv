@@ -23,6 +23,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 //mise en place du path final
 $finalpath = "{$method}:{$path}";
 
+
 function dynamicPath($path,$finalpath, &$matches ) {
     $patch = preg_replace('#\{[a-z]+\}#i', '([^/]+)?', $path);
     return preg_match("#^{$patch}$#", $finalpath, $matches) >= 1 ? $finalpath : '///';
@@ -49,12 +50,22 @@ $callable = match($finalpath) {
         require __DIR__ . '/Src/Controllers/ValidFormConnect.php';
     },
     // Trajets
+    
     'GET:/FormTrajet' => function() {
         require __DIR__ . '/Src/Pages/Forms/FormTrajet.php';
     },
     'POST:/ValidFormTrajet' => function() {
         require __DIR__ . '/Src/Controllers/ValidFormTrajet.php';    
-    },    
+    },
+    dynamicPath('GET:/FormTrajet/{id}', $finalpath, $matches) => function () use ($matches)  {
+        require __DIR__ . '/Src/Pages/Forms/FormTrajet.php';
+    }, 
+    dynamicPath('GET:/ValidDeleteTrajet/{id}', $finalpath, $matches) => function () use ($matches)  {
+        require __DIR__ . '/Src/Controllers/ValidDeleteTrajet.php';
+    }, 
+    dynamicPath('GET:/DeleteTrajet/{id}', $finalpath, $matches) => function () use ($matches)  {
+        require __DIR__ . '/Src/Pages/DeleteTrajet.php';
+    },
     //* Administration
     // Dashboard Admin
     'GET:/DashboardAdmin' => function() {

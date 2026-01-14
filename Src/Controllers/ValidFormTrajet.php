@@ -2,6 +2,9 @@
 namespace App\Controllers;
 
 use App\Db\DbAddService;
+use App\Db\DbUpdateService;
+use App\Service\RecupId;
+
 
 //* Récupération des informations du formulaire de trajet.
 
@@ -86,14 +89,41 @@ function verifPlace ($placeD, $placeT) {
 * @return void. Ajoute le trajet en base de donnée et redirige l'utilisateur en cas de succes.
 */
 function verifFormTrajet($post) {
-    verifVille($post['ville_depart'], $post['ville_arrivee']);
-    verifDate($post['date_depart'], $post['date_arrivee']);
-    verifPlace($post['place_disponible'], $post['place_totale']);
-    $add = new DbAddService();
-    $add->addTrajet($post);
-    $_SESSION['message'] = "Trajet crée avec succes";
-    header('Location: /Success');
-    exit();
+    if ($post['action'] !== 'delete') {
+        if ($post['action'] === 'create') {
+
+            verifVille($post['ville_depart'], $post['ville_arrivee']);
+            verifDate($post['date_depart'], $post['date_arrivee']);
+            verifPlace($post['place_disponible'], $post['place_totale']);
+            $add = new DbAddService();
+            $add->addTrajet($post);
+            $_SESSION['message'] = "Trajet crée avec succes";
+            header('Location: /Success');
+            exit();
+        } else {
+            verifVille($post['ville_depart'], $post['ville_arrivee']);
+            verifDate($post['date_depart'], $post['date_arrivee']);
+            verifPlace($post['place_disponible'], $post['place_totale']);
+            $update = new DbUpdateService();
+            $update->updateTrajet($post);
+            $_SESSION['message'] = "Trajet Modifier avec succes";
+            header('Location: /Success');
+            exit();
+        }  
+    } else {
+        //Récupération de l'id
+        $recupId = new RecupId();
+        $id = $recupId->recupId($_SERVER['REQUEST_URI']);
+
+        if ($id === null) {
+            Header('Location: /');
+            exit();
+        }
+        
+        header('Location: /DeleteTrajet/'.$id.'');
+        exit();
+    }
+
 };
 
 verifFormTrajet($post);
