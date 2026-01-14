@@ -1,7 +1,7 @@
 <?php
 namespace App\Service;
 
-class ExternalService {
+class ExternalServices {
 
     public function ConvertisseurTime($Time) {
         // 1. On transforme le float en int (on arrondit à la seconde près)

@@ -2,8 +2,6 @@
 namespace App\Db;
 
 class DbSelectService extends DbConnexion{
-
-    
         
     public function selectUser($id, $password) {
             // ajout utilisateur_enregistre

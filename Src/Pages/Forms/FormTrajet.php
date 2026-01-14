@@ -3,146 +3,109 @@
 namespace App\Pages\Forms;
 
 use App\Db\DbSelectService;
+use App\Service\RecupId;
 
-// verification que l'utilisateur est connecter sinon redirection.
-// Si l'utilisateur est connecté récupération de ces donnée pour préremplir le formulaire.
+// Verifivation qu'un utilisateur est connecter. 
 $utilisateur = $_SESSION['utilisateur'] ?? [];
 if (($utilisateur['connect'] ?? false) === true){
+    
 } else {
     Header('Location: /');
     exit();
 }
 
-// Création des objet date et heure.
+// Vérification de l'uri pour savoir si c'est une modification.
+$recupId = new RecupId();
+$id = $recupId->recupId($_SERVER['REQUEST_URI']);
 
-$date = date("Y-m-d"); //date actuelle.
-$heure = date("h:i"); // heure actuelle.
-$heureSupp = date("h:i", strtotime('+1 hour'));// Ajout d'une heure supplémùentaire à l'heure actuelle pour l'heure d'arrivé (limitation de conflit).
+$edit = ($id !== null);
 
-/**
-* Fonction du formatage de la date pour la metre au format sql.
-*
-* @param date $datepost .
-* @return $objDate objet date Formaté. 
-*/
-function formatDate($datePost) {
-    $objdate = date_create_from_format('Y-m-d', $datePost);
-        return $objdate;
-}
-if (isset($_POST['date_depart'])) {
-    return $dateDepart = formatDate($_POST['date_depart']);
-}
-if (isset($_POST['date_arrivee'])) {
-    return $dateArrivee = formatDate($_POST['date_arrivee']);
+// Récupération des information du trajet.
+$connexion = new DbSelectService();
+$infoTrajet = $edit ? $connexion->recupTrajetById($id) : [];
+
+//3 verifier si l'utilisateur connecté est le propriétaire du trajet.
+if ($edit) {
+    if ((int)$utilisateur['id'] !== (int)$infoTrajet['createur_id']) {
+        header('Location: /');
+        exit();
+    }
 }
 
-// Récupération des villes pour l'insertion dans le formulaire.
-function recupVille() {
-	$ville = new DbSelectService();
-	$liste = $ville->recupVille();
-	$option = '';
-	foreach ($liste as $ville) {
-            
-            $option .= '<option value="'.$ville['id'].'">'.$ville['nom'].'</option>';
-        }
-        return $option;
-
+function affichageBtn($edit) {
+    $btn = '<div class="btn-action">';
+    if (!$edit) {
+        $btn .= '<button type="submit" name="action" value="create">Créer le trajet</button>';
+    } else {
+        $btn .= '<button type="submit" name="action" value="update">Modifier le trajet</button>';
+        $btn .= '<button type="submit" name="action" value="delete">Supprimer le trajet</button>';
+    }
+    $btn .= '</div>';
+    return $btn;
 }
-$recup = recupVille();
-    
-// recuperation des info de l'utilisateur pour alimenter le formulaire
 
-$content ='<p>formulaire des trajets</p>'
-.'<fieldset class="trajet-fieldset">'
-    .'<legend>Création de trajet</legend>'
-    .'<form action="/ValidFormTrajet" method="POST">'
-        .'<input type="hidden" id="createur_id" name="createur_id" value="'.$utilisateur['id'].'" >'
+// Valeurs par défaut ou Valeur de la BDD
+$v_depart   = $infoTrajet['depart_ville_id'] ?? ''; 
+$v_arrivee  = $infoTrajet['arrive_ville_id'] ?? '';
+$d_depart   = $infoTrajet['depart_date'] ?? date("Y-m-d");
+$h_depart   = $infoTrajet['depart_heure'] ?? date("H:i");
+$d_arrivee  = $infoTrajet['arrive_date'] ?? date("Y-m-d");
+$h_arrivee  = $infoTrajet['arrive_heure'] ?? date("H:i", strtotime('+1 hour'));
+$p_totale   = $infoTrajet['place_totale'] ?? 4;
+$p_restante = $infoTrajet['place_disponible'] ?? 2;
 
-        // Information de l'utilisateur connecté
-        .'<div class="info-utilisateur">'
-            .'<div>'
-                .'<p><label>email :</label></p>'
-                .'<p><input type="email" id="email" name="email" value="'.$utilisateur['email'].'" readonly></p>'
-            .'</div>'
-            .'<div>'
-                .'<p><label>Nom</label></p>'
-                .'<p><input type="text" id="nom" name="nom" value="'.$utilisateur['nom'].'" readonly></p>'
-            .'</div>'
-            .'<div>'
-                .'<p><label>Prenom</label></p>'
-                .'<p><input type="text" id="prenom" name="prenom" value="'.$utilisateur['prenom'].'" readonly></p>'
-            .'</div>'
-            .'<div>'
-                .'<p><label>Telephone</label></p>'
-                .'<p><input type="text" id="telephone" name="telephone" value="'.$utilisateur['telephone'].'" readonly></p>'
-            .'</div>'
-        .'</div>'
-        // Fin info utilisateur
+// Récupération des villes
+function recupVille($selectedId = null) {
+    $db = new DbSelectService();
+    $liste = $db->recupVille();
+    $option = '';
+    foreach ($liste as $ville) {
+        $selected = ($selectedId == $ville['id']) ? 'selected' : '';
+        $option .= '<option value="'.$ville['id'].'" '.$selected.'>'.$ville['nom'].'</option>';
+    }
+    return $option;
+}
 
-        // Information sur le trajet
-        .'<div class="info-trajet">'
-            // Info départ
-            .'<div class="info-depart">'
-                .'<div>'
-                    .'<p>Ville de Départ</p>'
-                    .'<select id="ville_depart" name="ville_depart" required>'
-                        .$recup
-                    .'</select>'
-                .'</div>'
-                .'<div>'
-                    .'<p><label>Jours de départ</label></p>'
-                    .'<p><input type="date" id="date_depart" name="date_depart" value="'.$date.'" required></p>'
-                .'</div>'
-                .'<div>'
-                    .'<p><label>Heure de départ</label></p>'
-                    .'<p><input type="time" id="heure_depart" name="heure_depart" value="'.$heure.'" required></p>'
-                .'</div>'
-            .'</div>'
-            // info arrivée
-            .'<div class="info-arrivee">'
-                .'<div>'
-                    .'<p>Ville de arrivé</p>'
-                    .'<select id="ville_arrivee" name="ville_arrivee" required>'
-                        .$recup
-                    .'</select>'
-                .'</div>'
-                .'<div>'
-                    .'<p><label>Jours de arrivé</label></p>'
-                    .'<p><input type="date" id="date_arrivee" name="date_arrivee" value="'.$date.'" required></p>'
-                .'</div>'
-                .'<div>'
-                    .'<p><label>Heure de arrivé</label></p>'
-                    .'<p><input type="time" id="heure_arrivee" name="heure_arrivee" value="'.$heureSupp.'" required></p>'
-                .'</div>'
-            .'</div>'
-        .'</div>'
-        // fin info villes
+$listeVilleDepart = recupVille($v_depart);
+$listeVilleArrivee = recupVille($v_arrivee);
 
-        // Info places
-        .'<div class="info-place">'
-            .'<div>'
-                .'<p><label>Nombre de place Totale</label></p>'
-                .'<p><input type="Number" id="place_totale" name="place_totale" value="4" max="9"required></p>'
-            .'</div>'
-            .'<div>'
-                .'<p><label>Nombre de place disponible</label></p>'
-                .'<p><input type="number" id="place_restante" name="place_disponible" value="2" max="9"required></p>'
-            .'</div>'
-        .'</div>'
-        // fin info places
+
+$content = '<p>formulaire des trajets</p>'
+. '<fieldset class="trajet-fieldset">'
+    . '<legend>' . ($edit ? "Modifier le trajet : " . htmlspecialchars($id) : "Créer un trajet") . '</legend>'
+    . '<form action="/ValidFormTrajet" method="POST">'
+        . '<input type="hidden" name="id_trajet" value="' . ($id ?? '') . '">'
+        . '<input type="hidden" id="createur_id" name="createur_id" value="' . $utilisateur['id'] . '">'
+
+        . '<div class="info-utilisateur">'
+            . '<div><p><label>Email :</label></p><p><input type="email" value="' . $utilisateur['email'] . '" readonly></p></div>'
+            . '<div><p><label>Nom :</label></p><p><input type="text" value="' . $utilisateur['nom'] . '" readonly></p></div>'
+            . '<div><p><label>Prenom</label></p><p><input type="text" id="prenom" name="prenom" value="'.$utilisateur['prenom'].'" readonly></p></div>'
+            . '<div><p><label>Telephone</label></p><p><input type="text" id="telephone" name="telephone" value="'.$utilisateur['telephone'].'" readonly></p></div>'
+        . '</div>'
+
+        . '<div class="info-trajet">'
+            . '<div class="info-depart">'
+                . '<div><p>Ville de Départ :</p><select name="ville_depart" required>' . $listeVilleDepart . '</select></div>'
+                . '<div><p><label>Jour départ</label></p><input type="date" name="date_depart" value="' . $d_depart . '" required></div>'
+                . '<div><p><label>Heure départ</label></p><input type="time" name="heure_depart" value="' . $h_depart . '" required></div>'
+            . '</div>'
+            . '<div class="info-arrivee">'
+                . '<div><p>Ville d\'arrivée :</p><select name="ville_arrivee" required>' . $listeVilleArrivee . '</select></div>'
+                . '<div><p><label>Jour arrivée</label></p><input type="date" name="date_arrivee" value="' . $d_arrivee . '" required></div>'
+                . '<div><p><label>Heure arrivée</label></p><input type="time" name="heure_arrivee" value="' . $h_arrivee . '" required></div>'
+            . '</div>'
+        . '</div>'
+
+        . '<div class="info-place">'
+            . '<div><p><label>Places totales</label></p><input type="number" name="place_totale" value="' . $p_totale . '" max="9" required></div>'
+            . '<div><p><label>Places dispos</label></p><input type="number" name="place_disponible" value="' . $p_restante . '" max="9" required></div>'
+        . '</div>'
         
-        // Boutons d'actions
-        .'<div class="btn-action">'
-            .'<button type="submit" id="action" name="action" value="create">Créer le trajet</button>'
-            .'<button type="submit" id="action" name="action" value="update">Modifier le trajet</button>'
-            .'<button type="submit" id="action" name="action" value="delete">Supprimer le trajet</button>'
-        .'</div>'
-    .'</form>'
-.'</fieldset>'
-;
-
-
+        . affichageBtn($edit)
+    . '</form>'
+. '</fieldset>';
 
 require __DIR__ . '/../Layout.php';
-?>
 
+?>

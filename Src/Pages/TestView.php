@@ -6,8 +6,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
-use App\Service\ExternalService;
-$externalService = new ExternalService();
+use App\Service\ExternalServices;
+$externalService = new ExternalServices();
 
 use App\Db\DbSelectService;
 $selectDb = new DbSelectService();
