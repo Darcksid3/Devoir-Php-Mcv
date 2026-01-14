@@ -23,57 +23,64 @@ $method = $_SERVER['REQUEST_METHOD'];
 //mise en place du path final
 $finalpath = "{$method}:{$path}";
 
+function dynamicPath($path,$finalpath, &$matches ) {
+    $patch = preg_replace('#\{[a-z]+\}#i', '([^/]+)?', $path);
+    return preg_match("#^{$patch}$#", $finalpath, $matches) >= 1 ? $finalpath : '///';
+}
+
 //* Mise en place du routeur
 $callable = match($finalpath) {
     'GET:/' => function() {
-        require __DIR__ . '/src/pages/Home.php';
+        require __DIR__ . '/Src/Pages/Home.php';
     },
     //* FORMULAIRES
     // Inscription
     'GET:/FormInscript' => function() {
-        require __DIR__ . '/src/pages/forms/formInscript.php';
+        require __DIR__ . '/Src/Pages/Forms/FormInscript.php';
     },
     'POST:/ValidFormInscript' => function() {;
-        require __DIR__ . '/src/Controllers/ValidFormInscript.php';
+        require __DIR__ . '/Src/Controllers/ValidFormInscript.php';
     },
     // Connexion
     'GET:/FormConnect' => function() {
-        require __DIR__ . '/src/pages/Forms/FormConnect.php';
+        require __DIR__ . '/Src/Pages/Forms/FormConnect.php';
     },
     'POST:/ValidFormConnect' => function() {
-        require __DIR__ . '/src/Controllers/ValidFormConnect.php';
+        require __DIR__ . '/Src/Controllers/ValidFormConnect.php';
     },
     // Trajets
     'GET:/FormTrajet' => function() {
-        require __DIR__ . '/src/pages/Forms/FormTrajet.php';
+        require __DIR__ . '/Src/Pages/Forms/FormTrajet.php';
     },
     'POST:/ValidFormTrajet' => function() {
-        // 1. Récupèration l'action demandée via le bouton
-        $action = $_POST['action'] ?? 'default';
-
-        // 2. Aiguillage vers le bon service ou la bonne logique
-        match($action) {
-            'create' => require __DIR__ . '/src/services/CreateTrajetService.php',
-            'update' => require __DIR__ . '/src/services/UpdateTrajetService.php',
-            'delete' => require __DIR__ . '/src/services/DeleteTrajetService.php',
-            default  => die("Action non reconnue"),
-        };
-    },
+        require __DIR__ . '/Src/Controllers/ValidFormTrajet.php';    
+    },    
     //* Administration
     // Dashboard Admin
     'GET:/DashboardAdmin' => function() {
-        require __DIR__ . '/src/pages/Admin/DashboardAdmin.php';
+        require __DIR__ . '/Src/Pages/Admin/DashboardAdmin.php';
     },
     // Gestion de success test des formulaires
     'GET:/Success' => function() {
-        require __DIR__ . '/src/pages/Success.php';
+        require __DIR__ . '/Src/Pages/Success.php';
+    },
+    // Modale
+    'GET:/Modale' => function() {
+        require __DIR__ . '/Src/Pages/Modale.php';
+    },
+    dynamicPath('GET:/Modale/{id}', $finalpath, $matches) => function () use ($matches) {
+        require __DIR__ . '/Src/Pages/Modale.php';
+    },
+    // Gestion de la deconnexion
+    'GET:/Deconnexion' => function() {
+        require __DIR__ . '/Src/Service/Deconnexion.php';
     },
     // Pages d'affichage des test
     'GET:/TestView' => function() {
-        require __DIR__ . '/src/pages/TestView.php';
+        require __DIR__ . '/Src/Pages/TestView.php';
     },
     default => function () {
-        echo '404.php';
+        require __DIR__ . '/Src/Pages/PageInconnue.php';
     },
 
 };
