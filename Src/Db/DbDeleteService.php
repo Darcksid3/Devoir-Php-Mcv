@@ -15,6 +15,16 @@ class DbDeleteService extends DbConnexion {
         }
     }
 
+    public function deleteVille($id) {
+        try {
+            $connexion = $this->connexion(2);
+            $query = $connexion->prepare("delete from ville where id = :id");
+            $query->execute(['id' => $id]);
+
+        } catch(error) {
+            return 'une eerreur est survenur';
+        }
+    }
 };
 
 ?>

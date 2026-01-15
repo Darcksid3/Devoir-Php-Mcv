@@ -33,7 +33,7 @@ function recupVille() {
 $listeVille = recupVille();
 
 $content = '<h2>Formulaires de gestion des villes</h2>'
-        .'<form>'
+        .'<form action="ValidFormAgence" method="POST" >'
             
             .'<p>'
                 .'<label for="nom">Nom de la ville :</label>'
@@ -41,9 +41,9 @@ $content = '<h2>Formulaires de gestion des villes</h2>'
                 .'<button type="submit" name="action" value="create">Créer une agence</button>'
             .'</p>'
         .'</form>'
-        .'<form>'
+        .'<form action="ValidFormAgence" method="POST">'
             .'<p>'
-                .'<select>'.$listeVille.'</select>'
+                .'<select name="ville" id="ville">'.$listeVille.'</select>'
                 .'<label for="nouveau_nom">Nouveau nom de la ville :</label>'
                 .'<input type="text" name="nouveau_nom" id="nouveau_nom">'
                 .'<button type="submit" name="action" value="update">Modifier une agence</button>'

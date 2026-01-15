@@ -42,11 +42,12 @@ class DbAddService extends DbConnexion {
     public function addVille($ville) {
         //ajoute une ville 
         $pdo = $this->connexion(2);
-        $query = $pdo->prepare("insert into ville (nom) values (:ville) ");
+        $query = $pdo->prepare("insert into ville (nom) values (:ville)");
         
-        $query->execute(['nom' => $ville]);
+        $query->execute(['ville' => $ville]);
     }
 
+    
 }
 
 ?>

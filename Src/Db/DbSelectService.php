@@ -83,6 +83,20 @@ class DbSelectService extends DbConnexion{
         return $resultat['nom'];
     }
 
+    public function recupVilleByName($nomVille) {
+        $connexion = $this->connexion(1);
+        $query = $connexion->prepare("select nom from ville where nom = :nom");
+        $query->execute(['nom' => (string)$nomVille]);
+        if ($query->rowCount() >= 1) {
+            
+        $resultat = $query->fetch();
+            $response = ['status' => true, 'nom' => $resultat];
+            return $response;
+        } else{
+            return $response = ['status' => false];
+        }
+    }
+
     public function recupOwnerTrajet($idCreateur) {
         $connexion = $this->connexion(0);
         $query = $connexion->prepare("select email from utilisateur where id = :id");

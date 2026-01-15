@@ -21,5 +21,12 @@ class DbUpdateService extends DbConnexion {
         ]);
         
     }
+
+    public function updateVille($id, $nouveau_nom){
+        $connexion = $this->connexion(2);
+        $sql = "update ville set nom=:nouveau_nom where id=:id";
+        $query = $connexion->prepare($sql);
+        $query->execute(['nouveau_nom' => $nouveau_nom, 'id' => $id]);
+    }
 }
 ?>

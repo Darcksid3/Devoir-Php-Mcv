@@ -81,6 +81,9 @@ $callable = match($finalpath) {
     'GET:/ListeTrajet' => function() {
         require __DIR__ . '/Src/Pages/Admin/ListeTrajet.php';
     },
+    'POST:/ValidFormAgence' => function() {
+        require __DIR__ . '/Src/Pages/Admin/ValidFormAgence.php';
+    },
     // Gestion de success test des formulaires
     'GET:/Success' => function() {
         require __DIR__ . '/Src/Pages/Success.php';
