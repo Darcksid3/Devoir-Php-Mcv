@@ -66,10 +66,20 @@ $callable = match($finalpath) {
     dynamicPath('GET:/DeleteTrajet/{id}', $finalpath, $matches) => function () use ($matches)  {
         require __DIR__ . '/Src/Pages/DeleteTrajet.php';
     },
+
     //* Administration
     // Dashboard Admin
     'GET:/DashboardAdmin' => function() {
         require __DIR__ . '/Src/Pages/Admin/DashboardAdmin.php';
+    },
+    'GET:/ListeUtilisateur' => function() {
+        require __DIR__ . '/Src/Pages/Admin/ListeUtilisateur.php';
+    },
+    'GET:/FormAgence' => function() {
+        require __DIR__ . '/Src/Pages/Admin/FormAgence.php';
+    },
+    'GET:/ListeTrajet' => function() {
+        require __DIR__ . '/Src/Pages/Admin/ListeTrajet.php';
     },
     // Gestion de success test des formulaires
     'GET:/Success' => function() {

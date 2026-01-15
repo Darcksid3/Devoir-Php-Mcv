@@ -41,9 +41,9 @@ if (($utilisateur['connect'] ?? false) === true){
                 //affichage du menu admin
                 echo '<div>'
                         .'<a href="/" style="display:inline;margin-right:200px;font-size:2rem;font-weight:700;text-decoration:none;color:black;">Touche pas au klaxon</a>'
-                        .'<button type="button" style="margin-right:20px;" onclick="location.href=\'/\'">Utilisateur</button>'
-                        .'<button type="button" style="margin-right:20px;" onclick="location.href=\'/\'">Agence</button>'
-                        .'<button type="button" style="margin-right:20px;" onclick="location.href=\'/FormTrajet\'">Trajet</button>'
+                        .'<button type="button" style="margin-right:20px;" onclick="location.href=\'/ListeUtilisateur\'">Utilisateur</button>'
+                        .'<button type="button" style="margin-right:20px;" onclick="location.href=\'/FormAgence\'">Agence</button>'
+                        .'<button type="button" style="margin-right:20px;" onclick="location.href=\'/ListeTrajet\'">Trajet</button>'
                         . '<p style="display:inline;margin-right:20px;">Bonjour '.$utilisateur['nom'].' '.$utilisateur['prenom'].'</p>'
                         .'<button type="button" onclick="location.href=\'/Deconnexion\'">Déconnexion</button>'
                 . '</div>'
