@@ -41,7 +41,7 @@ if ($edit) {
     }
 }
 
-function affichageBtn($edit, $is_admin) {
+function affichageBtn($edit) {
     $btn = '<div class="btn-action">';
     if (!$edit) {
         $btn .= '<button type="submit" name="action" value="create">Créer le trajet</button>';
