@@ -26,11 +26,12 @@ GRANT INSERT ON `covoiturage_interne`.`utilisateur_enregistre` TO 'registration_
 -- 2. PRIVILÈGES DE L'ADMINISTRATEUR (Connexion 2)
 -- ----------------------------------------------------------------------
 
--- Confirme qu'AUCUN DROIT n'est donné sur utilisateur et utilisateur_enregistre
+
 -- L'admin est limité à l'administration du projet (trajets et villes)
 GRANT ALL PRIVILEGES ON `covoiturage_interne`.`ville` TO 'admin_app'@'localhost';
 GRANT ALL PRIVILEGES ON `covoiturage_interne`.`trajet` TO 'admin_app'@'localhost';
-
+GRANT SELECT ON `covoiturage_interne`.`utilisateur_enregistre` TO 'admin_app'@'localhost';
+GRANT SELECT ON `covoiturage_interne`.`utilisateur` TO 'admin_app'@'localhost';
 -- ----------------------------------------------------------------------
 -- 3. PRIVILÈGES DE L'UTILISATEUR STANDARD (Connexion 3)
 -- ----------------------------------------------------------------------

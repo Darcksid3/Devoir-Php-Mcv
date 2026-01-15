@@ -1,24 +1,36 @@
 <?php
-namespace App\Pages;
+namespace App\Admin;
 
+use App\Service\StatusVerif;
 use App\Db\DbSelectService;
 
+// Verifivation qu'un utilisateur est connecter. 
+$utilisateur = $_SESSION['utilisateur'] ?? [];
+if (($utilisateur['connect'] ?? false) === true){
+	
+} else {
+Header('Location: /');
+exit();
+}
+$statusVerif = new StatusVerif();
+$is_admin = $statusVerif->verifStatus($utilisateur);
+
+if (!$is_admin){
+header('Location: /');
+exit();
+}
+
 function actionButton($id) {
-	$btnView = '<button type="button" onclick="location.href=\'/Modale/'.$id.'\'">Voir</button>';
-	$btnModif = '<button type="button" onclick="location.href=\'/FormTrajet/'.$id.'\'">Modifier</button>';
 	$btnSupp = '<button type="button" onclick="location.href=\'/DeleteTrajet/'.$id.'\'">Supprimer</button>';
 
-	$affichageBouton = 'Option : '.$btnView.$btnModif.$btnSupp;
+	$affichageBouton = 'Option : '.$btnSupp;
 	return $affichageBouton;
 }
 
 function AffichageTrajet() {
-	$btnView = '<button>Voir</button>';
-	$btnModif = '<button>Modifier</button>';
-	$btnSupp = '<button>Supprimer</button>';
 	$dbSelectService = new DbSelectService();
 
-	$resultat = $dbSelectService->afficheAll();
+	$resultat = $dbSelectService->listeAllTrajet();
 	
 	if ($resultat['status'] === false) {
 		return $contenu ="<p>Aucun trajet n'est prévu !!</p>";
@@ -42,7 +54,7 @@ function AffichageTrajet() {
 					.'<td>'.actionButton($trajetInfo['id']).'</td>'
 				.'</tr>';
 			}
-			$contenu = '<h1>Bienvenue sur la page d\'accueil</h1>'
+			$contenu = '<h1>Liste des trajet</h1>'
 		.'<table border="1">'
 			.'<thead>'
 				.'<tr>'
@@ -68,6 +80,6 @@ function AffichageTrajet() {
 		$content = AffichageTrajet();
 		
 
-require __DIR__ . '/Layout.php';
+require __DIR__ . '/../Layout.php';
 ?>
 

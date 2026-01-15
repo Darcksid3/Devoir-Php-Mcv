@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Pages\Forms;
-
+use App\Service\StatusVerif;
 use App\Db\DbSelectService;
 use App\Service\RecupId;
 
@@ -13,7 +13,8 @@ if (($utilisateur['connect'] ?? false) === true){
     Header('Location: /');
     exit();
 }
-
+$statusVerif = new StatusVerif();
+    $is_admin = $statusVerif->verifStatus($utilisateur);
 // Vérification de l'uri pour savoir si c'est une modification.
 $recupId = new RecupId();
 $id = $recupId->recupId($_SERVER['REQUEST_URI']);
@@ -26,13 +27,21 @@ $infoTrajet = $edit ? $connexion->recupTrajetById($id) : [];
 
 //3 verifier si l'utilisateur connecté est le propriétaire du trajet.
 if ($edit) {
-    if ((int)$utilisateur['id'] !== (int)$infoTrajet['createur_id']) {
-        header('Location: /');
-        exit();
+    
+    if($is_admin){
+        
+        // on récupère les donnée du créateur du trajet (int)$infoTrajet['createur_id']
+        
+        $utilisateur = $connexion->infoOwner((int)$infoTrajet['createur_id']);
+    }else {
+        if ((int)$utilisateur['id'] !== (int)$infoTrajet['createur_id']) {
+            header('Location: /');
+            exit();
+        }
     }
 }
 
-function affichageBtn($edit) {
+function affichageBtn($edit, $is_admin) {
     $btn = '<div class="btn-action">';
     if (!$edit) {
         $btn .= '<button type="submit" name="action" value="create">Créer le trajet</button>';
@@ -102,7 +111,7 @@ $content = '<p>formulaire des trajets</p>'
             . '<div><p><label>Places dispos</label></p><input type="number" name="place_disponible" value="' . $p_restante . '" max="9" required></div>'
         . '</div>'
         
-        . affichageBtn($edit)
+        . affichageBtn($edit, $is_admin)
     . '</form>'
 . '</fieldset>';
 
