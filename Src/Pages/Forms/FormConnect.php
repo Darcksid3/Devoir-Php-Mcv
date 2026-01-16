@@ -6,7 +6,7 @@ namespace App\Pages\Forms;
 $content = '<fieldset>'
         .'<legend> Formulaire de connexion </legend>'
         .'<form action="/ValidFormConnect" method="POST">'
-        .'<p>email a utiliser => alexandre.martin@email.fr => sophie.dubois@email.fr => julien.bernard@email.fr => camille.moreau@email.fr =>lucie.lefevre@email.fr => louis.fontaine@email.fr => hugo.lambert@email.fr => arthur.henry@email.fr</p>'
+        .'<p>email a utiliser => alexandre.martin@email.fr (admin) => sophie.dubois@email.fr (utilisateur) => julien.bernard@email.fr (utilisateur)</p>'
         .'<label for="email">Email :</label><br>'
         .'<input type="email" id="email" name="email" required>'
         .'<br>'

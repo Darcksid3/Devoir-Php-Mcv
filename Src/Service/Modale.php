@@ -8,7 +8,8 @@ $recupId = new RecupId();
 $id = $recupId->recupId($_SERVER['REQUEST_URI']);
 
 if ($id === null) {
-    Header('Location: /');
+echo "Erreur : ID de trajet manquant.";    
+//Header('Location: /');
     exit();
 }
 
@@ -16,7 +17,8 @@ if ($id === null) {
 $utilisateur = $_SESSION['utilisateur'] ?? [];
 if (($utilisateur['connect'] ?? false) === true ) {
 } else {
-    Header('Location: /');
+echo "Veuillez vous connecter pour voir les détails.";    
+//Header('Location: /');
     exit();
 }
 
@@ -27,21 +29,20 @@ $dbSelectService = new DbSelectService();
 // Récupération du trajet selectionné
 $trajetInfo = $dbSelectService->recupTrajetById($id);
 //récupération des infos du créateur du trajet
+if (!$trajetInfo) {
+    echo "Trajet introuvable.";
+    exit();
+}
 $createurTrajetInfo = $dbSelectService->infoOwner($trajetInfo['createur_id']);
-//récupération du nom des villes
-$villeD = $dbSelectService->recupVilleById($trajetInfo['depart_ville_id']);
-$villeA = $dbSelectService->recupVilleById($trajetInfo['arrive_ville_id']);
 
-// Affichage de la modale
-$content = '<p>Vous etes sur la page des modales</p>'
-    . '<p>'.$id.'</p>'
-    .'<p>trajet entre '.$villeD.' et '.$villeA.'</p>'
-    .'<p>Information sur le créateur du trajet</p>'
-    .'<p>Email : '.$createurTrajetInfo['email'].'</p>'
-    .'<p>Nom : '.$createurTrajetInfo['nom'].'</p>'
-    .'<p>Prenom : '.$createurTrajetInfo['prenom'].'</p>'
-    ;
+// Affichage des infos de la modale
 
-require __DIR__ . '/Layout.php';
-
+echo '<p>trajet entre '.$trajetInfo['depart_ville_nom'].' et '.$trajetInfo['arrive_ville_nom'].'</p>';
+echo '<p>Information sur le créateur du trajet</p>';
+echo '<p>Email : '.$createurTrajetInfo['email'].'</p>';
+echo '<p>Nom : '.$createurTrajetInfo['nom'] .'</p>';
+echo '<p>Prenom : '.$createurTrajetInfo['prenom'] .'</p>';
 ?>
+
+
+

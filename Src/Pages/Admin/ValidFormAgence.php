@@ -6,13 +6,14 @@ use App\Db\DbUpdateService;
 use App\Db\DbDeleteService;
 
 $post = $_POST;
-var_dump($post);
+
 function addVille($ville) {
+    $addVille = ucfirst($ville);
     $dbSelectService = new DbSelectService();
-    $response = $dbSelectService->recupVilleByName($ville);
+    $response = $dbSelectService->recupVilleByName($addVille);
     if($response['status'] === false){
         $dbAddService = new DbAddService();
-        $dbAddService->addVille($ville);
+        $dbAddService->addVille($addVille);
         $_SESSION['message'] = '$action = create';
         header('Location: /Success');
         exit();
@@ -32,8 +33,9 @@ function deleteVille($id) {
 }
 
 function updateVille($id, $nouveau_nom){
+    $updateVille = ucFirst($nouveau_nom);
     $dbUpdateService = new DbUpdateService();
-    $dbUpdateService->updateVille($id,$nouveau_nom);
+    $dbUpdateService->updateVille($id,$updateVille);
     $_SESSION['message'] = 'Ville modifié avec succes';
     header('Location: /Success');
     exit();

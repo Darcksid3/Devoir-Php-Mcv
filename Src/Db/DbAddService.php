@@ -25,14 +25,14 @@ class DbAddService extends DbConnexion {
     public function addTrajet($infoTrajet) {
         //ajoute un trajet
         $pdo = $this->connexion(1);
-        $query = $pdo->prepare("insert into trajet (depart_ville_id, depart_date, depart_heure, arrive_ville_id, arrive_date, arrive_heure, place_totale, place_disponible, createur_id) values (:depart_ville_id, :depart_date, :depart_heure, :arrive_ville_id, :arrive_date, :arrive_heure, :place_totale, :place_disponible, :createur_id)");
+        $query = $pdo->prepare("insert into trajet (depart_ville_id, depart_gdh, depart_date, arrive_ville_id, arrive_gdh, arrive_date, place_totale, place_disponible, createur_id) values (:depart_ville_id, :depart_gdh, :depart_date, :arrive_ville_id, :arrive_gdh, :arrive_date, :place_totale, :place_disponible, :createur_id)");
         $query->execute([
-            'depart_ville_id' => (int)$infoTrajet['ville_depart'],
-            'depart_date' => $infoTrajet['date_depart'],
-            'depart_heure' => $infoTrajet['heure_depart'],
-            'arrive_ville_id' => (int)$infoTrajet['ville_arrivee'],
-            'arrive_date' => $infoTrajet['date_arrivee'],
-            'arrive_heure' => $infoTrajet['heure_arrivee'],
+            'depart_ville_id' => (int)$infoTrajet['depart_ville'],
+            'depart_gdh' => $infoTrajet['depart_gdh'],
+            'depart_date' => $infoTrajet['depart_date'],
+            'arrive_ville_id' => (int)$infoTrajet['arrive_ville'],
+            'arrive_gdh' => $infoTrajet['arrive_gdh'],
+            'arrive_date' => $infoTrajet['arrive_date'],
             'place_totale' => (int)$infoTrajet['place_totale'],
             'place_disponible' => (int)$infoTrajet['place_disponible'],
             'createur_id' => (int)$infoTrajet['createur_id']

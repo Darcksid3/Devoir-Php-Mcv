@@ -12,14 +12,11 @@ class DbSelectService extends DbConnexion{
             return $result;
     }
 
-  
-
     public function searchEmail($email) {
         $pdo = $this->connexion(0);
         $query = $pdo->prepare("SELECT * FROM utilisateur WHERE email = :email");
         $query->execute(['email' => $email]);
     
-        // Vérification du résultat
         if ($query->rowCount() >= 1) {
             $resultat = $query->fetch();
             $responce = ['status' => true, 'user' => $resultat];
@@ -51,18 +48,18 @@ class DbSelectService extends DbConnexion{
     public function afficheAll() {
         // connexion a la base de donnée
         $connexion = $this->connexion(1);
-
+        $sql = "select t.*, v1.nom as depart_ville_nom, v2.nom as arrive_ville_nom from trajet t inner join ville v1 on t.depart_ville_id = v1.id inner join ville v2 on t.arrive_ville_id = v2.id where t.depart_date >= NOW() and t.place_disponible > 0 order by depart_date ASC";
         // récupération de tout les trajet à venir
-        $query = $connexion->prepare("select * from trajet where concat(depart_date, ' ', depart_heure) >= NOW() order by depart_date ASC, depart_heure ASC");
+        $query = $connexion->prepare($sql);
         $query->execute();
         
         if ($query->rowCount() >= 1) {
             // Renvoie de la liste
             $resultat = $query->fetchAll();
-            return $responce = ['status' => true, 'liste' =>$resultat];
+            return $response = ['status' => true, 'liste' =>$resultat];
         } else {
             
-            return $responce = ['status' => false];
+            return $response = ['status' => false];
         }
     }
 
@@ -107,7 +104,8 @@ class DbSelectService extends DbConnexion{
 
     public function recupTrajetById($id) {
         $connexion = $this->connexion(1);
-        $query = $connexion->prepare("select * from trajet where id = :id");
+        $sql = "select t.*,  v1.nom as depart_ville_nom,  v2.nom as arrive_ville_nom  from trajet t  inner join ville v1 on t.depart_ville_id = v1.id  inner join ville v2 on t.arrive_ville_id = v2.id where t.id = :id";
+        $query = $connexion->prepare($sql);
         $query->execute(['id' => (int)$id]);
         $resultat = $query->fetch();
         return $resultat;
@@ -150,7 +148,7 @@ class DbSelectService extends DbConnexion{
     public function listeEnregistre() {
 
         $pdo = $this->connexion(2);
-        $sql = "SELECT utilisateur.* FROM utilisateur INNER JOIN utilisateur_enregistre ON utilisateur.id = utilisateur_enregistre.utilisateur_id";
+        $sql = "select utilisateur.* from utilisateur inner join utilisateur_enregistre on utilisateur.id = utilisateur_enregistre.utilisateur_id";
 
         $stmt = $pdo->prepare($sql);
 
@@ -166,9 +164,9 @@ class DbSelectService extends DbConnexion{
     public function listeAllTrajet() {
         // connexion a la base de donnée
         $connexion = $this->connexion(1);
-
+        $sql = "select t.*, v1.nom as depart_ville_nom, v2.nom as arrive_ville_nom from trajet t inner join ville v1 on t.depart_ville_id = v1.id inner join ville v2 on t.arrive_ville_id = v2.id order by depart_date ASC";
         // récupération de tout les trajet à venir
-        $query = $connexion->prepare("select * from trajet order by depart_date ASC, depart_heure ASC");
+        $query = $connexion->prepare($sql);
         $query->execute();
         
         if ($query->rowCount() >= 1) {

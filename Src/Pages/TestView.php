@@ -3,80 +3,65 @@ namespace App\Pages;
 
 use App\Service\StatusVerif;
 use App\Db\DbSelectService;
+use DateTime;
+use DateTimeZone;
 
-$utilisateur = $_SESSION['utilisateur'] ?? [];
+$content = '<h2>Test View</h2>';
+function randomVille(){
+    $connexion = new DbSelectService();
+    $db = $connexion->connexion(2);
+    $sql = 'select count(*) from utilisateur';
+    $query = $db->query($sql);
+	$count = $query->fetchColumn();
+	return $count;
     
-$statusVerif = new StatusVerif();
-$is_connect = $statusVerif->verifConnect($utilisateur);
-
-$dbSelectService = new DbSelectService();
-$listetrajet = $dbSelectService->afficheAll();
-
-function isOwner($uid, $cuid){if ($uid === $cuid){return true;}}
-
-function affichageBtn($id, $is_connect, $is_owner) {
-	$btnView = '<button type="button" onclick="location.href=\'/Modale/'.$id.'\'">Voir</button>';
-	$btnModif = '<button type="button" onclick="location.href=\'/FormTrajet/'.$id.'\'">Modifier</button>';
-	$btnSupp = '<button type="button" onclick="location.href=\'/DeleteTrajet/'.$id.'\'">Supprimer</button>';
-	$afficheBtn = '';
-	if ($is_owner){
-		$afficheBtn .= $btnModif.''.$btnSupp;
-		return $afficheBtn;
-	} else if ($is_connect) {
-		$afficheBtn .= $btnView;
-		return $afficheBtn;
-	} else {
-		return $afficheBtn;
-	}
 
 }
 
-$trElement = '';
+$content .= randomVille();
+$content .= '<input type="datetime-local" lang="fr-FR">';
 
-foreach ($listetrajet['liste'] as $trajetInfo) {
-		$trajetInfo['depart_ville_nom'] = $dbSelectService->recupVilleById($trajetInfo['depart_ville_id']);
-		$trajetInfo['arrive_ville_nom'] = $dbSelectService->recupVilleById($trajetInfo['arrive_ville_id']);
-		$trajetInfo['createur_email'] = $dbSelectService->recupOwnerTrajet($trajetInfo['createur_id']);
-		$owner = $dbSelectService->infoOwner($trajetInfo['createur_id']);
-		if(isset($utilisateur['id'])){
-			$is_owner = isOwner($utilisateur['id'], $trajetInfo['createur_id']);
-		} else {
-			$is_owner = false;
-		}
-		$btn = affichageBtn($trajetInfo['id'], $is_connect, $is_owner);
-		$trElement .= '<tr>'
-			.'<td>'.$trajetInfo['id'].'</td>'
-			.'<td>'.$trajetInfo['createur_email'].'</td>'
-			.'<td>'.$trajetInfo['depart_ville_nom'].'</td>'
-			.'<td>'.$trajetInfo['depart_date'].'</td>'
-			.'<td>'.$trajetInfo['depart_heure'].'</td>'
-			.'<td>'.$trajetInfo['arrive_ville_nom'].'</td>'
-			.'<td>'.$trajetInfo['arrive_date'].'</td>'
-			.'<td>'.$trajetInfo['arrive_heure'].'</td>'
-			.'<td>'.$btn.'</td>'
-		.'</tr>';
-	}
+function generateGDH($date = "now", $timezone = "UTC") {
+    $dt = new DateTime($date, new DateTimeZone($timezone));
+    
+    // Format : Jour(2) + Heure(2) + Min(2) + Zone(1) + " " + Mois(3) + " " + Année(2)
+    // On met le mois en majuscules (strtoupper)
+    return strtoupper($dt->format('dHi\Z M y'));
+}
 
-$content = '<h2>Liste Trajet TestView</h2>'
-		.'<table border="1">'
-			.'<thead>'
-				.'<tr>'
-					.'<th>ID</th>'//TODO : ajouter juste pour le débug (vérification de l'affichage par date et heure croissante)
-					.'<th>Créateur du trajet</th>'
-					.'<th>Ville de départ</th>'
-					.'<th>Date de départ</th>'
-					.'<th>Heure de départ</th>'
-					.'<th>Ville d\'arrivée</th>'
-					.'<th>Date d\'arrivée</th>'
-					.'<th>Heure d\'arrivée</th>'
-					.'<th>Options</th>'
-				.'</tr>'
-			.'</thead>'
-			.'<tbody>'
-				.$trElement	
-			.'</tbody>'
-		.'</table>'
-			;
+// Exemple d'utilisation :
+$content .='<hr>'
+        .'Génaration GDH'
+        . generateGDH()
+        ;
+
+function splitGDH($gdh) {
+    // Regex pour capturer : Jour(2), HeureMin(4), Zone(1), Mois(3), Année(2)
+    $pattern = '/^(\d{2})(\d{4})([A-Z])\s([A-Z]{3})\s(\d{2})$/i';
+    
+    if (preg_match($pattern, $gdh, $matches)) {
+        return [
+            'jour'   => $matches[1],
+            'heure'  => substr($matches[2], 0, 2) . ":" . substr($matches[2], 2, 2),
+            'fuseau' => $matches[3],
+            'mois'   => $matches[4],
+            'annee'  => "20" . $matches[5],
+            'lecture_humaine' => "Le {$matches[1]} {$matches[4]} 20{$matches[5]} à " . substr($matches[2], 0, 2) . "h" . substr($matches[2], 2, 2) . " (Zone {$matches[3]})"
+        ];
+    }
+    return false;
+}
+
+// Exemple d'utilisation :
+$monGdh = generateGDH();
+$infos = splitGDH($monGdh);
+
+if ($infos) {
+    $content .= '<hr><p>Le gdh utilisez est : '.generateGDH().'</p><p>le GDH décripté est : '.$infos['lecture_humaine'].'</p>'; 
+    // Affiche : Le 16 JAN 2026 à 09h33 (Zone Z)
+} else {
+    $content .= '<hr><p>Pas de GDH</p>';
+}
 
 require __DIR__ .'/../Pages/Layout.php';
 ?>

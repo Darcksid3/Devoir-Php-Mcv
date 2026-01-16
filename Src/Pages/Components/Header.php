@@ -17,7 +17,7 @@ echo '<nav>'
         ;
 
         // Début du Header
-$message = $_SESSION['message'] ?? 'Pas de message';
+$message = $_SESSION['message'] ?? '';
 unset($_SESSION['message']);
 $utilisateur = $_SESSION['utilisateur'] ?? [];
 if (($utilisateur['connect'] ?? false) === true){

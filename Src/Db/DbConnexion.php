@@ -9,8 +9,6 @@ abstract class DbConnexion {
 
     protected $host, $db, $rsUser, $rsPass, $appUser, $appPass, $adminUser, $adminPass;
 
-
-
     public function __construct() {
         $this->host = $_ENV['DB_HOST'];
         $this->db   = $_ENV['DB_NAME'];
@@ -21,6 +19,7 @@ abstract class DbConnexion {
         $this->adminUser = $_ENV['DB_USER_ADMIN'];
         $this->adminPass = $_ENV['DB_PASSWORD_ADMIN'];
     }
+    
     /**
     * Connexion a la base de donnée en fonction du type d'utilisateur
     * 0:gestionnaire d'enregitrement des utilisateurs
@@ -29,7 +28,6 @@ abstract class DbConnexion {
     * @param int $type
     * @return PDO/NULL
     */
-    
     public function connexion($type): ?PDO {
         try {
             $info = $this->typeConnexion($type);

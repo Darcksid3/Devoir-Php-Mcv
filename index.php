@@ -54,12 +54,15 @@ $callable = match($finalpath) {
     'GET:/FormTrajet' => function() {
         require __DIR__ . '/Src/Pages/Forms/FormTrajet.php';
     },
+    dynamicPath('POST:/ValidFormTrajet/{id}', $finalpath, $matches) => function () use ($matches)  {
+        require __DIR__ . '/Src/Controllers/ValidFormTrajet.php';
+    },
     'POST:/ValidFormTrajet' => function() {
         require __DIR__ . '/Src/Controllers/ValidFormTrajet.php';    
     },
     dynamicPath('GET:/FormTrajet/{id}', $finalpath, $matches) => function () use ($matches)  {
         require __DIR__ . '/Src/Pages/Forms/FormTrajet.php';
-    }, 
+    },
     dynamicPath('GET:/ValidDeleteTrajet/{id}', $finalpath, $matches) => function () use ($matches)  {
         require __DIR__ . '/Src/Controllers/ValidDeleteTrajet.php';
     }, 
@@ -89,11 +92,11 @@ $callable = match($finalpath) {
         require __DIR__ . '/Src/Pages/Success.php';
     },
     // Modale
-    'GET:/Modale' => function() {
-        require __DIR__ . '/Src/Pages/Modale.php';
+    'POST:/Modale' => function() {
+        require __DIR__ . '/Src/Service/Modale.php';
     },
-    dynamicPath('GET:/Modale/{id}', $finalpath, $matches) => function () use ($matches) {
-        require __DIR__ . '/Src/Pages/Modale.php';
+    dynamicPath('POST:/Modale/{id}', $finalpath, $matches) => function () use ($matches) {
+        require __DIR__ . '/Src/Service/Modale.php';
     },
     // Gestion de la deconnexion
     'GET:/Deconnexion' => function() {
