@@ -2,13 +2,9 @@
 namespace App\Pages;
 
 $utilisateur = $_SESSION['utilisateur'] ?? ['connect' => false];
-//$message = $_SESSION['message'] ?? '';
-//unset($_SESSION['message']);
-
-//var_dump($utilisateur['connect']);
 
 if ($utilisateur['connect']){
-    $content ='<h2>Pages De Succes</h2>' 
+    $content ='<h2>Succes</h2>' 
         . '<hr>'
         
         . '<div>'
@@ -21,9 +17,8 @@ if ($utilisateur['connect']){
         . '</div>'
         ;
 } else {
-        $content ='<h2>Pages De Succes</h2>' 
+        $content ='<h2>Succes</h2>' 
         . '<hr>'
-        
         ;
         session_destroy();
         

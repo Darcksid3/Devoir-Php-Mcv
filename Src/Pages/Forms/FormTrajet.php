@@ -82,7 +82,6 @@ $urlAction = "/ValidFormTrajet";
 if (!empty($id)) {
     $urlAction .= "/" . $id;
 }
-var_dump($urlAction);
 $content = '<p>formulaire des trajets</p>'
 . '<fieldset class="trajet-fieldset">'
     . '<legend>' . ($edit ? "Modifier le trajet : " . htmlspecialchars($id) : "Créer un trajet") . '</legend>'

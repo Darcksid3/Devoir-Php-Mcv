@@ -15,7 +15,7 @@ function addVille($ville) {
         $dbAddService = new DbAddService();
         $dbAddService->addVille($addVille);
         $_SESSION['message'] = '$action = create';
-        header('Location: /Success');
+        header('Location: /FormAgence');
         exit();
     } else {
         $_SESSION['message'] = 'Cette ville existe déja !!';
@@ -28,7 +28,7 @@ function deleteVille($id) {
     $dbDeleteService = new DbDeleteService();
     $dbDeleteService->deleteVille($id);
     $_SESSION['message'] = 'Ville supprimé avec succes';
-    header('Location: /Success');
+    header('Location: /FormAgence');
     exit();
 }
 
@@ -37,7 +37,7 @@ function updateVille($id, $nouveau_nom){
     $dbUpdateService = new DbUpdateService();
     $dbUpdateService->updateVille($id,$updateVille);
     $_SESSION['message'] = 'Ville modifié avec succes';
-    header('Location: /Success');
+    header('Location: /FormAgence');
     exit();
 }
 function verifForm($post){

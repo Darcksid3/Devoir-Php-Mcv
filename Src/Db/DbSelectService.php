@@ -118,7 +118,17 @@ class DbSelectService extends DbConnexion{
         $query->execute(['id' => $id]);
         $resultat = $query->fetch();
         return $resultat;
-    }  
+    }
+    public function modale($id){
+        $connexion = $this->connexion(1);
+        $sql = "select place_disponible, createur_id from trajet where id = :id";
+        $query = $connexion->prepare($sql);
+        $query->execute(['id' => $id]);
+        $resultat = $query->fetch();
+        $response = $this->infoOwner($resultat['createur_id']);
+        $response['place_disponible'] = $resultat['place_disponible'];
+        return $response;
+    }
     //Admin
     public function selectAllUser() {
         $pdo = $this->connexion(2);

@@ -11,5 +11,5 @@ require __DIR__ . '/Layout.php';
 ?>
 <script>
     // redirection vers la page d'accueil.
-    setTimeout(() => { window.location.href = "/"; }, 3000);
+    setTimeout(() => { window.location.href = "/"; }, 2000);
 </script>

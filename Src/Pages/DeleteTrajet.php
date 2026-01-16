@@ -3,7 +3,6 @@ namespace App\Pages;
 
 use App\Service\RecupId;
 
-//Récupération de l'id
 $recupId = new RecupId();
 $id = $recupId->recupId($_SERVER['REQUEST_URI']);
 

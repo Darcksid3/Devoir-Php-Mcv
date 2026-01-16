@@ -1,7 +1,5 @@
 <?php
 namespace App\Pages\Forms;
-//$message = $_SESSION['message'] ?? '';
-//unset($_SESSION['message']);
 
 $content = '<fieldset>'
         .'<legend> Formulaire de connexion </legend>'

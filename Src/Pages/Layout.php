@@ -35,20 +35,7 @@ namespace App\Pages;
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script></body></html>
-    <script>
-        $(document).ready(function(){
-        $('#myModal').on('show.bs.modal', function (e) {
-            var rowid = $(e.relatedTarget).data('id');
-            $.ajax({
-                type : 'post',
-                url : '/Modale/' + rowid, //Here you will fetch records 
-                success : function(data){
-                $('.fetched-data').html(data);//Show fetched data from database
-                }
-            });
-        });
-    });
-    </script>
+    <script src="Public/javascript/modale.js"></script>
     </body>
 </html>
 

@@ -12,7 +12,6 @@ use DateTimeZone;
 
 $post = [];
 $post = $_POST;
-var_dump($post);
 // Fonction de traitement des informations reçues
 
 /**
@@ -96,7 +95,7 @@ function verifFormTrajet($post) {
             $add = new DbAddService();
             $add->addTrajet($post);
             $_SESSION['message'] = "Trajet crée avec succes";
-            header('Location: /Success');
+            header('Location: /');
             exit();
         } else {
             //Récupération de l'id
@@ -112,7 +111,7 @@ function verifFormTrajet($post) {
             $update = new DbUpdateService();
             $update->updateTrajet($post);
             $_SESSION['message'] = "Trajet Modifier avec succes";
-            header('Location: /Success');
+            header('Location: /');
             exit();
         }  
     } else {

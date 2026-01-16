@@ -66,6 +66,8 @@ function AffichageTrajet() {
 					.'<td>'.$trajetInfo['arrive_ville_nom'].'</td>'
 					.'<td>'.$arriveDate['date'].'</td>'
 					.'<td>'.$arriveDate['heure'].'</td>'
+					.'<td>'.$trajetInfo['place_totale'].'</td>'
+					.'<td>'.$trajetInfo['place_disponible'].'</td>'
 					.'<td>'.actionButton($trajetInfo['id']).'</td>'
 				.'</tr>';
 			}
@@ -83,6 +85,8 @@ function AffichageTrajet() {
 								.'<th>Ville d\'arrivée</th>'
 								.'<th>Date d\'arrivée</th>'
 								.'<th>Heured\'arrivée</th>'
+								.'<th>Place Totale</th>'
+								.'<th>Place disponible</th>'
 								.'<th>Options</th>'
 							.'</tr>'
 						.'</thead>'

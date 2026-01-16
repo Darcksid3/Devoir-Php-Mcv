@@ -34,7 +34,7 @@ function verifFormInscription($email, $password1, $password2) {
     
     //* 3) Analyse des résultats et affichage.
     if (!$verifMail['status'] || !$verifMdp) {
-        $_SESSION['message'] = 'email ou mot de passe incorect.';
+        $_SESSION['message'] = 'email ou mot de passe incorrect.';
         header('Location: /FormInscript');
         exit();
 
@@ -49,7 +49,7 @@ function verifFormInscription($email, $password1, $password2) {
         //* 4) Message de succes et redirection.
         $_SESSION['message'] = 'Inscription réussit';
         $_SESSION['inscription'] = true;
-        header('Location: /Success');
+        header('Location: /');
         exit();
 
     }
