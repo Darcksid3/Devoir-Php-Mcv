@@ -4,13 +4,14 @@ namespace App\Controllers;
 use App\Db\DbAddService;
 use App\Db\DbUpdateService;
 use App\Service\RecupId;
+use DateTime;
+use DateTimeZone;
 
 
 //* Récupération des informations du formulaire de trajet.
 
 $post = [];
 $post = $_POST;
-
 // Fonction de traitement des informations reçues
 
 /**
@@ -20,24 +21,12 @@ $post = $_POST;
 * @param string $villeA Ville d'arrivée.
 * @return void. renvoie l'utilisateur azu formulaire si les villes sont identiques.
 */
-function verifVille($villeD, $villeA) {
+function verifVille($villeD, $villeA, $header) {
 if($villeD === $villeA) {
+    $header = 'Location: /FormTrajet';
     $_SESSION['message'] = "Les ville de départ et d'arrivée doivent être différentes.";
-    header('Location: /FormTrajet');
+    header($header);
     exit();
-    }
-};
-
-/**
-* Vérification que les heures et dates soient cohérentes.
-*
-* @param string $heureD Heure de départ.
-* @param string $heureA Heure d'arrivée.
-* @return False si l'heure d'arrivée est inférieure ou égale à l'heure de départ. 
-*/
-function verifHeure($heureD, $heureA) {
-    if ($heureA <= $heureD) {
-        return false;
     }
 };
 
@@ -48,21 +37,17 @@ function verifHeure($heureD, $heureA) {
 * @param string $dateA Date d'arrivée.
 * @return void. renvoie l'utilisateur au formulaire si la date d'arrivée est inférieure à la date de départ.
 */
-function verifDate($dateD, $dateA) {
-    
+function verifDate($dateD, $dateA, $header) {
+    $dateA = new DateTime($dateA);
+    $dateD = new DateTime($dateD);
     if($dateA < $dateD) {
-        $_SESSION['message'] = "La date de d'arrivée ne peut pas se situer avant la date de départ.";
-        return $_SESSION['message'];
-        header('Location: /FormTrajet');
+        $_SESSION['message'] = "L'arrivée ne peut pas se situer avant le départ.";
+        
+        header($header);
         exit();
-    } else if ($dateA === $dateD) {
-        $verif = verifHeure($_POST['heure_depart'], $_POST['heure_arrivee']);
-        if ($verif === false) {
-            $_SESSION['message'] = "L'heure d'arrivée ne peut pas etre inférieure a l'heure de départ.";
-            header('Location: /FormTrajet');
-            exit();
-        } 
-    }
+    } 
+    return true;
+    
 };
 
 /**
@@ -72,13 +57,21 @@ function verifDate($dateD, $dateA) {
 * @param int $placeT Nombre de place totale.
 * @return void. Renvoie l'utilisateur au formulaire si il y as incohérence dans les places.
 */
-function verifPlace ($placeD, $placeT) {
+function verifPlace ($placeD, $placeT, $header) {
     if ($placeD > $placeT) {
         $_SESSION['message'] = "Le nombre de place disponible ne peut pas etre supérieur au nombre de place totale.";
-        header('Location: /FormTrajet');
+        header($header);
         exit();
     } 
 };
+
+function generateGDH($date, $timezone = "UTC") {
+    $dt = new DateTime($date, new DateTimeZone($timezone));
+    
+    // Format : Jour(2) + Heure(2) + Min(2) + Zone(1) + " " + Mois(3) + " " + Année(2)
+    // On met le mois en majuscules (strtoupper)
+    return strtoupper($dt->format('dHi\Z M y'));
+}
 
 // Fin des fonctions de traitement des informations reçues
 
@@ -90,24 +83,35 @@ function verifPlace ($placeD, $placeT) {
 */
 function verifFormTrajet($post) {
     if ($post['action'] !== 'delete') {
-        if ($post['action'] === 'create') {
 
-            verifVille($post['ville_depart'], $post['ville_arrivee']);
-            verifDate($post['date_depart'], $post['date_arrivee']);
-            verifPlace($post['place_disponible'], $post['place_totale']);
+        if ($post['action'] === 'create') {
+            $header = 'Location: /FormTrajet';
+            $post['depart_gdh'] = generateGDH($post['depart_date']);
+            $post['arrive_gdh'] = generateGDH($post['arrive_date']);
+
+            verifVille($post['depart_ville'], $post['arrive_ville'], $header);
+            verifDate($post['depart_date'], $post['arrive_date'], $header);
+            verifPlace($post['place_disponible'], $post['place_totale'], $header);
             $add = new DbAddService();
             $add->addTrajet($post);
             $_SESSION['message'] = "Trajet crée avec succes";
-            header('Location: /Success');
+            header('Location: /');
             exit();
         } else {
-            verifVille($post['ville_depart'], $post['ville_arrivee']);
-            verifDate($post['date_depart'], $post['date_arrivee']);
-            verifPlace($post['place_disponible'], $post['place_totale']);
+            //Récupération de l'id
+            $recupId = new RecupId();
+            $id = $recupId->recupId($_SERVER['REQUEST_URI']);
+            $header = 'Location: /FormTrajet/'.$id;
+            
+            $post['depart_gdh'] = generateGDH($post['depart_date']);
+            $post['arrive_gdh'] = generateGDH($post['arrive_date']);
+            verifVille($post['depart_ville'], $post['arrive_ville'], $header);
+            verifDate($post['depart_date'], $post['arrive_date'], $header);
+            verifPlace($post['place_disponible'], $post['place_totale'], $header);
             $update = new DbUpdateService();
             $update->updateTrajet($post);
             $_SESSION['message'] = "Trajet Modifier avec succes";
-            header('Location: /Success');
+            header('Location: /');
             exit();
         }  
     } else {

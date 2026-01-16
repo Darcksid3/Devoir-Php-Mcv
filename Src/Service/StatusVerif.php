@@ -5,13 +5,10 @@ namespace App\Service;
 class StatusVerif {
 // vérification su status de l'utilisateur
     public function verifConnect($utilisateur) {
-
-        // si l'utilisateur erst connecté
-
-        if ($utilisateur['connect'] === true) {
+        // si l'utilisateur est connecté
+        if (isset($utilisateur['connect'])) {
             return true;
-            
-        }else {
+        } else {
             return false;
         }
     }

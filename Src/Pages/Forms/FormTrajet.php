@@ -41,13 +41,13 @@ if ($edit) {
     }
 }
 
-function affichageBtn($edit, $is_admin) {
+function affichageBtn($edit) {
     $btn = '<div class="btn-action">';
     if (!$edit) {
-        $btn .= '<button type="submit" name="action" value="create">Créer le trajet</button>';
+        $btn .= '<button type="submit" name="action" id=="action" value="create">Créer le trajet</button>';
     } else {
-        $btn .= '<button type="submit" name="action" value="update">Modifier le trajet</button>';
-        $btn .= '<button type="submit" name="action" value="delete">Supprimer le trajet</button>';
+        $btn .= '<button type="submit" name="action" id=="action" value="update">Modifier le trajet</button>';
+        $btn .= '<button type="submit" name="action" id=="action" value="delete">Supprimer le trajet</button>';
     }
     $btn .= '</div>';
     return $btn;
@@ -56,10 +56,8 @@ function affichageBtn($edit, $is_admin) {
 // Valeurs par défaut ou Valeur de la BDD
 $v_depart   = $infoTrajet['depart_ville_id'] ?? ''; 
 $v_arrivee  = $infoTrajet['arrive_ville_id'] ?? '';
-$d_depart   = $infoTrajet['depart_date'] ?? date("Y-m-d");
-$h_depart   = $infoTrajet['depart_heure'] ?? date("H:i");
-$d_arrivee  = $infoTrajet['arrive_date'] ?? date("Y-m-d");
-$h_arrivee  = $infoTrajet['arrive_heure'] ?? date("H:i", strtotime('+1 hour'));
+$d_depart   = $infoTrajet['depart_date'] ?? date("Y-m-d H:i");
+$d_arrivee  = $infoTrajet['arrive_date'] ?? date("Y-m-d H:i", strtotime('+1 hour'));
 $p_totale   = $infoTrajet['place_totale'] ?? 4;
 $p_restante = $infoTrajet['place_disponible'] ?? 2;
 
@@ -77,13 +75,18 @@ function recupVille($selectedId = null) {
 
 $listeVilleDepart = recupVille($v_depart);
 $listeVilleArrivee = recupVille($v_arrivee);
+// On définit la base de l'URL
+$urlAction = "/ValidFormTrajet";
 
-
+// Si un ID est présent (cas modif/suppr), on l'ajoute à l'URL
+if (!empty($id)) {
+    $urlAction .= "/" . $id;
+}
 $content = '<p>formulaire des trajets</p>'
 . '<fieldset class="trajet-fieldset">'
     . '<legend>' . ($edit ? "Modifier le trajet : " . htmlspecialchars($id) : "Créer un trajet") . '</legend>'
-    . '<form action="/ValidFormTrajet" method="POST">'
-        . '<input type="hidden" name="id_trajet" value="' . ($id ?? '') . '">'
+    . '<form action="'.$urlAction.'" method="POST">'
+        . '<input type="hidden" name="id" value="' . ($id ?? '') . '">'
         . '<input type="hidden" id="createur_id" name="createur_id" value="' . $utilisateur['id'] . '">'
 
         . '<div class="info-utilisateur">'
@@ -95,14 +98,12 @@ $content = '<p>formulaire des trajets</p>'
 
         . '<div class="info-trajet">'
             . '<div class="info-depart">'
-                . '<div><p>Ville de Départ :</p><select name="ville_depart" required>' . $listeVilleDepart . '</select></div>'
-                . '<div><p><label>Jour départ</label></p><input type="date" name="date_depart" value="' . $d_depart . '" required></div>'
-                . '<div><p><label>Heure départ</label></p><input type="time" name="heure_depart" value="' . $h_depart . '" required></div>'
+                . '<div><p>Ville de Départ :</p><select name="depart_ville" required>' . $listeVilleDepart . '</select></div>'
+                . '<div><p><label>Horaire départ</label></p><input type="datetime-local" name="depart_date" id="depart_date" value="' . $d_depart . '" required></div>'
             . '</div>'
             . '<div class="info-arrivee">'
-                . '<div><p>Ville d\'arrivée :</p><select name="ville_arrivee" required>' . $listeVilleArrivee . '</select></div>'
-                . '<div><p><label>Jour arrivée</label></p><input type="date" name="date_arrivee" value="' . $d_arrivee . '" required></div>'
-                . '<div><p><label>Heure arrivée</label></p><input type="time" name="heure_arrivee" value="' . $h_arrivee . '" required></div>'
+                . '<div><p>Ville d\'arrivée :</p><select name="arrive_ville" required>' . $listeVilleArrivee . '</select></div>'
+                . '<div><p><label>Horaire arrivée</label></p><input type="datetime-local" name="arrive_date" id="="arrive_date" value="' . $d_arrivee . '" required></div>'
             . '</div>'
         . '</div>'
 

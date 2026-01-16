@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use App\Db\DbDeleteService;
 use App\Service\RecupId;
-//Récupération de l'id
+
 $recupId = new RecupId();
 $id = $recupId->recupId($_SERVER['REQUEST_URI']);
 
@@ -17,7 +17,7 @@ function deleteTrajet($id) {
     $dbDeleteService->deleteTrajet($id);
 
     $_SESSION['message'] = 'Trajet '.$id.' supprimer avec success !!';
-    header('Location: /Success');
+    header('Location: /');
     exit();
 }
 

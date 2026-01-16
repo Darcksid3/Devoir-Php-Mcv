@@ -17,7 +17,7 @@ echo '<nav>'
         ;
 
         // Début du Header
-$message = $_SESSION['message'] ?? 'Pas de message';
+$message = $_SESSION['message'] ?? '';
 unset($_SESSION['message']);
 $utilisateur = $_SESSION['utilisateur'] ?? [];
 if (($utilisateur['connect'] ?? false) === true){
@@ -32,9 +32,7 @@ if (($utilisateur['connect'] ?? false) === true){
                                 .'<button type="button" onclick="location.href=\'/Deconnexion\'">Déconnexion</button>'
                                 
                         . '</div>'
-                        .'<hr style="color:red;">'
                         . '<div><p>'.$message.'</p></div>'
-                        .'<hr style="color:red;">'
                         ;
                 
         } else if ($utilisateur['status'] === 'admin') {
@@ -47,9 +45,7 @@ if (($utilisateur['connect'] ?? false) === true){
                         . '<p style="display:inline;margin-right:20px;">Bonjour '.$utilisateur['nom'].' '.$utilisateur['prenom'].'</p>'
                         .'<button type="button" onclick="location.href=\'/Deconnexion\'">Déconnexion</button>'
                 . '</div>'
-                .'<hr style="color:yellow;">'
                 . '<div><p>'.$message.'</p></div>'
-                .'<hr style="color:yellow;">'
                 ;
         }
 

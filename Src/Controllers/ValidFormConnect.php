@@ -50,7 +50,7 @@ function verifFormConnexion($email, $password) {
 
     } else {
         //* Si faux retour au formulaire
-        $_SESSION['message'] = $email. ' Non Trouvé!';
+        $_SESSION['message'] = 'Une erreur est survenue veuillez vérifiez vos informations';
         header('Location: /FormInscript');
         exit();
     }

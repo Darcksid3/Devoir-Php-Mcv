@@ -39,14 +39,14 @@ CREATE TABLE IF NOT EXISTS `trajet` (
     -- Clé étrangère vers la table `ville` pour la ville de départ
     `depart_ville_id` INT UNSIGNED NOT NULL,
     
-    `depart_date` DATE NOT NULL,
-    `depart_heure` TIME NOT NULL,
+    `depart_gdh` VARCHAR(15) NOT NULL,
+    `depart_date` DATETIME NOT NULL,
     
     -- Clé étrangère vers la table `ville` pour la ville d'arrivée
     `arrive_ville_id` INT UNSIGNED NOT NULL,
     
-    `arrive_date` DATE NOT NULL,
-    `arrive_heure` TIME NOT NULL,
+    `arrive_gdh` VARCHAR(15) NOT NULL,
+    `arrive_date` DATETIME NOT NULL,
 
     `place_totale` INT NOT NULL,
     `place_disponible` INT NOT NULL,

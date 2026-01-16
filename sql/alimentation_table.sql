@@ -15,7 +15,7 @@ INSERT INTO ville (nom) VALUES
 ('Rennes'),
 ('Reims');
 
--- Insertion des utilisateurs dans la table users
+-- Insertion des utilisateurs dans la table utilisateur
 INSERT INTO utilisateur (nom, prenom, telephone, email) VALUES
 ('Martin', 'Alexandre', '0612345678', 'alexandre.martin@email.fr'),
 ('Dubois', 'Sophie', '0698765432', 'sophie.dubois@email.fr'),
@@ -37,3 +37,9 @@ INSERT INTO utilisateur (nom, prenom, telephone, email) VALUES
 ('Lambert', 'Hugo', '0611223366', 'hugo.lambert@email.fr'),
 ('Masson', 'Julie', '0733445566', 'julie.masson@email.fr'),
 ('Henry', 'Arthur', '0666554433', 'arthur.henry@email.fr');
+
+-- Insertion des utilisateur_enregistre (status utilisateur et admin)
+INSERT INTO utilisateur_enregistre (utilisateur_id, password_hash, status) VALUES
+(1, '$2y$10$4F.3YKrjJwEgwfdZlPVdKOVe3O81hcNvw2wBgFmW3Cra9c10tbX0e', 'admin'),
+(2, '$2y$10$uDOJdI02Pd9J5nW/Qd2yCumOChQQYPMI/FeuELTesEQbo6zjllglC', 'utilisateur'),
+(3, '$2y$10$FOPTDK5kdpTI.wxlFehFZeotxt8WOmque9bxmoSOhhDlCOmsJppf.', 'utilisateur');
