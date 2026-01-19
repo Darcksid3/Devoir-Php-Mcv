@@ -1,0 +1,151 @@
+/* IMPORT */
+@use "sass:color";
+
+$bgcolor: #f1f8fc
+$okcolor: #82b864
+$errcolor: #cd2c2e
+$greycolor: #384050
+$greycolorhover : rgba(56, 64, 80, 0.5)
+$darkbluecolor: #00497c
+$darlblueshadow: rgba(0, 73, 124, 0.5)
+$bluecolor: #0074c7
+
+
+/* Général */
+body, header, footer, main
+    margin: auto
+    padding: 0px
+
+body
+    width: 1280px
+
+header
+    padding: 5%
+
+main
+    margin: auto
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+
+footer
+    text-align: center
+
+/* Table */
+.table
+    border-collapse: collapse
+    border-radius: 0.5rem
+    width: 100%
+    
+    th, td
+        border: 2px solid
+        border-color: #c0c0c0 
+        padding:0.5rem
+        text-align: center
+        
+    th
+        color: $bgcolor
+        background-color: $greycolor 
+    tbody
+        tr
+            &:nth-child(odd)
+                background-color: #d3d3d3
+
+.option
+    cursor: pointer
+    margin-right: 0.5rem
+
+    &.option-trash
+        margin-right: 0
+    &.option-view
+        margin-left: 0
+    &.option-edit
+        margin: 0
+
+/* Header */
+.logo
+    display: flex
+    flex-basis: 33%
+    &:hover
+        color: #000
+        text-decoration: none
+    a
+        font-size: 2rem
+        font-weight: 700
+        text-decoration: none
+        color: #000
+
+/* menu */
+.myMenu    
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-content: center
+    width: 100%
+    padding: 1rem
+    border: 1px solid $darkbluecolor 
+    border-radius: 1rem
+
+    .nav
+        display: flex
+        flex-direction: row
+        justify-content: flex-end
+        align-items: center
+    
+    p
+        margin: 0px
+        margin-right: 2rem
+
+/* Boutons */ 
+.mybtn 
+    border: none
+    border-radius: 0.5rem 
+    box-shadow: 5px 5px 2px rgba(0,0,0,0.2)
+    font-weight: 700
+    margin-right: 2rem
+    padding: 0.5rem
+    &:hover
+        cursor: pointer
+    &.mybtn-grey
+        color: $bgcolor
+        background-color: $greycolor
+        &:hover
+            background-color: $greycolorhover
+    
+
+
+/* Message */
+.msg
+    margin-top: 0.5rem
+    padding: 0.5rem
+    color: $bgcolor
+    font-weight: 700
+    border-radius: 0.5rem
+    display: flex
+    flex-direction: row
+    align-items: center
+
+    &.msg-err
+        background-color: $errcolor
+
+    &.msg-ok
+        background-color: $okcolor
+
+/* Formulaire */
+.form
+    width: 30%
+    margin: 2rem
+    &.form-large
+        width: 100%
+    &.form-medium
+        width: 75%
+    legend
+        text-align: center
+    .validation
+        text-align: center
+    .box
+        border: 1px solid $bluecolor
+        box-shadow: 5px 5px 2px $darlblueshadow
+        border-radius: 0.5rem
+        padding: 1rem

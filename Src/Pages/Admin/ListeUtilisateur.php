@@ -35,7 +35,7 @@ foreach ($liste as $user) {
     ;
 }
 
-$content = '<table>'
+$content = '<table class="table">'
             .'<thead>'
                 .'<th>Nom</th>'
                 .'<th>Prénom</th>'

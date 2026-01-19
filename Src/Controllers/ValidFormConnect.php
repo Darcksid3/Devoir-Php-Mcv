@@ -22,36 +22,42 @@ function verifFormConnexion($email, $password) {
     $passwordVerif = new PasswordVerif();
     //* 2) récupération de l'id de l'utilisateur par son email
     $searchMail = $dbSelectService->searchEmail($email);
-    $infoUser = $searchMail['user'];
-    $id = $infoUser['id'];
-    //* 3) Récupération du mot de passe hashé
-    $pass_hash = $dbSelectService->recupHash($id);
-    //* 4) Vérifdication du hash du mot de passe 
-    $verifPass = $passwordVerif->verifHash($password, $pass_hash['password_hash']);
+    
 
-    if ($searchMail && $verifPass) {
+    if ($searchMail['status']===true) {
         //* Si ok 
-        // mise en session des info de l'utilisateur
-        $_SESSION['utilisateur'] = [
-            'id' => $infoUser['id'], 
-            'nom' => $infoUser['nom'], 
-            'prenom' => $infoUser['prenom'], 
-            'telephone' => $infoUser['telephone'], 
-            'email' => $infoUser['email'], 
-            'status' => $pass_hash['status'], 
-            'connect' => true
-            ];
+        $infoUser = $searchMail['user'];
+        $id = $infoUser['id'];
+        //* 3) Récupération du mot de passe hashé
+        $pass_hash = $dbSelectService->recupHash($id);
+        //* 4) Vérifdication du hash du mot de passe 
+        $verifPass = $passwordVerif->verifHash($password, $pass_hash['password_hash']);
+        if($verifPass) {
+            // mise en session des info de l'utilisateur
+            $_SESSION['utilisateur'] = [
+                'id' => $infoUser['id'], 
+                'nom' => $infoUser['nom'], 
+                'prenom' => $infoUser['prenom'], 
+                'telephone' => $infoUser['telephone'], 
+                'email' => $infoUser['email'], 
+                'status' => $pass_hash['status'], 
+                'connect' => true
+                ];
 
-        // Message de succes
-        $_SESSION['message'] = "Utilisateur authentifié avec succés";
-        // redirection page de succes
-        header('Location: /Success');
+            // Message de succes
+            $_SESSION['message'] = '<div class="msg msg-ok">Utilisateur authentifié avec succés.</div>';
+            header('Location: /');
+            exit();
+        } else{
+            $_SESSION['message'] = '<div class="msg msg-err">Une erreur est survenue veuillez vérifiez vos informations</div>';
+        header('Location: /FormConnect'); 
         exit();
+        }
 
     } else {
         //* Si faux retour au formulaire
-        $_SESSION['message'] = 'Une erreur est survenue veuillez vérifiez vos informations';
-        header('Location: /FormInscript');
+        $_SESSION['message'] = '<div class="msg msg-err">Une erreur est survenue veuillez vérifiez vos informations</div>';
+        header('Location: /FormConnect'); 
         exit();
     }
 

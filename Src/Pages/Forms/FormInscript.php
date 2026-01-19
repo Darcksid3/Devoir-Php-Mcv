@@ -1,20 +1,20 @@
 <?php
 namespace App\Pages\Forms;
 
-$content = '<fieldset>'
+$content = '<fieldset class="form">'
         .'<legend> Formulaire d\'inscription </legend>'
         .'<form action="/ValidFormInscript" method="POST">'
             .'<p>email a utiliser alexandre.martin@email.fr </p>'
-            .'<label for="email">Email :</label><br>'
-            .'<input type="email" id="email" name="email" required>'
+            .'<label for="email" class="form-label">Email :</label>'
+            .'<input type="email" class="form-control" id="email" name="email" required>'
+
+            .'<label for="password1" class="form-label">Mot de passe :</label>'
+            .'<input type="password" class="form-control" id="password1" name="password1" required>'
+
+            .'<label for="password2" class="form-label">Vérifier le Mot de passe 2:</label>'
+            .'<input type="password" class="form-control" id="password2" name="password2" required>'
             .'<br>'
-            .'<label for="password1">Mot de passe :</label><br>'
-            .'<input type="password" id="password1" name="password1" required>'
-            .'<br>'
-            .'<label for="password2">Vérifier le Mot de passe 2:</label><br>'
-            .'<input type="password" id="password2" name="password2" required>'
-            .'<br>'
-            .'<button type="submit">S\'inscrire</button>'
+            .'<div class="validation"><button type="submit" class="mybtn mybtn-grey">S\'inscrire</button></div>'
         .'</form>'
     .'</fieldset>'
 ;

@@ -16,7 +16,7 @@ function deleteTrajet($id) {
     $dbDeleteService = new DbDeleteService();
     $dbDeleteService->deleteTrajet($id);
 
-    $_SESSION['message'] = 'Trajet '.$id.' supprimer avec success !!';
+    $_SESSION['message'] = '<div class="msg msg-ok">Trajet supprimer avec success !!</div>';
     header('Location: /');
     exit();
 }
