@@ -38,9 +38,9 @@ if (($utilisateur['connect'] ?? false) === true){
 		//affichage du myMenu admin
 		$menuContent = '<div class="logo"><a href="/" >Touche pas au klaxon</a></div>'
 				.'<div class="nav">'
-					.'<button type="button" class="mybtn" onclick="location.href=\'/ListeUtilisateur\'">Utilisateur</button>'
-					.'<button type="button" class="mybtn" onclick="location.href=\'/FormAgence\'">Agence</button>'
-					.'<button type="button" class="mybtn" onclick="location.href=\'/ListeTrajet\'">Trajet</button>'
+					.'<button type="button" class="mybtn" onclick="location.href=\'/ListeUtilisateur\'">Utilisateurs</button>'
+					.'<button type="button" class="mybtn" onclick="location.href=\'/FormAgence\'">Agences</button>'
+					.'<button type="button" class="mybtn" onclick="location.href=\'/ListeTrajet\'">Trajets</button>'
 					.'<p>Bonjour '.$utilisateur['nom'].' '.$utilisateur['prenom'].'</p>'
 					.'<button type="button" class="mybtn mybtn-grey" onclick="location.href=\'/Deconnexion\'">Déconnexion</button>'
 				.'</div>';
