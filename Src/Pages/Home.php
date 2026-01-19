@@ -13,6 +13,7 @@ $utilisateur = $_SESSION['utilisateur'] ?? [];
 $statusVerif = new StatusVerif();
 $is_connect = $statusVerif->verifConnect($utilisateur);
 
+
 $dbSelectService = new DbSelectService();
 $listetrajet = [];
 $listetrajet = $dbSelectService->afficheAll();
@@ -46,6 +47,18 @@ function formatDh($date) {
 		'heure' => $parties[1]
 	];
 }
+function displayIsConnect($is_connect){
+	$display = [];
+	if(!$is_connect){
+		$display = ['status' => false, 'titre' => '<h2>Pour obtenir plus d\'information sur un trajet, veuillez vous connecter</h2>', 'table' => '</tr>'];
+		return $display;
+	} else {
+		$display = ['status' => true, 'titre' => '<h2>Liste des trajet</h2>', 'table' => '<th></th></tr>'];
+		return $display;
+	}
+}
+$display = displayIsConnect($is_connect);
+
 function affichageTrElement($listetrajet,$is_connect,$dbSelectService, $utilisateur){
 	
 	$trElement = '';
@@ -68,11 +81,13 @@ function affichageTrElement($listetrajet,$is_connect,$dbSelectService, $utilisat
 				.'<td>'.$trajetInfo['arrive_ville_nom'].'</td>'
 				.'<td>'.$arriveDate['date'].'</td>'
 				.'<td>'.$arriveDate['heure'].'</td>'
-				.'<td>'.$trajetInfo['place_disponible'].'</td>'
-				.'<td class="options">'.$btn.'</td>'
-				.'</tr>'
-				;
-			
+				.'<td>'.$trajetInfo['place_disponible'].'</td>';
+				if (!$is_connect){
+					$trElement .= '</tr>';
+				} else {
+					$trElement .= '<td class="options">'.$btn.'</td>'
+								.'</tr>';
+				}
 		}return $trElement;
 	} else {
 		return $trElement = '<tr><td>Aucun trajet de prévu!!</td></tr>';
@@ -82,7 +97,7 @@ function affichageTrElement($listetrajet,$is_connect,$dbSelectService, $utilisat
 $trElement = affichageTrElement($listetrajet,$is_connect, $dbSelectService,$utilisateur);
 
 
-$content = '<h2>Liste des trajets</h2>'
+$content = $display['titre']
 		.'<table class="table">'
 			.'<thead>'
 				.'<tr>'
@@ -93,9 +108,8 @@ $content = '<h2>Liste des trajets</h2>'
 					.'<th>Date</th>'
 					.'<th>Heure</th>'
 					.'<th>Places</th>'
-					.'<th></th>'
-				.'</tr>'
-			.'</thead>'
+					. $display['table']
+					.'</thead>'
 			.'<tbody>'
 				.$trElement	
 			.'</tbody>'
