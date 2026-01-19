@@ -22,7 +22,7 @@ exit();
 }
 
 function actionButton($id) {
-	$btnSupp = '<button type="button" onclick="location.href=\'/DeleteTrajet/'.$id.'\'">Supprimer</button>';
+	$btnSupp = '<a type="button" class="option option-trash" onclick="location.href=\'/DeleteTrajet/'.$id.'\'"><img src="/Public/asset/trash3.svg" alt="Supprimer le trajet"></a>';
 
 	$affichageBouton = $btnSupp;
 	return $affichageBouton;
@@ -58,7 +58,6 @@ function AffichageTrajet() {
 				$departDate = formatDh($trajetInfo['depart_date']);
 				$arriveDate = formatDh($trajetInfo['arrive_date']);
 				$trElement .= '<tr>'
-					.'<td>'.$trajetInfo['id'].'</td>'
 					.'<td>'.$trajetInfo['createur_email'].'</td>'
 					.'<td>'.$trajetInfo['depart_ville_nom'].'</td>'
 					.'<td>'.$departDate['date'].'</td>'
@@ -72,12 +71,11 @@ function AffichageTrajet() {
 				.'</tr>';
 			}
 			$contenu = '<h2>Administration des trajets</h2>'
-					.'<button type="button" onclick="location.href=\'/FormTrajet\'">Crée un trajet</button>'
-					.'<h3>Liste des trajet</h3>'
-						.'<table border="1">'
+					.'<button type="button" class="mybtn" onclick="location.href=\'/FormTrajet\'">Crée un trajet</button>'
+					.'<h3>Liste des trajets</h3>'
+						.'<table class="table">'
 						.'<thead>'
 							.'<tr>'
-								.'<th>ID</th>'//TODO : ajouter juste pour le débug (vérification de l'affichage par date et heure croissante)
 								.'<th>Créateur du trajet</th>'
 								.'<th>Ville de départ</th>'
 								.'<th>Date de départ</th>'
@@ -87,7 +85,7 @@ function AffichageTrajet() {
 								.'<th>Heured\'arrivée</th>'
 								.'<th>Place Totale</th>'
 								.'<th>Place disponible</th>'
-								.'<th>Options</th>'
+								.'<th></th>'
 							.'</tr>'
 						.'</thead>'
 						.'<tbody>'

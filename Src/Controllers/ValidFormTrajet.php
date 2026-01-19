@@ -23,8 +23,8 @@ $post = $_POST;
 */
 function verifVille($villeD, $villeA, $header) {
 if($villeD === $villeA) {
-    $header = 'Location: /FormTrajet';
-    $_SESSION['message'] = "Les ville de départ et d'arrivée doivent être différentes.";
+    $_SESSION['tempDATA'] = $_POST;
+    $_SESSION['message'] = '<div class="msg msg-err">Les ville de départ et d\'arrivée doivent être différentes.</div>';
     header($header);
     exit();
     }
@@ -41,7 +41,8 @@ function verifDate($dateD, $dateA, $header) {
     $dateA = new DateTime($dateA);
     $dateD = new DateTime($dateD);
     if($dateA < $dateD) {
-        $_SESSION['message'] = "L'arrivée ne peut pas se situer avant le départ.";
+        $_SESSION['tempDATA'] = $_POST;
+        $_SESSION['message'] = '<div class="msg msg-err">L\'arrivée ne peut pas se situer avant le départ.</div>';
         
         header($header);
         exit();
@@ -59,7 +60,8 @@ function verifDate($dateD, $dateA, $header) {
 */
 function verifPlace ($placeD, $placeT, $header) {
     if ($placeD > $placeT) {
-        $_SESSION['message'] = "Le nombre de place disponible ne peut pas etre supérieur au nombre de place totale.";
+        $_SESSION['tempDATA'] = $_POST;
+        $_SESSION['message'] = '<div class="msg msg-err">Le nombre de place disponible ne peut pas etre supérieur au nombre de place totale.</div>';
         header($header);
         exit();
     } 
@@ -94,7 +96,7 @@ function verifFormTrajet($post) {
             verifPlace($post['place_disponible'], $post['place_totale'], $header);
             $add = new DbAddService();
             $add->addTrajet($post);
-            $_SESSION['message'] = "Trajet crée avec succes";
+            $_SESSION['message'] = '<div class="msg msg-ok">Trajet crée avec succes</div>';
             header('Location: /');
             exit();
         } else {
@@ -110,7 +112,7 @@ function verifFormTrajet($post) {
             verifPlace($post['place_disponible'], $post['place_totale'], $header);
             $update = new DbUpdateService();
             $update->updateTrajet($post);
-            $_SESSION['message'] = "Trajet Modifier avec succes";
+            $_SESSION['message'] = '<div class="msg msg-ok">Trajet Modifier avec succes</div>';
             header('Location: /');
             exit();
         }  

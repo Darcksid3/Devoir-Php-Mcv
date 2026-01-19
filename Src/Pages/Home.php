@@ -4,6 +4,9 @@ namespace App\Pages;
 use App\Service\StatusVerif;
 use App\Db\DbSelectService;
 use DateTime;
+use App\Controllers\Test;
+$test = new Test();
+$test->displayError();
 
 $utilisateur = $_SESSION['utilisateur'] ?? [];
     
@@ -13,18 +16,18 @@ $is_connect = $statusVerif->verifConnect($utilisateur);
 $dbSelectService = new DbSelectService();
 $listetrajet = [];
 $listetrajet = $dbSelectService->afficheAll();
-
+//var_dump($listetrajet);
 function isOwner($uid, $cuid){if ($uid === $cuid){return true;}}
 
 function affichageBtn($id, $is_connect, $is_owner) {
 	$row['ID'] = $id;
 	//$btnView = '<button type="button" onclick="location.href=\'/Modale/'.$id.'\'">Voir</button>';
-	$btnView = '<a href="#" class="btn btn-primary btn-small" data-toggle="modal" data-target="#myModal" data-id="'.$id.'">Voir Détails</a>';
-	$btnModif = '<button type="button" onclick="location.href=\'/FormTrajet/'.$id.'\'">Modifier</button>';
-	$btnSupp = '<button type="button" onclick="location.href=\'/DeleteTrajet/'.$id.'\'">Supprimer</button>';
+	$btnView = '<a class="option option-view" href="#"  data-toggle="modal" data-target="#myModal" data-id="'.$id.'"><img src="/Public/asset/eye.svg" alt="voir les information"></a>';
+	$btnModif = '<a class="option option-edit" onclick="location.href=\'/FormTrajet/'.$id.'\'"><img src="/Public/asset/pencil.svg" alt="Modifier le trajet"></a>';
+	$btnSupp = '<a class="option option-trash" onclick="location.href=\'/DeleteTrajet/'.$id.'\'"><img src="/Public/asset/trash3.svg" alt="Supprimer le trajet"></a>';
 	$afficheBtn = '';
 	if ($is_owner){
-		$afficheBtn .= $btnModif.''.$btnSupp;
+		$afficheBtn .= $btnView.' '.$btnModif.' '.$btnSupp;
 		return $afficheBtn;
 	} else if ($is_connect) {
 		$afficheBtn .= $btnView;
@@ -66,27 +69,30 @@ function affichageTrElement($listetrajet,$is_connect,$dbSelectService, $utilisat
 				.'<td>'.$arriveDate['date'].'</td>'
 				.'<td>'.$arriveDate['heure'].'</td>'
 				.'<td>'.$trajetInfo['place_disponible'].'</td>'
-				.'<td>'.$btn.'</td>'
-			.'</tr>';
-		}
-		return $trElement;
-	}else {
-		return $trElement = '<tr><td>Aucun trajet de prévu!!</td></tr>';}
+				.'<td class="options">'.$btn.'</td>'
+				.'</tr>'
+				;
+			
+		}return $trElement;
+	} else {
+		return $trElement = '<tr><td>Aucun trajet de prévu!!</td></tr>';
+	}
 }
+
 $trElement = affichageTrElement($listetrajet,$is_connect, $dbSelectService,$utilisateur);
 
 
-$content = '<h2>Page d\'accueil liste des trajets</h2>'
-		.'<table border="1">'
+$content = '<h2>Liste des trajets</h2>'
+		.'<table class="table">'
 			.'<thead>'
 				.'<tr>'
-					.'<th>Ville de départ</th>'
-					.'<th>Date de départ</th>'
-					.'<th>Heure de départ</th>'
-					.'<th>Ville d\'arrivée</th>'
-					.'<th>Date d\'arrivée</th>'
-					.'<th>Heured\'arrivée</th>'
-					.'<th>Place disponible</th>'
+					.'<th>Départ</th>'
+					.'<th>Date</th>'
+					.'<th>Heure</th>'
+					.'<th>Destination</th>'
+					.'<th>Date</th>'
+					.'<th>Heure</th>'
+					.'<th>Places</th>'
 					.'<th></th>'
 				.'</tr>'
 			.'</thead>'
@@ -95,7 +101,7 @@ $content = '<h2>Page d\'accueil liste des trajets</h2>'
 			.'</tbody>'
 		.'</table>'
 			;
-
+			/** Contenu de la fenetre modale */
 		$content .= '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'
             .'<div class="modal-dialog" role="document">'
                 .'<div class="modal-content">'
@@ -106,7 +112,7 @@ $content = '<h2>Page d\'accueil liste des trajets</h2>'
                         .'<div class="fetched-data"></div>'
                     .'</div>'
                     .'<div class="modal-footer">'
-                        .'<button type="button" data-dismiss="modal">Fermer</button>'
+                        .'<button class="mybtn mybtn-grey" type="button" data-dismiss="modal">Fermer</button>'
                     .'</div>'
                 .'</div>'
             .'</div>'
