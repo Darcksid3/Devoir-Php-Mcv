@@ -145,7 +145,7 @@ $content = '<fieldset class="form form-large">'
                     .'<input type="number" class="form-control" name="place_disponible" id="place_disponible" value="' . $p_restante . '" max="9" required>'
                 .'</div>'
             .'</div>'
-            .'<div class="row justify-content-center box">'.affichageBtn($edit, $is_admin).'</div>'
+            .'<div class="row justify-content-center box">'.affichageBtn($edit).'</div>'
         .'</div>'
     . '</form>'
 . '</fieldset>';

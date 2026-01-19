@@ -27,7 +27,7 @@ class ExternalServices {
     *@return array Un tableau contenant le temps de trajet formaté et la distance en Km
     */
     
-    public function getTravelTime($city1, $city2) {
+    public function getTravelTime($city1, $city2): string|array{
         // 1. Geocoding (on transforme les noms en coordonnées)
         // Note: Nominatim demande un User-Agent personnalisé
         $opts = ["http" => ["header" => "User-Agent: MonAppCovoiturage/1.0\r\n"]];

@@ -12,11 +12,11 @@ if ($id === null) {
     exit();
 }
 
-function deleteTrajet($id) {
+function deleteTrajet(int $id): never {
     $dbDeleteService = new DbDeleteService();
     $dbDeleteService->deleteTrajet($id);
 
-    $_SESSION['message'] = '<div class="msg msg-ok">Trajet supprimer avec success !!</div>';
+    $_SESSION['message'] = '<div class="msg msg-ok">Trajet supprimé avec succès !!</div>';
     header('Location: /');
     exit();
 }

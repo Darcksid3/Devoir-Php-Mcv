@@ -5,10 +5,11 @@ use Error;
 
 class DbDeleteService extends DbConnexion {
 
-    public function deleteTrajet($id) { 
+    public function deleteTrajet(int $id) { 
         try {
         $connexion = $this->connexion(1);
-        $query = $connexion->prepare("delete from trajet where id = :id");
+        $sql = "delete from trajet where id = :id";
+        $query = $connexion->prepare((string) $sql);
         $query->execute(['id' => $id]);
         } catch (Error) {
             return 'une erreur est survenue';
@@ -18,7 +19,8 @@ class DbDeleteService extends DbConnexion {
     public function deleteVille($id) {
         try {
             $connexion = $this->connexion(2);
-            $query = $connexion->prepare("delete from ville where id = :id");
+            $sql = "delete from ville where id = :id";
+            $query = $connexion->prepare((string) $sql);
             $query->execute(['id' => $id]);
 
         } catch(error) {

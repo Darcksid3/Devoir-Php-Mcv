@@ -101,4 +101,3 @@ function AffichageTrajet() {
 
 require __DIR__ . '/../Layout.php';
 ?>
-

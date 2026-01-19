@@ -13,7 +13,7 @@ class PasswordVerif {
     * @param string $pass2 Le second mot de passe (confirmation).
     * @return string / null Retourne  le mot de passe s'il correspond, sinon rien.
     */
-    public function verifPassword($pass1, $pass2) {
+    public function verifPassword(string $pass1, string $pass2): string | null {
         if ($pass1 === $pass2) {
             return $pass1;
         } else { 

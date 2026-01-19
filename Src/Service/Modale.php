@@ -37,6 +37,3 @@ echo '<p>Email : '.$createurTrajetInfo['email'].'</p>';
 echo '<p>Nombre total de places : '.$createurTrajetInfo['place_disponible'] .'</p>';
 
 ?>
-
-
-

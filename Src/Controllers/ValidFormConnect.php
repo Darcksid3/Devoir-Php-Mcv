@@ -16,7 +16,7 @@ $password = $_POST['password'];
 * * Redirection vers la page d'inscription en cas d'erreur ou vers la page d'accueil en cas de  success.
 * @return void
 */
-function verifFormConnexion($email, $password) {
+function verifFormConnexion(mixed $email, mixed $password) {
     //* 1) import des classes de services
     $dbSelectService = new DbSelectService();
     $passwordVerif = new PasswordVerif();
