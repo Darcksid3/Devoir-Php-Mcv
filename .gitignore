@@ -7,6 +7,7 @@
 /Controllers/Test.php
 /Service/ExternalServices.php
 /Pages/TestView.php
+.htaccess
 
 # fichier de configuration
 .env

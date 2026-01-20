@@ -12,7 +12,7 @@ if ($id === null) {
 }
 
 $content = '<h2>Page de confirmation de supression de trajet</h2>'
-        .'<button type="button" onclick="location.href=\'/ValidDeleteTrajet/'.$id.'\'">Confirmer la suppression</button>';
+        .'<button type="button" class="mybtn mybtn-grey" onclick="location.href=\'/ValidDeleteTrajet/'.$id.'\'">Confirmer la suppression</button>';
 ;
 
 

@@ -20,7 +20,7 @@ $password2 = $_POST['password2'] ?? '';
 *  Redirection vers la page d'inscription en cas déerreur ou vers la page d'accueil en cas de succes.
 * @return void
 */
-function verifFormInscription($email, $password1, $password2) {
+function verifFormInscription(mixed $email, mixed $password1, mixed $password2) {
 
     //* Récupération des classes de services.
     $dbSelectService = new DbSelectService();
@@ -45,7 +45,7 @@ function verifFormInscription($email, $password1, $password2) {
         $pass_hash = $verifPassword->hashPassword($password1);
         //* 3) ajout de l'utilistaueur dans la base de donnée des utilisteur enregistrés.
         $add = new DbAddService();
-        $add->addUser($uid, $pass_hash);
+        $add->addUser((int) $uid, $pass_hash);
         //* 4) Message de succes et redirection.
         $_SESSION['message'] = '<div class="msg msg-ok">Inscription réussit</div>';
         $_SESSION['inscription'] = true;

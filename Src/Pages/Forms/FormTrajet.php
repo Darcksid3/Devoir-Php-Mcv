@@ -25,9 +25,9 @@ $edit = ($id !== null);
 
 // Récupération des information du trajet.
 $connexion = new DbSelectService();
-$infoTrajet = $edit ? $connexion->recupTrajetById($id) : [];
+$info = $edit ? $connexion->recupTrajetById($id) : [];
 
-$infoTrajet = $infoTrajet ?? [];
+$infoTrajet = $info;
 $tempDATA = $_SESSION['tempDATA'] ?? [];
 //3 verifier si l'utilisateur connecté est le propriétaire du trajet.
 if ($edit) {
@@ -44,8 +44,12 @@ if ($edit) {
         }
     }
 }
-
-function affichageBtn($edit) {
+/**
+    * Liste les utilisateur enregistré
+    * @param bool $edit
+    * @return string
+    */
+function affichageBtn(bool $edit) {
     $btn = '<div class="btn-action">';
     if (!$edit) {
         $btn .= '<button type="submit" class="mybtn" name="action" id=="action" value="create">Créer le trajet</button>';
@@ -66,7 +70,12 @@ $p_totale   = $infoTrajet['place_totale'] ?? $tempDATA['place_totale'] ?? 4;
 $p_restante = $infoTrajet['place_disponible'] ?? $tempDATA['place_disponible'] ?? 2;
 
 // Récupération des villes
-function recupVille($selectedId = null) {
+/**
+    * Liste les utilisateur enregistré
+    * @param string $selectedId
+    * @return string
+    */
+function recupVille(string $selectedId) {
     $db = new DbSelectService();
     $liste = $db->recupVille();
     $option = '';
@@ -87,7 +96,7 @@ if (!empty($id)) {
     $urlAction .= "/" . $id;
 }
 $content = '<fieldset class="form form-large">'
-    .'<legend>' . ($edit ? "Modifier le trajet : " . htmlspecialchars($id) : "Créer un trajet") . '</legend>'
+    .'<legend>' . ($edit ? "Modifier le trajet : " . $id : "Créer un trajet") . '</legend>'
     .'<form action="'.$urlAction.'" method="POST">'
         .'<input type="hidden" name="id" value="' . ($id ?? '') . '">'
         .'<input type="hidden" id="createur_id" name="createur_id" value="' . $utilisateur['id'] . '">'
@@ -130,7 +139,7 @@ $content = '<fieldset class="form form-large">'
                         .'<select class="form-select" name="arrive_ville" id"arrive_ville" required>' . $listeVilleArrivee . '</select>'
                     .'</div>'
                     .'<div>'
-                        .'<label </div>arrive-date">Horaire arrivée</label>'
+                        .'<label class="form-label" for="arrive-date">Horaire arrivée</label>'
                         .'<input type="datetime-local" class="form-control" name="arrive_date" id="="arrive_date" value="' . $d_arrivee . '" required>'
                     .'</div>'
                 .'</div>'
@@ -145,7 +154,7 @@ $content = '<fieldset class="form form-large">'
                     .'<input type="number" class="form-control" name="place_disponible" id="place_disponible" value="' . $p_restante . '" max="9" required>'
                 .'</div>'
             .'</div>'
-            .'<div class="row justify-content-center box">'.affichageBtn($edit, $is_admin).'</div>'
+            .'<div class="row justify-content-center box">'.affichageBtn($edit).'</div>'
         .'</div>'
     . '</form>'
 . '</fieldset>';

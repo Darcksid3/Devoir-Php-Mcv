@@ -19,9 +19,9 @@ $post = $_POST;
 *
 * @param string $villeD Ville de départ.
 * @param string $villeA Ville d'arrivée.
-* @return void. renvoie l'utilisateur azu formulaire si les villes sont identiques.
+* @return void renvoie l'utilisateur azu formulaire si les villes sont identiques.
 */
-function verifVille($villeD, $villeA, $header) {
+function verifVille($villeD, $villeA, string $header) {
 if($villeD === $villeA) {
     $_SESSION['tempDATA'] = $_POST;
     $_SESSION['message'] = '<div class="msg msg-err">Les ville de départ et d\'arrivée doivent être différentes.</div>';
@@ -35,9 +35,9 @@ if($villeD === $villeA) {
 *
 * @param string $dateD Date de départ.
 * @param string $dateA Date d'arrivée.
-* @return void. renvoie l'utilisateur au formulaire si la date d'arrivée est inférieure à la date de départ.
+* @return true Renvoie toujours true si le script n'est pas interrompu.
 */
-function verifDate($dateD, $dateA, $header) {
+function verifDate(string $dateD, string $dateA, string $header): bool {
     $dateA = new DateTime($dateA);
     $dateD = new DateTime($dateD);
     if($dateA < $dateD) {
@@ -56,9 +56,9 @@ function verifDate($dateD, $dateA, $header) {
 *
 * @param int $placeD Nombre de place disponible.
 * @param int $placeT Nombre de place totale.
-* @return void. Renvoie l'utilisateur au formulaire si il y as incohérence dans les places.
+* @return void Renvoie l'utilisateur au formulaire si il y as incohérence dans les places.
 */
-function verifPlace ($placeD, $placeT, $header) {
+function verifPlace ($placeD, $placeT, string $header) {
     if ($placeD > $placeT) {
         $_SESSION['tempDATA'] = $_POST;
         $_SESSION['message'] = '<div class="msg msg-err">Le nombre de place disponible ne peut pas etre supérieur au nombre de place totale.</div>';
@@ -67,8 +67,8 @@ function verifPlace ($placeD, $placeT, $header) {
     } 
 };
 
-function generateGDH($date, $timezone = "UTC") {
-    $dt = new DateTime($date, new DateTimeZone($timezone));
+function generateGDH(string $date, string $timezone = "UTC"): string {
+    $dt = new DateTime($date, new DateTimeZone((string) $timezone));
     
     // Format : Jour(2) + Heure(2) + Min(2) + Zone(1) + " " + Mois(3) + " " + Année(2)
     // On met le mois en majuscules (strtoupper)
@@ -80,10 +80,10 @@ function generateGDH($date, $timezone = "UTC") {
 /**
 * Validation du formulaire de création detrajet.
 *
-* @param array $post Données du formulaire.
-* @return void. Ajoute le trajet en base de donnée et redirige l'utilisateur en cas de succes.
+* @param array<mixed> $post Données du formulaire.
+* @return bool renvoie toujours true redirige l'utilisateur en cas de succes.
 */
-function verifFormTrajet($post) {
+function verifFormTrajet(array $post): bool {
     if ($post['action'] !== 'delete') {
 
         if ($post['action'] === 'create') {

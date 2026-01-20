@@ -20,6 +20,10 @@ header('Location: /');
 exit();
 }
 
+/**
+* Récupération des villes
+* @return string
+*/
 function recupVille() {
     $db = new DbSelectService();
     $liste = $db->recupVille();

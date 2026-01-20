@@ -9,7 +9,7 @@ $id = $recupId->recupId($_SERVER['REQUEST_URI']);
 
 if ($id === null) {
 echo "Erreur : ID de trajet manquant.";    
-//Header('Location: /');
+    Header('Location: /');
     exit();
 }
 
@@ -37,6 +37,3 @@ echo '<p>Email : '.$createurTrajetInfo['email'].'</p>';
 echo '<p>Nombre total de places : '.$createurTrajetInfo['place_disponible'] .'</p>';
 
 ?>
-
-
-

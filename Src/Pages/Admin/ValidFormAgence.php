@@ -7,7 +7,12 @@ use App\Db\DbDeleteService;
 
 $post = $_POST;
 
-function addVille($ville) {
+/**
+* Mise en place du bouton d'action
+* @param string $ville
+* @return void
+*/
+function addVille(string $ville) {
     $addVille = ucfirst($ville);
     $dbSelectService = new DbSelectService();
     $response = $dbSelectService->recupVilleByName($addVille);
@@ -23,8 +28,12 @@ function addVille($ville) {
         exit();
     }
 }
-
-function deleteVille($id) {
+/**
+* Mise en place du bouton d'action
+* @param int $id
+* @return void
+*/
+function deleteVille(int $id) {
     $dbDeleteService = new DbDeleteService();
     $dbDeleteService->deleteVille($id);
     $_SESSION['message'] = 'Ville supprimé avec succes';
@@ -32,7 +41,13 @@ function deleteVille($id) {
     exit();
 }
 
-function updateVille($id, $nouveau_nom){
+/**
+* Mise en place du bouton d'action
+* @param int $id
+* @param string $nouveau_nom
+* @return void
+*/
+function updateVille(int $id, string $nouveau_nom){
     $updateVille = ucFirst($nouveau_nom);
     $dbUpdateService = new DbUpdateService();
     $dbUpdateService->updateVille($id,$updateVille);
@@ -40,7 +55,12 @@ function updateVille($id, $nouveau_nom){
     header('Location: /FormAgence');
     exit();
 }
-function verifForm($post){
+/**
+* Mise en place du bouton d'action
+* @param array<mixed> $post
+* @return void
+*/
+function verifForm(array $post){
 
     if($post['action'] === 'create') {
         addVille($post['nom']);

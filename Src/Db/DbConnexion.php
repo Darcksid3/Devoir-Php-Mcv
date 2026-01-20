@@ -7,7 +7,7 @@ use PDOException;
 
 abstract class DbConnexion {
 
-    protected $host, $db, $rsUser, $rsPass, $appUser, $appPass, $adminUser, $adminPass;
+    protected string $host, $db, $rsUser, $rsPass, $appUser, $appPass, $adminUser, $adminPass;
 
     public function __construct() {
         $this->host = $_ENV['DB_HOST'];
@@ -26,7 +26,7 @@ abstract class DbConnexion {
     * 1: Application principale
     * 2: Administrateur
     * @param int $type
-    * @return PDO/NULL
+    * @return PDO | NULL
     */
     public function connexion($type): ?PDO {
         try {
@@ -53,13 +53,13 @@ abstract class DbConnexion {
             die("Erreur de connexion : " . $error->getMessage());
         }
     }
-
+    
     /**
      * Renvoie les information de l'utilisateur authorisé a efectuer l'action en base de donnée
      * @param int $type
-     * @return $array information de connexion
+     * @return array<mixed> information de connexion
      */
-    public function typeConnexion(int $type): ?array {
+    public function typeConnexion(int $type): ? array {
         return match($type) {
             0       => ['user' => $this->rsUser,    'pass' => $this->rsPass],
             1       => ['user' => $this->appUser,   'pass' => $this->appPass],
@@ -67,6 +67,6 @@ abstract class DbConnexion {
             default => null,
         };
     }
-
+    
 }
 ?>
