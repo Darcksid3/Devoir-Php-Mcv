@@ -3,10 +3,8 @@ namespace App\Pages;
 
 use App\Service\StatusVerif;
 use App\Db\DbSelectService;
+use Automattic\WooCommerce\EmailEditor\Validator\Schema\Boolean_Schema;
 use DateTime;
-use App\Controllers\Test;
-$test = new Test();
-$test->displayError();
 
 $utilisateur = $_SESSION['utilisateur'] ?? [];
     
@@ -17,10 +15,25 @@ $is_connect = $statusVerif->verifConnect($utilisateur);
 $dbSelectService = new DbSelectService();
 $listetrajet = [];
 $listetrajet = $dbSelectService->afficheAll();
-//var_dump($listetrajet);
-function isOwner($uid, $cuid){if ($uid === $cuid){return true;}}
-
-function affichageBtn($id, $is_connect, $is_owner) {
+/**
+* Vérifie si l'utilisateur est créateur d'un trajet
+* @param int $uid
+* @param int $cuid
+* @return boolean
+*/
+function isOwner(int $uid, int $cuid)
+	{if ($uid === $cuid){
+		return true;
+	}  else {return false;}
+}
+/**
+* Vérifie quel bouton doit etre affiché
+* @param int $id
+* @param bool $is_connect
+* @param bool $is_owner
+* @return string
+*/
+function affichageBtn(int $id, bool $is_connect, bool $is_owner) {
 	$row['ID'] = $id;
 	//$btnView = '<button type="button" onclick="location.href=\'/Modale/'.$id.'\'">Voir</button>';
 	$btnView = '<a class="option option-view" href="#"  data-toggle="modal" data-target="#myModal" data-id="'.$id.'"><img src="/Public/asset/eye.svg" alt="voir les information"></a>';
@@ -37,7 +50,12 @@ function affichageBtn($id, $is_connect, $is_owner) {
 		return $afficheBtn;
 	}
 }
-function formatDh($date) {
+/**
+* Mise en place du bouton d'action
+* @param string $date
+* @return array<mixed>
+*/
+function formatDh(string $date) {
 
 	$parties = explode(' ', $date);
 	$formatDate = new DateTime($parties[0]);
@@ -47,7 +65,13 @@ function formatDh($date) {
 		'heure' => $parties[1]
 	];
 }
-function displayIsConnect($is_connect){
+
+/**
+* Mise en place du bouton d'action
+* @param bool $is_connect
+* @return array<mixed>
+*/
+function displayIsConnect(bool $is_connect){
 	$display = [];
 	if(!$is_connect){
 		$display = ['status' => false, 'titre' => '<h2>Pour obtenir plus d\'information sur un trajet, veuillez vous connecter</h2>', 'table' => '</tr>'];
@@ -59,13 +83,21 @@ function displayIsConnect($is_connect){
 }
 $display = displayIsConnect($is_connect);
 
-function affichageTrElement($listetrajet,$is_connect,$dbSelectService, $utilisateur){
+/**
+* Affichage des trajet a venir si de la place est disponible
+* @param array <mixed> $listetrajet
+* @param bool $is_connect
+* @param DbSelectService $dbSelectService
+* @param array<mixed> $utilisateur
+* @return string
+*/
+function affichageTrElement(array $listetrajet, bool $is_connect, DbSelectService $dbSelectService, array $utilisateur){
 	
 	$trElement = '';
 	
 	if ($listetrajet['status'] !== false) {
 		foreach ($listetrajet['liste'] as $trajetInfo) {
-			$trajetInfo['createur_email'] = $dbSelectService->recupOwnerTrajet($trajetInfo['createur_id']);
+			$trajetInfo['createur_email'] = (string) $dbSelectService->recupOwnerTrajet($trajetInfo['createur_id']);
 			if(isset($utilisateur['id'])){
 				$is_owner = isOwner($utilisateur['id'], $trajetInfo['createur_id']);
 			} else {

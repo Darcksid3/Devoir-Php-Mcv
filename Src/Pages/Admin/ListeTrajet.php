@@ -20,15 +20,23 @@ if (!$is_admin){
 header('Location: /');
 exit();
 }
-
-function actionButton($id) {
+/**
+* Mise en place du bouton d'action
+* @param int $id
+* @return string
+*/
+function actionButton(int $id) {
 	$btnSupp = '<a type="button" class="option option-trash" onclick="location.href=\'/DeleteTrajet/'.$id.'\'"><img src="/Public/asset/trash3.svg" alt="Supprimer le trajet"></a>';
 
 	$affichageBouton = $btnSupp;
 	return $affichageBouton;
 }
-
-function formatDh($date) {
+/**
+* Mise en place du bouton d'action
+* @param string $date
+* @return array<mixed>
+*/
+function formatDh(string $date) {
 
 	$parties = explode(' ', $date);
 	$formatDate = new DateTime($parties[0]);
@@ -38,7 +46,10 @@ function formatDh($date) {
 		'heure' => $parties[1]
 	];
 }
-
+/**
+* Mise en place de l'affichage
+* @return string
+*/
 function AffichageTrajet() {
 	$dbSelectService = new DbSelectService();
 
@@ -54,11 +65,12 @@ function AffichageTrajet() {
 		$trElement =  '';
 
 		foreach ($resultat['liste'] as $trajetInfo) {
-				$trajetInfo['createur_email'] = $dbSelectService->recupOwnerTrajet($trajetInfo['createur_id']);
+				$createur_email = (string) $dbSelectService->recupOwnerTrajet($trajetInfo['createur_id']);
 				$departDate = formatDh($trajetInfo['depart_date']);
 				$arriveDate = formatDh($trajetInfo['arrive_date']);
-				$trElement .= '<tr>'
-					.'<td>'.$trajetInfo['createur_email'].'</td>'
+				$trElement .= '<tr><td>'
+					.$createur_email
+					.'</td>'
 					.'<td>'.$trajetInfo['depart_ville_nom'].'</td>'
 					.'<td>'.$departDate['date'].'</td>'
 					.'<td>'.$departDate['heure'].'</td>'

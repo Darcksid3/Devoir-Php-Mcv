@@ -7,6 +7,10 @@ use DateTime;
 use DateTimeZone;
 
 $content = '<h2>Test View</h2>';
+/**
+* Mise en place du bouton d'action
+* @return int
+*/
 function randomVille(){
     $connexion = new DbSelectService();
     $db = $connexion->connexion(2);
@@ -21,7 +25,13 @@ function randomVille(){
 $content .= randomVille();
 $content .= '<input type="datetime-local" lang="fr-FR">';
 
-function generateGDH($date = "now", $timezone = "UTC") {
+/**
+* Mise en place du bouton d'action
+* @param string $date
+* @param string $timezone
+* @return string
+*/
+function generateGDH(string $date = "now", string $timezone = "UTC") {
     $dt = new DateTime($date, new DateTimeZone($timezone));
     
     // Format : Jour(2) + Heure(2) + Min(2) + Zone(1) + " " + Mois(3) + " " + Année(2)
@@ -35,7 +45,12 @@ $content .='<hr>'
         . generateGDH()
         ;
 
-function splitGDH($gdh) {
+        /**
+* Mise en place du bouton d'action
+* @param string $gdh
+* @return array<mixed>|bool
+*/
+function splitGDH(string $gdh) {
     // Regex pour capturer : Jour(2), HeureMin(4), Zone(1), Mois(3), Année(2)
     $pattern = '/^(\d{2})(\d{4})([A-Z])\s([A-Z]{3})\s(\d{2})$/i';
     

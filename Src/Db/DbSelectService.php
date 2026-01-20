@@ -130,14 +130,15 @@ class DbSelectService extends DbConnexion{
     /**
     * récupère le créateur du trajet
     * @param int $idCreateur
-    * @return array<mixed>
+    * @return string
     */
-    public function recupOwnerTrajet(int $idCreateur) {
+    public function recupOwnerTrajet(int $idCreateur):string {
         $connexion = $this->connexion(0);
         $query = $connexion->prepare("select email from utilisateur where id = :id");
         $query->execute(['id' => (int)$idCreateur]);
         $resultat = $query->fetch();
-        return $resultat['email'];
+        return ($resultat && isset($resultat['email'])) ? (string)$resultat['email'] : 'Utilisateur inconnu';
+
     }
     /**
     * récupère un trajet spécifique par son id

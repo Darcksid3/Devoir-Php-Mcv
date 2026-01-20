@@ -25,9 +25,9 @@ $edit = ($id !== null);
 
 // Récupération des information du trajet.
 $connexion = new DbSelectService();
-$infoTrajet = $edit ? $connexion->recupTrajetById($id) : [];
+$info = $edit ? $connexion->recupTrajetById($id) : [];
 
-$infoTrajet = $infoTrajet ?? [];
+$infoTrajet = $info;
 $tempDATA = $_SESSION['tempDATA'] ?? [];
 //3 verifier si l'utilisateur connecté est le propriétaire du trajet.
 if ($edit) {
@@ -44,8 +44,12 @@ if ($edit) {
         }
     }
 }
-
-function affichageBtn($edit) {
+/**
+    * Liste les utilisateur enregistré
+    * @param bool $edit
+    * @return string
+    */
+function affichageBtn(bool $edit) {
     $btn = '<div class="btn-action">';
     if (!$edit) {
         $btn .= '<button type="submit" class="mybtn" name="action" id=="action" value="create">Créer le trajet</button>';
@@ -66,7 +70,12 @@ $p_totale   = $infoTrajet['place_totale'] ?? $tempDATA['place_totale'] ?? 4;
 $p_restante = $infoTrajet['place_disponible'] ?? $tempDATA['place_disponible'] ?? 2;
 
 // Récupération des villes
-function recupVille($selectedId = null) {
+/**
+    * Liste les utilisateur enregistré
+    * @param int $selectedId
+    * @return string
+    */
+function recupVille(int $selectedId) {
     $db = new DbSelectService();
     $liste = $db->recupVille();
     $option = '';
@@ -87,7 +96,7 @@ if (!empty($id)) {
     $urlAction .= "/" . $id;
 }
 $content = '<fieldset class="form form-large">'
-    .'<legend>' . ($edit ? "Modifier le trajet : " . htmlspecialchars($id) : "Créer un trajet") . '</legend>'
+    .'<legend>' . ($edit ? "Modifier le trajet : " . $id : "Créer un trajet") . '</legend>'
     .'<form action="'.$urlAction.'" method="POST">'
         .'<input type="hidden" name="id" value="' . ($id ?? '') . '">'
         .'<input type="hidden" id="createur_id" name="createur_id" value="' . $utilisateur['id'] . '">'

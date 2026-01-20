@@ -1,4 +1,5 @@
 <?php
+/*
 namespace App\Controllers;
 
 use App\Db\DbConnexion;
@@ -33,6 +34,7 @@ public function myLog($message, $color = "white"){
 /**
 * TEST AJOUT DE TRAJET AUTHOMATISé
 */
+/*
 public function randomVille(){
     $connexion = new DbSelectService();
     $db = $connexion->connexion(2);
@@ -69,4 +71,5 @@ public function testAddTrajet($place){
 
 
 }
+*/
 ?>

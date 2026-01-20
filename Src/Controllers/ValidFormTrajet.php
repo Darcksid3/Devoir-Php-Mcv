@@ -80,10 +80,10 @@ function generateGDH(string $date, string $timezone = "UTC"): string {
 /**
 * Validation du formulaire de création detrajet.
 *
-* @param array $post Données du formulaire.
+* @param array<mixed> $post Données du formulaire.
 * @return bool renvoie toujours true redirige l'utilisateur en cas de succes.
 */
-function verifFormTrajet(mixed $post): bool {
+function verifFormTrajet(array $post): bool {
     if ($post['action'] !== 'delete') {
 
         if ($post['action'] === 'create') {
