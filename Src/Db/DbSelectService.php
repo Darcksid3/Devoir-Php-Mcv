@@ -12,6 +12,10 @@ class DbSelectService extends DbConnexion{
     */
     public function selectUser(int $id, string $password) {
             $pdo = $this->connexion(0);
+            if (!$pdo instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
             $query = $pdo->prepare("select * from utilisateur_enregistre where utilisateur_id = :id and password_hash = :password");
             $query->execute(['id' => $id, 'password'=> $password]);
             $result = $query->fetch();
@@ -24,6 +28,10 @@ class DbSelectService extends DbConnexion{
     */
     public function searchEmail(string $email) {
         $pdo = $this->connexion(0);
+        if (!$pdo instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $query = $pdo->prepare("SELECT * FROM utilisateur WHERE email = :email");
         $query->execute(['email' => $email]);
     
@@ -43,6 +51,10 @@ class DbSelectService extends DbConnexion{
     */
     public function recupHash(int $id){
 	$pdo = $this->connexion(1);
+    if (!$pdo instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
     $query = $pdo->prepare("select password_hash, status from utilisateur_enregistre where utilisateur_id = :id");
     $query->execute(['id' => $id]);
 	
@@ -58,6 +70,10 @@ class DbSelectService extends DbConnexion{
     */
     public function selectAllVille(){
         $pdo = $this->connexion(1);
+        if (!$pdo instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $query = $pdo->prepare("select * from ville");
         $query->execute();
         $result = $query->fetchAll();
@@ -70,6 +86,10 @@ class DbSelectService extends DbConnexion{
     public function afficheAll() {
         // connexion a la base de donnée
         $connexion = $this->connexion(1);
+        if (!$connexion instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $sql = "select t.*, v1.nom as depart_ville_nom, v2.nom as arrive_ville_nom from trajet t inner join ville v1 on t.depart_ville_id = v1.id inner join ville v2 on t.arrive_ville_id = v2.id where t.depart_date >= NOW() and t.place_disponible > 0 order by depart_date ASC";
         // récupération de tout les trajet à venir
         $query = $connexion->prepare($sql);
@@ -91,6 +111,10 @@ class DbSelectService extends DbConnexion{
     public function recupVille() {
 
         $connexion = $this->connexion(1);
+        if (!$connexion instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $query = $connexion->prepare('select * from ville');
         $query->execute();
         $resultat = $query->fetchAll();
@@ -103,6 +127,10 @@ class DbSelectService extends DbConnexion{
     */
     public function recupVilleById($idVille) {
         $connexion = $this->connexion(1);
+        if (!$connexion instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $query = $connexion->prepare("select nom from ville where id = :id");
         $query->execute(['id' => (int)$idVille]);
         $resultat = $query->fetch();
@@ -116,6 +144,10 @@ class DbSelectService extends DbConnexion{
     */
     public function recupVilleByName($nomVille) {
         $connexion = $this->connexion(1);
+        if (!$connexion instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $query = $connexion->prepare("select nom from ville where nom = :nom");
         $query->execute(['nom' => (string)$nomVille]);
         if ($query->rowCount() >= 1) {
@@ -134,6 +166,10 @@ class DbSelectService extends DbConnexion{
     */
     public function recupOwnerTrajet(int $idCreateur):string {
         $connexion = $this->connexion(0);
+        if (!$connexion instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $query = $connexion->prepare("select email from utilisateur where id = :id");
         $query->execute(['id' => (int)$idCreateur]);
         $resultat = $query->fetch();
@@ -147,6 +183,10 @@ class DbSelectService extends DbConnexion{
     */
     public function recupTrajetById(int $id) {
         $connexion = $this->connexion(1);
+        if (!$connexion instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $sql = "select t.*,  v1.nom as depart_ville_nom,  v2.nom as arrive_ville_nom  from trajet t  inner join ville v1 on t.depart_ville_id = v1.id  inner join ville v2 on t.arrive_ville_id = v2.id where t.id = :id";
         $query = $connexion->prepare($sql);
         $query->execute(['id' => (int)$id]);
@@ -162,6 +202,10 @@ class DbSelectService extends DbConnexion{
     */
     public function infoOwner(int $id) {
         $connexion = $this->connexion(0);
+        if (!$connexion instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $query = $connexion->prepare("select * from utilisateur where id = :id");
         $query->execute(['id' => $id]);
         $resultat = $query->fetch();
@@ -174,6 +218,10 @@ class DbSelectService extends DbConnexion{
     */
     public function modale(int $id){
         $connexion = $this->connexion(1);
+        if (!$connexion instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $sql = "select place_disponible, createur_id from trajet where id = :id";
         $query = $connexion->prepare($sql);
         $query->execute(['id' => $id]);
@@ -189,6 +237,10 @@ class DbSelectService extends DbConnexion{
     */
     public function selectAllUser() {
         $pdo = $this->connexion(2);
+        if (!$pdo instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $sql = "select * from utilisateur_enregistre";
         $query = $pdo->prepare($sql);
         $query->execute();
@@ -201,6 +253,10 @@ class DbSelectService extends DbConnexion{
     */
     public function selectAllEmployee() {
         $pdo = $this->connexion(2);
+        if (!$pdo instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $sql = "select * from utilisateur";
         $query = $pdo->prepare($sql);
         $query->execute();
@@ -215,6 +271,10 @@ class DbSelectService extends DbConnexion{
     */
     public function selectUserById(int $id) {
         $pdo = $this->connexion(2);
+        if (!$pdo instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $sql = "select * from utilisateur where id = :id";
         $query = $pdo->prepare($sql);
         $query->execute(['id' => $id]);
@@ -230,6 +290,10 @@ class DbSelectService extends DbConnexion{
     public function listeEnregistre() {
 
         $pdo = $this->connexion(2);
+        if (!$pdo instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $sql = "select utilisateur.* from utilisateur inner join utilisateur_enregistre on utilisateur.id = utilisateur_enregistre.utilisateur_id";
 
         $stmt = $pdo->prepare($sql);
@@ -251,6 +315,10 @@ class DbSelectService extends DbConnexion{
     public function listeAllTrajet() {
         // connexion a la base de donnée
         $connexion = $this->connexion(1);
+        if (!$connexion instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $sql = "select t.*, v1.nom as depart_ville_nom, v2.nom as arrive_ville_nom from trajet t inner join ville v1 on t.depart_ville_id = v1.id inner join ville v2 on t.arrive_ville_id = v2.id order by depart_date ASC";
         // récupération de tout les trajet à venir
         $query = $connexion->prepare($sql);

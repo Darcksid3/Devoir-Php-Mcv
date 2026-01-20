@@ -1,22 +1,6 @@
 <?php
 namespace App\Pages\Components;
-/*
-//todo Nav générale de débug avec toute les options A SUPPRIMER APRES
-echo '<nav>'
-	.'<a href="/">Accueil</a> |  '
-	.'<a href="/Success">Succès</a> | '
-	.'<a href="/DashboardAdmin">Admin</a> | '
-	.'<a href="/FormInscript">Inscription</a> | '
-	.'<a href="/FormConnect">Connexion</a> | '
-	.'<a href="/FormTrajet">Trajet</a> | '
-	.'<a href="/Deconnexion">Deconnexion</a> | '
-	.'<a href="/TestView">TestView</a> | '
-	.'<a href="/lol">Pages lol</a>' 
-	.'</nav>'
-	.'<hr>'
-	;
-*/
-	// Début du Header
+
 $message = $_SESSION['message'] ?? '';
 unset($_SESSION['message']);
 
@@ -49,7 +33,6 @@ if (($utilisateur['connect'] ?? false) === true){
 } else {
 	$menuContent = '<div class="logo"><a href="/" >Touche pas au klaxon</a></div>'
 			.'<div class="nav">'
-				.'<button type="button" class="mybtn" onclick="location.href=\'/FormInscript\'">Inscription</button>'
 				.'<button type="button" class="mybtn mybtn-grey" onclick="location.href=\'/FormConnect\'">Connexion</button>'
 			.'</div>';
 }

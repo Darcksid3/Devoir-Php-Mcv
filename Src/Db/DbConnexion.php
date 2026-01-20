@@ -53,7 +53,7 @@ abstract class DbConnexion {
             die("Erreur de connexion : " . $error->getMessage());
         }
     }
-
+    
     /**
      * Renvoie les information de l'utilisateur authorisé a efectuer l'action en base de donnée
      * @param int $type
@@ -67,6 +67,6 @@ abstract class DbConnexion {
             default => null,
         };
     }
-
+    
 }
 ?>

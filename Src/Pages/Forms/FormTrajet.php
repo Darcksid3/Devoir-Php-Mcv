@@ -72,10 +72,10 @@ $p_restante = $infoTrajet['place_disponible'] ?? $tempDATA['place_disponible'] ?
 // Récupération des villes
 /**
     * Liste les utilisateur enregistré
-    * @param int $selectedId
+    * @param string $selectedId
     * @return string
     */
-function recupVille(int $selectedId) {
+function recupVille(string $selectedId) {
     $db = new DbSelectService();
     $liste = $db->recupVille();
     $option = '';
@@ -139,7 +139,7 @@ $content = '<fieldset class="form form-large">'
                         .'<select class="form-select" name="arrive_ville" id"arrive_ville" required>' . $listeVilleArrivee . '</select>'
                     .'</div>'
                     .'<div>'
-                        .'<label </div>arrive-date">Horaire arrivée</label>'
+                        .'<label class="form-label" for="arrive-date">Horaire arrivée</label>'
                         .'<input type="datetime-local" class="form-control" name="arrive_date" id="="arrive_date" value="' . $d_arrivee . '" required>'
                     .'</div>'
                 .'</div>'

@@ -10,9 +10,13 @@ class DbUpdateService extends DbConnexion {
     */
     public function updateTrajet(array $infoTrajet): void {
         
-        $connexion = $this->connexion(1);
+        $pdo = $this->connexion(1);
+        if (!$pdo instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $sql = "update trajet set depart_ville_id=:depart_ville_id, depart_gdh=:depart_gdh, depart_date=:depart_date, arrive_ville_id=:arrive_ville_id, arrive_gdh=:arrive_gdh, arrive_date=:arrive_date, place_totale=:place_totale, place_disponible=:place_disponible where id=:id";
-        $query = $connexion->prepare($sql);
+        $query = $pdo->prepare($sql);
         $query->execute([
             'depart_ville_id' => (int)$infoTrajet['depart_ville'],
             'depart_gdh' => $infoTrajet['depart_gdh'],
@@ -28,9 +32,13 @@ class DbUpdateService extends DbConnexion {
     }
 
     public function updateVille(int $id, string $nouveau_nom):void{
-        $connexion = $this->connexion(2);
+        $pdo = $this->connexion(2);
+        if (!$pdo instanceof \PDO) {
+                
+                throw new \Exception("La connexion à la base de données a échoué.");
+            }
         $sql = "update ville set nom=:nouveau_nom where id=:id";
-        $query = $connexion->prepare($sql);
+        $query = $pdo->prepare($sql);
         $query->execute(['nouveau_nom' => $nouveau_nom, 'id' => $id]);
     }
 }
