@@ -30,7 +30,12 @@ class DbUpdateService extends DbConnexion {
         ]);
         
     }
-
+    /**
+    * Mise a jour des villes
+    * @param int $id 
+    * @param string $nouveau_nom
+    * @return void
+    */
     public function updateVille(int $id, string $nouveau_nom):void{
         $pdo = $this->connexion(2);
         if (!$pdo instanceof \PDO) {
