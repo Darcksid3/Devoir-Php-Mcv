@@ -28,7 +28,7 @@ class PasswordVerif {
     * @parem string $password Le mot de passe en clair.
     * @return string $hash Le hash généré via l'algorithme BCRYPT.
     */
-    public function hashPassword($password) {
+    public function hashPassword(string $password) {
         $hash = password_hash($password, PASSWORD_BCRYPT);
         return $hash;
     }

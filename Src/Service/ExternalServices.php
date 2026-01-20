@@ -3,7 +3,12 @@ namespace App\Service;
 
 class ExternalServices {
 
-    public function ConvertisseurTime($Time) {
+    /**
+    * Conversion du temps
+    * @param int $Time
+    * @return string
+    */
+    public function ConvertisseurTime(int $Time): string {
         // 1. On transforme le float en int (on arrondit à la seconde près)
         $totalSeconds = (int)round($Time);
 
@@ -20,13 +25,13 @@ class ExternalServices {
         // 5. Retour du résultat formaté
         return "{$heures} h {$minutes} min {$secondes} s";
     }
+
     /**
     *Obtenir le temps de trajet entre les deux villes sélectionnées.
-    *@param string $city1 Le nom de lma première ville
-    *@param string $city2 Le nom de la seconde ville
-    *@return array Un tableau contenant le temps de trajet formaté et la distance en Km
+    * @param string $city1 Le nom de lma première ville
+    * @param string $city2 Le nom de la seconde ville
+    * @return array<mixed> Un tableau contenant le temps de trajet formaté et la distance en Km
     */
-    
     public function getTravelTime($city1, $city2): string|array{
         // 1. Geocoding (on transforme les noms en coordonnées)
         // Note: Nominatim demande un User-Agent personnalisé

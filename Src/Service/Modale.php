@@ -9,7 +9,7 @@ $id = $recupId->recupId($_SERVER['REQUEST_URI']);
 
 if ($id === null) {
 echo "Erreur : ID de trajet manquant.";    
-//Header('Location: /');
+    Header('Location: /');
     exit();
 }
 
