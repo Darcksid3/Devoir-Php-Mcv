@@ -8,7 +8,9 @@
 /Service/ExternalServices.php
 /Pages/TestView.php
 .htaccess
-
+/.phpdoc
+/docs
+phpdoc.xml
 # fichier de configuration
 .env
 .env.local

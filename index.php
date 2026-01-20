@@ -35,13 +35,6 @@ $callable = match($finalpath) {
         require __DIR__ . '/Src/Pages/Home.php';
     },
     //* FORMULAIRES
-    // Inscription
-    'GET:/FormInscript' => function() {
-        require __DIR__ . '/Src/Pages/Forms/FormInscript.php';
-    },
-    'POST:/ValidFormInscript' => function() {;
-        require __DIR__ . '/Src/Controllers/ValidFormInscript.php';
-    },
     // Connexion
     'GET:/FormConnect' => function() {
         require __DIR__ . '/Src/Pages/Forms/FormConnect.php';
@@ -50,7 +43,6 @@ $callable = match($finalpath) {
         require __DIR__ . '/Src/Controllers/ValidFormConnect.php';
     },
     // Trajets
-    
     'GET:/FormTrajet' => function() {
         require __DIR__ . '/Src/Pages/Forms/FormTrajet.php';
     },
@@ -71,10 +63,6 @@ $callable = match($finalpath) {
     },
 
     //* Administration
-    // Dashboard Admin
-    'GET:/DashboardAdmin' => function() {
-        require __DIR__ . '/Src/Pages/Admin/DashboardAdmin.php';
-    },
     'GET:/ListeUtilisateur' => function() {
         require __DIR__ . '/Src/Pages/Admin/ListeUtilisateur.php';
     },
@@ -102,9 +90,10 @@ $callable = match($finalpath) {
     'GET:/Deconnexion' => function() {
         require __DIR__ . '/Src/Service/Deconnexion.php';
     },
-    // Pages d'affichage des test
-    'GET:/TestView' => function() {
-        require __DIR__ . '/Src/Pages/TestView.php';
+    // Documentation
+    'GET:/docs' => function() {
+    header('Location: /docs/index.html');
+    exit;
     },
     default => function () {
         require __DIR__ . '/Src/Pages/PageInconnue.php';

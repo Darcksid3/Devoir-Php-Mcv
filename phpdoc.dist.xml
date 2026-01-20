@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor configVersion="3">
+    <paths>
+        <output>docs</output>
+    </paths>
+    <version number="1.0.0">
+        <api format="php">
+            <source dsn=".">
+                <path>Src</path>
+            </source>
+            <ignore>
+                <path>vendor</path>
+                <path>docs</path>
+                <path>old.www</path>
+                <path>sql</path>
+            </ignore>
+        </api>
+    </version>
+</phpdocumentor>
