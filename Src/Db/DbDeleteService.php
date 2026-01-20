@@ -5,6 +5,11 @@ use Error;
 
 class DbDeleteService extends DbConnexion {
 
+    /**
+    * Supression d'un trajet
+    * @param int $id
+    * @return void|string
+    */
     public function deleteTrajet(int $id) { 
         try {
         $connexion = $this->connexion(1);
@@ -16,7 +21,12 @@ class DbDeleteService extends DbConnexion {
         }
     }
 
-    public function deleteVille($id) {
+    /**
+    * Supression d'une agence
+    * @param int $id
+    * @return void|string
+    */
+    public function deleteVille(int $id) {
         try {
             $connexion = $this->connexion(2);
             $sql = "delete from ville where id = :id";

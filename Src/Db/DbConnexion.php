@@ -57,7 +57,7 @@ abstract class DbConnexion {
     /**
      * Renvoie les information de l'utilisateur authorisé a efectuer l'action en base de donnée
      * @param int $type
-     * @return array information de connexion
+     * @return array<mixed> information de connexion
      */
     public function typeConnexion(int $type): ? array {
         return match($type) {

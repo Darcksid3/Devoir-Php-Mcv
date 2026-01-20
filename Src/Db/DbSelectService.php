@@ -4,15 +4,25 @@ use PDO;
 
 class DbSelectService extends DbConnexion{
         
-    public function selectUser($id, $password) {
+    /**
+    * Liste les utilisateur enregistré
+    * @param int $id
+    * @param string $password
+    * @return array<mixed>
+    */
+    public function selectUser(int $id, string $password) {
             $pdo = $this->connexion(0);
             $query = $pdo->prepare("select * from utilisateur_enregistre where utilisateur_id = :id and password_hash = :password");
             $query->execute(['id' => $id, 'password'=> $password]);
             $result = $query->fetch();
             return $result;
     }
-
-    public function searchEmail($email) {
+    /**
+    * récupère l'email de l'utilisateur
+    * @param string $email
+    * @return array<mixed>
+    */
+    public function searchEmail(string $email) {
         $pdo = $this->connexion(0);
         $query = $pdo->prepare("SELECT * FROM utilisateur WHERE email = :email");
         $query->execute(['email' => $email]);
@@ -26,7 +36,12 @@ class DbSelectService extends DbConnexion{
         }
     }
 
-    public function recupHash($id){
+    /**
+    * récupération du hash du mot de passe
+    * @param int $id
+    * @return array<mixed>
+    */
+    public function recupHash(int $id){
 	$pdo = $this->connexion(1);
     $query = $pdo->prepare("select password_hash, status from utilisateur_enregistre where utilisateur_id = :id");
     $query->execute(['id' => $id]);
@@ -37,6 +52,10 @@ class DbSelectService extends DbConnexion{
 
 
     //gestion des trajet
+    /**
+    * Selection de toute les agence
+    * @return array<mixed>
+    */
     public function selectAllVille(){
         $pdo = $this->connexion(1);
         $query = $pdo->prepare("select * from ville");
@@ -44,7 +63,10 @@ class DbSelectService extends DbConnexion{
         $result = $query->fetchAll();
         return $result;
     }
-
+    /**
+    * Liste tout les trajet par date future et place disponible
+    * @return array<mixed>
+    */
     public function afficheAll() {
         // connexion a la base de donnée
         $connexion = $this->connexion(1);
@@ -62,7 +84,10 @@ class DbSelectService extends DbConnexion{
             return $response = ['status' => false];
         }
     }
-
+    /**
+    * Liste les villes
+    * @return array<mixed>
+    */
     public function recupVille() {
 
         $connexion = $this->connexion(1);
@@ -71,7 +96,11 @@ class DbSelectService extends DbConnexion{
         $resultat = $query->fetchAll();
         return $resultat;
     }
-
+    /**
+    * Sélèctionne une ville par son id
+    * @param int $idVille
+    * @return array<mixed>
+    */
     public function recupVilleById($idVille) {
         $connexion = $this->connexion(1);
         $query = $connexion->prepare("select nom from ville where id = :id");
@@ -80,6 +109,11 @@ class DbSelectService extends DbConnexion{
         return $resultat['nom'];
     }
 
+    /**
+    * récupère une ville par son nom
+    * @param string $nomVille
+    * @return array<mixed>
+    */
     public function recupVilleByName($nomVille) {
         $connexion = $this->connexion(1);
         $query = $connexion->prepare("select nom from ville where nom = :nom");
@@ -93,16 +127,24 @@ class DbSelectService extends DbConnexion{
             return $response = ['status' => false];
         }
     }
-
-    public function recupOwnerTrajet($idCreateur) {
+    /**
+    * récupère le créateur du trajet
+    * @param int $idCreateur
+    * @return array<mixed>
+    */
+    public function recupOwnerTrajet(int $idCreateur) {
         $connexion = $this->connexion(0);
         $query = $connexion->prepare("select email from utilisateur where id = :id");
         $query->execute(['id' => (int)$idCreateur]);
         $resultat = $query->fetch();
         return $resultat['email'];
     }
-
-    public function recupTrajetById($id) {
+    /**
+    * récupère un trajet spécifique par son id
+    * @param int $id
+    * @return array<mixed>
+    */
+    public function recupTrajetById(int $id) {
         $connexion = $this->connexion(1);
         $sql = "select t.*,  v1.nom as depart_ville_nom,  v2.nom as arrive_ville_nom  from trajet t  inner join ville v1 on t.depart_ville_id = v1.id  inner join ville v2 on t.arrive_ville_id = v2.id where t.id = :id";
         $query = $connexion->prepare($sql);
@@ -112,14 +154,24 @@ class DbSelectService extends DbConnexion{
     }
 
     //Modale
-    public function infoOwner($id) {
+    /**
+    * Liste les informations du créteur du trajet
+    * @param int $id
+    * @return array<mixed>
+    */
+    public function infoOwner(int $id) {
         $connexion = $this->connexion(0);
         $query = $connexion->prepare("select * from utilisateur where id = :id");
         $query->execute(['id' => $id]);
         $resultat = $query->fetch();
         return $resultat;
     }
-    public function modale($id){
+    /**
+    * sélèctionne les information pour la modale
+    * @param int $id
+    * @return array<mixed>
+    */
+    public function modale(int $id){
         $connexion = $this->connexion(1);
         $sql = "select place_disponible, createur_id from trajet where id = :id";
         $query = $connexion->prepare($sql);
@@ -130,6 +182,10 @@ class DbSelectService extends DbConnexion{
         return $response;
     }
     //Admin
+    /**
+    * Liste les utilisateur enregistré
+    * @return array<mixed>
+    */
     public function selectAllUser() {
         $pdo = $this->connexion(2);
         $sql = "select * from utilisateur_enregistre";
@@ -138,6 +194,10 @@ class DbSelectService extends DbConnexion{
         $resultat = $query->fetchAll();
         return $resultat;
     }
+    /**
+    * Liste les utilisateur enregistré
+    * @return array<mixed>
+    */
     public function selectAllEmployee() {
         $pdo = $this->connexion(2);
         $sql = "select * from utilisateur";
@@ -146,7 +206,13 @@ class DbSelectService extends DbConnexion{
         $resultat = $query->fetchAll();
         return $resultat;
     }
-    public function selectUserById($id) {
+
+    /**
+    * Liste les utilisateur enregistré
+    * @param int $id
+    * @return array<mixed>
+    */
+    public function selectUserById(int $id) {
         $pdo = $this->connexion(2);
         $sql = "select * from utilisateur where id = :id";
         $query = $pdo->prepare($sql);
@@ -155,6 +221,11 @@ class DbSelectService extends DbConnexion{
         return $resultat;
 
     }
+
+    /**
+    * Liste les utilisateur enregistré
+    * @return array<mixed>
+    */
     public function listeEnregistre() {
 
         $pdo = $this->connexion(2);
@@ -171,6 +242,11 @@ class DbSelectService extends DbConnexion{
 
         return $user_info;
     }
+
+    /**
+    * Liste tout les trajet pour l'admin
+    * @return array<mixed>
+    */
     public function listeAllTrajet() {
         // connexion a la base de donnée
         $connexion = $this->connexion(1);

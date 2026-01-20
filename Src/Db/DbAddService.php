@@ -20,7 +20,7 @@ class DbAddService extends DbConnexion {
 
     /**
     * Ajout d'un trajet en base de donnée.
-    * @param array $infoTrajet Informations du trajet à ajouter.
+    * @param array<mixed> $infoTrajet Informations du trajet à ajouter.
     * @return void 
     */
     public function addTrajet(mixed $infoTrajet): void {

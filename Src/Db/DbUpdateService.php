@@ -3,7 +3,12 @@ namespace App\Db;
 
 class DbUpdateService extends DbConnexion {
 
-    public function updateTrajet($infoTrajet) {
+    /**
+    * Mise a jour des trajets
+    * @param array<mixed> $infoTrajet
+    * @return void
+    */
+    public function updateTrajet(array $infoTrajet): void {
         
         $connexion = $this->connexion(1);
         $sql = "update trajet set depart_ville_id=:depart_ville_id, depart_gdh=:depart_gdh, depart_date=:depart_date, arrive_ville_id=:arrive_ville_id, arrive_gdh=:arrive_gdh, arrive_date=:arrive_date, place_totale=:place_totale, place_disponible=:place_disponible where id=:id";
@@ -22,7 +27,7 @@ class DbUpdateService extends DbConnexion {
         
     }
 
-    public function updateVille($id, $nouveau_nom){
+    public function updateVille(int $id, string $nouveau_nom):void{
         $connexion = $this->connexion(2);
         $sql = "update ville set nom=:nouveau_nom where id=:id";
         $query = $connexion->prepare($sql);
