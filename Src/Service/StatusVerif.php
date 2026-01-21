@@ -28,7 +28,6 @@ class StatusVerif {
 
         if ($utilisateur['status'] === 'admin') {
             return true;
-            
         }else {
             return false;
         }

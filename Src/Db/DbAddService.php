@@ -8,16 +8,17 @@ class DbAddService extends DbConnexion {
     /**
     * Ajout d'un trajet en base de donnée.
     * @param array<mixed> $infoTrajet Informations du trajet à ajouter.
+    * @throw Exeption erreur de connection à la base de donnée
     * @return void 
     */
     public function addTrajet(mixed $infoTrajet): void {
         
-        $pdo = $this->connexion(1);
-        if (!$pdo instanceof \PDO) {
+        $connexion = $this->connexion(1);
+        if (!$connexion instanceof \PDO) {
             throw new \Exception("La connexion à la base de données a échoué.");
         }
         $sql ="insert into trajet (depart_ville_id, depart_gdh, depart_date, arrive_ville_id, arrive_gdh, arrive_date, place_totale, place_disponible, createur_id) values (:depart_ville_id, :depart_gdh, :depart_date, :arrive_ville_id, :arrive_gdh, :arrive_date, :place_totale, :place_disponible, :createur_id)";
-        $query = $pdo->prepare($sql);
+        $query = $connexion->prepare((string) $sql);
         $query->execute([
             'depart_ville_id' => (int)$infoTrajet['depart_ville'],
             'depart_gdh' => $infoTrajet['depart_gdh'],
@@ -30,6 +31,7 @@ class DbAddService extends DbConnexion {
             'createur_id' => (int)$infoTrajet['createur_id']
         ]);
     }
+    
     /**
     * Ajout d'une nouvelle agence
     * @param string $ville
@@ -38,12 +40,12 @@ class DbAddService extends DbConnexion {
     */
     public function addVille(string $ville): void {
 
-        $pdo = $this->connexion(2);
-        if (!$pdo instanceof \PDO) {
+        $connexion = $this->connexion(2);
+        if (!$connexion instanceof \PDO) {
             throw new \Exception("La connexion à la base de données a échoué.");
         }
         $sql = "insert into ville (nom) values (:ville)";
-        $query = $pdo->prepare($sql);
+        $query = $connexion->prepare((string) $sql);
         
         $query->execute(['ville' => $ville]);
     }

@@ -44,11 +44,12 @@ if ($edit) {
         }
     }
 }
+
 /**
-    * Liste les utilisateur enregistré
-    * @param bool $edit
-    * @return string
-    */
+* Liste les utilisateur enregistré
+* @param bool $edit
+* @return string
+*/
 function affichageBtn(bool $edit) {
     $btn = '<div class="btn-action">';
     if (!$edit) {

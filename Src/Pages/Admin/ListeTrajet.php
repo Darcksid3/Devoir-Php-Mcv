@@ -20,6 +20,7 @@ if (!$is_admin){
 header('Location: /');
 exit();
 }
+
 /**
 * Mise en place du bouton d'action
 * @param int $id
@@ -31,6 +32,7 @@ function actionButton(int $id) {
 	$affichageBouton = $btnSupp;
 	return $affichageBouton;
 }
+
 /**
 * Mise en place du bouton d'action
 * @param string $date
@@ -46,6 +48,7 @@ function formatDh(string $date) {
 		'heure' => $parties[1]
 	];
 }
+
 /**
 * Mise en place de l'affichage
 * @return string
