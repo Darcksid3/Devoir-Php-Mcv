@@ -12,6 +12,11 @@ if ($id === null) {
     exit();
 }
 
+/**
+* Supression d'un trajet
+* @param int $id du trajet concerné
+* @return never
+*/
 function deleteTrajet(int $id): never {
     $dbDeleteService = new DbDeleteService();
     $dbDeleteService->deleteTrajet($id);

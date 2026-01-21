@@ -1,18 +1,13 @@
 #dépendance générale
-/ressources/
 /vendor/
 /test/
-/devoir/
 /old.www/
-/Controllers/Test.php
-/Service/ExternalServices.php
-/Pages/TestView.php
-.htaccess
 /.phpdoc
 /docs
-phpdoc.xml
+phpdoc.dist.xml
+.phpunit.result.cache
+
 # fichier de configuration
 .env
-.env.local
 /sql/localUser.sql
 .vscode/

@@ -18,7 +18,7 @@ $utilisateur = $_SESSION['utilisateur'] ?? [];
 if (($utilisateur['connect'] ?? false) === true ) {
 } else {
 echo "Veuillez vous connecter pour voir les détails.";    
-//Header('Location: /');
+    Header('Location: /');
     exit();
 }
 

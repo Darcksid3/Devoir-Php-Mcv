@@ -18,7 +18,7 @@ $content = '<h2>Page de confirmation de supression de trajet</h2>'
 
 
 
-
+$_SESSION['pages'] = ' Suppression';
 require __DIR__ . '/Layout.php';
 
 ?>

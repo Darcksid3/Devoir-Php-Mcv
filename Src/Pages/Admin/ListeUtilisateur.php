@@ -47,7 +47,7 @@ $content = '<table class="table">'
             .'</tbody>'
         .'</table>' 
         ;
-
+$_SESSION['pages'] = ' Liste Utilisateur';
 require __DIR__ . '/../Layout.php';
 
 ?>

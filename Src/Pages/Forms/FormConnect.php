@@ -4,8 +4,6 @@ namespace App\Pages\Forms;
 $content = '<fieldset class="form">'
         .'<legend> Formulaire de connexion </legend>'
         .'<form action="/ValidFormConnect" method="POST">'
-            .'<p>email a utiliser => alexandre.martin@email.fr (admin) => sophie.dubois@email.fr (utilisateur) => julien.bernard@email.fr (utilisateur)</p>'
-
             .'<label for="email" class="form-label">Email :</label>'
             .'<input type="email" id="email" name="email" class="form-control" required>'
             
@@ -16,5 +14,6 @@ $content = '<fieldset class="form">'
         .'</form>'
         .'</fieldset>'
     ;
+    $_SESSION['pages'] = ' Connexion';
 require __DIR__ . '/../Layout.php';
 ?>
