@@ -40,5 +40,5 @@ INSERT INTO utilisateur (nom, prenom, telephone, email) VALUES
 
 -- Insertion des utilisateur_enregistre (status utilisateur et admin)
 INSERT INTO utilisateur_enregistre (utilisateur_id, password_hash, status) VALUES
-(1, '$2y$10$4F.3YKrjJwEgwfdZlPVdKOVe3O81hcNvw2wBgFmW3Cra9c10tbX0e', 'admin'),
+(1, '$2y$10$ScJqWUP.2is2YaC36kMOzeKTFt.E1Awc202kOuRcrE5knp.8MU3Pe', 'admin'),
 (2, '$2y$10$uDOJdI02Pd9J5nW/Qd2yCumOChQQYPMI/FeuELTesEQbo6zjllglC', 'utilisateur');

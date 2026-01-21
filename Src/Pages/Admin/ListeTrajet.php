@@ -110,6 +110,6 @@ function AffichageTrajet() {
 }	
 		$content = AffichageTrajet();
 		
-
+$_SESSION['pages'] = ' Liste Trajet';
 require __DIR__ . '/../Layout.php';
 ?>

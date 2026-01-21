@@ -158,7 +158,7 @@ $content = '<fieldset class="form form-large">'
         .'</div>'
     . '</form>'
 . '</fieldset>';
-
+$_SESSION['pages'] = ' Trajet';
 require __DIR__ . '/../Layout.php';
 
 ?>

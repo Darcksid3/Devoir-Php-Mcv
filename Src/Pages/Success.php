@@ -4,7 +4,7 @@ namespace App\Pages;
 
         session_destroy();
         
-
+$_SESSION['pages'] = ' Sucess';
 require __DIR__ . '/Layout.php';
 
 ?>

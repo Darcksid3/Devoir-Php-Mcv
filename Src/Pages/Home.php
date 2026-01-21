@@ -164,6 +164,7 @@ $content = $display['titre']
             .'</div>'
         .'</div>'
 		;
+		$_SESSION['pages'] = ' Accueil';
 require __DIR__ .'/../Pages/Layout.php';
 
 ?>

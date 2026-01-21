@@ -5,6 +5,7 @@
 /.phpdoc
 /docs
 phpdoc.dist.xml
+.phpunit.result.cache
 
 # fichier de configuration
 .env
