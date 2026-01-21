@@ -33,7 +33,7 @@ function verifFormConnexion(mixed $email, mixed $password) {
         //* 4) Vérifdication du hash du mot de passe 
         $verifPass = $passwordVerif->verifHash($password, $pass_hash['password_hash']);
         if($verifPass) {
-            // mise en session des info de l'utilisateur
+            //* mise en session des info de l'utilisateur
             $_SESSION['utilisateur'] = [
                 'id' => $infoUser['id'], 
                 'nom' => $infoUser['nom'], 
@@ -44,14 +44,15 @@ function verifFormConnexion(mixed $email, mixed $password) {
                 'connect' => true
                 ];
 
-            // Message de succes
+            //* Succes
             $_SESSION['message'] = '<div class="msg msg-ok">Utilisateur authentifié avec succés.</div>';
             header('Location: /');
             exit();
         } else{
+            //* Erreur
             $_SESSION['message'] = '<div class="msg msg-err">Une erreur est survenue veuillez vérifiez vos informations</div>';
-        header('Location: /FormConnect'); 
-        exit();
+            header('Location: /FormConnect'); 
+            exit();
         }
 
     } else {

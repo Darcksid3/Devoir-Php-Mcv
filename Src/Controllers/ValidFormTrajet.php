@@ -12,7 +12,8 @@ use DateTimeZone;
 
 $post = [];
 $post = $_POST;
-// Fonction de traitement des informations reçues
+
+//* Début des fonctions traitement des données
 
 /**
 * Vérification que les villes sélèctionné soit diférentes
@@ -67,6 +68,12 @@ function verifPlace ($placeD, $placeT, string $header) {
     } 
 };
 
+/**
+* Génération du format GDH en fonction de la date et de l'heure envoyait
+* @param string $date
+* @param string $timezone (internationale)
+* @return string le GDH formaté pour la BDD
+*/
 function generateGDH(string $date, string $timezone = "UTC"): string {
     $dt = new DateTime($date, new DateTimeZone((string) $timezone));
     
@@ -75,7 +82,7 @@ function generateGDH(string $date, string $timezone = "UTC"): string {
     return strtoupper($dt->format('dHi\Z M y'));
 }
 
-// Fin des fonctions de traitement des informations reçues
+//* Fin des fonctions traitement des données
 
 /**
 * Validation du formulaire de création detrajet.
@@ -91,9 +98,11 @@ function verifFormTrajet(array $post): bool {
             $post['depart_gdh'] = generateGDH($post['depart_date']);
             $post['arrive_gdh'] = generateGDH($post['arrive_date']);
 
+            //* Lancement des vérifications
             verifVille($post['depart_ville'], $post['arrive_ville'], $header);
             verifDate($post['depart_date'], $post['arrive_date'], $header);
             verifPlace($post['place_disponible'], $post['place_totale'], $header);
+
             $add = new DbAddService();
             $add->addTrajet($post);
             $_SESSION['message'] = '<div class="msg msg-ok">Trajet crée avec succes</div>';
@@ -107,6 +116,8 @@ function verifFormTrajet(array $post): bool {
             
             $post['depart_gdh'] = generateGDH($post['depart_date']);
             $post['arrive_gdh'] = generateGDH($post['arrive_date']);
+
+            //* Lancement des vérifications
             verifVille($post['depart_ville'], $post['arrive_ville'], $header);
             verifDate($post['depart_date'], $post['arrive_date'], $header);
             verifPlace($post['place_disponible'], $post['place_totale'], $header);

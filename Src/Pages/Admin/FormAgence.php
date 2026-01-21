@@ -84,7 +84,7 @@ $content = '<h2>Formulaires de gestion des agences</h2>'
                 .'</form>'
             .'</fielset>'
         ;
-
+$_SESSION['pages'] = ' Agence';
 require __DIR__ . '/../Layout.php';
 
 ?>

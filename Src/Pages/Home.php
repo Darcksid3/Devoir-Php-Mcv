@@ -3,11 +3,10 @@ namespace App\Pages;
 
 use App\Service\StatusVerif;
 use App\Db\DbSelectService;
-use Automattic\WooCommerce\EmailEditor\Validator\Schema\Boolean_Schema;
 use DateTime;
 
 $utilisateur = $_SESSION['utilisateur'] ?? [];
-    
+
 $statusVerif = new StatusVerif();
 $is_connect = $statusVerif->verifConnect($utilisateur);
 
@@ -15,6 +14,7 @@ $is_connect = $statusVerif->verifConnect($utilisateur);
 $dbSelectService = new DbSelectService();
 $listetrajet = [];
 $listetrajet = $dbSelectService->afficheAll();
+
 /**
 * Vérifie si l'utilisateur est créateur d'un trajet
 * @param int $uid
@@ -26,6 +26,7 @@ function isOwner(int $uid, int $cuid)
 		return true;
 	}  else {return false;}
 }
+
 /**
 * Vérifie quel bouton doit etre affiché
 * @param int $id
@@ -164,6 +165,7 @@ $content = $display['titre']
             .'</div>'
         .'</div>'
 		;
+		$_SESSION['pages'] = ' Accueil';
 require __DIR__ .'/../Pages/Layout.php';
 
 ?>
