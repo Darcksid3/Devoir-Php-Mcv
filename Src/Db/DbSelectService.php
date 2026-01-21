@@ -62,23 +62,6 @@ class DbSelectService extends DbConnexion{
 	return $resultat;
     }
 
-
-    //gestion des trajet
-    /**
-    * Selection de toute les agence
-    * @return array<mixed>
-    */
-    public function selectAllVille(){
-        $pdo = $this->connexion(1);
-        if (!$pdo instanceof \PDO) {
-                
-                throw new \Exception("La connexion à la base de données a échoué.");
-            }
-        $query = $pdo->prepare("select * from ville");
-        $query->execute();
-        $result = $query->fetchAll();
-        return $result;
-    }
     /**
     * Liste tout les trajet par date future et place disponible
     * @return array<mixed>
