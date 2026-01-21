@@ -6,34 +6,16 @@ use App\Db\DbConnexion;
 class DbAddService extends DbConnexion {
 
     /**
-    * Ajout d'un utilisateur en base de donnée.
-    * @param int $id Identifiant de l'utilisateur.
-    * @param string $password Hash du mot de passe de l'utilisateur.
-    * @return void
-    */
-    public function addUser(int $id, mixed $password) {
-        $pdo = $this->Connexion(0);
-        if (!$pdo instanceof \PDO) {
-                
-                throw new \Exception("La connexion à la base de données a échoué.");
-            }
-        $sql = "insert into utilisateur_enregistre (utilisateur_id, password_hash) values (:id, :password)";
-        $query = $pdo->prepare($sql);
-        $query->execute(['id' => $id, 'password' => $password]);
-    }
-
-    /**
     * Ajout d'un trajet en base de donnée.
     * @param array<mixed> $infoTrajet Informations du trajet à ajouter.
     * @return void 
     */
     public function addTrajet(mixed $infoTrajet): void {
-        //ajoute un trajet
+        
         $pdo = $this->connexion(1);
         if (!$pdo instanceof \PDO) {
-                
-                throw new \Exception("La connexion à la base de données a échoué.");
-            }
+            throw new \Exception("La connexion à la base de données a échoué.");
+        }
         $sql ="insert into trajet (depart_ville_id, depart_gdh, depart_date, arrive_ville_id, arrive_gdh, arrive_date, place_totale, place_disponible, createur_id) values (:depart_ville_id, :depart_gdh, :depart_date, :arrive_ville_id, :arrive_gdh, :arrive_date, :place_totale, :place_disponible, :createur_id)";
         $query = $pdo->prepare($sql);
         $query->execute([
@@ -48,14 +30,18 @@ class DbAddService extends DbConnexion {
             'createur_id' => (int)$infoTrajet['createur_id']
         ]);
     }
-
+    /**
+    * Ajout d'une nouvelle agence
+    * @param string $ville
+    * @throw Exeption erreur de connection à la base de donnée
+    * @return void
+    */
     public function addVille(string $ville): void {
-        //ajoute une ville 
+
         $pdo = $this->connexion(2);
         if (!$pdo instanceof \PDO) {
-                
-                throw new \Exception("La connexion à la base de données a échoué.");
-            }
+            throw new \Exception("La connexion à la base de données a échoué.");
+        }
         $sql = "insert into ville (nom) values (:ville)";
         $query = $pdo->prepare($sql);
         
