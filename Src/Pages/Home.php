@@ -78,7 +78,7 @@ function displayIsConnect(bool $is_connect){
 		$display = ['status' => false, 'titre' => '<h2>Pour obtenir plus d\'information sur un trajet, veuillez vous connecter</h2>', 'table' => '</tr>'];
 		return $display;
 	} else {
-		$display = ['status' => true, 'titre' => '<h2>Liste des trajet</h2>', 'table' => '<th></th></tr>'];
+		$display = ['status' => true, 'titre' => '<h2 class="mb-4" >Liste des trajets</h2>', 'table' => '<th></th></tr>'];
 		return $display;
 	}
 }
@@ -165,7 +165,7 @@ $content = $display['titre']
             .'</div>'
         .'</div>'
 		;
-		$_SESSION['pages'] = ' Accueil';
+		$_SESSION['pages'] = ' - Accueil';
 require __DIR__ .'/../Pages/Layout.php';
 
 ?>

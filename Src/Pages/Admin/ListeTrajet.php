@@ -59,9 +59,9 @@ function AffichageTrajet() {
 	$resultat = $dbSelectService->listeAllTrajet();
 	
 	if ($resultat['status'] === false) {
-		return $contenu ='<h2>Administration des trajets</h2>'
-		.'<button type="button" onclick="location.href=\'/FormTrajet\'">Crée un trajet</button>'
-		.'<h3>Liste des trajet</h3>'
+		return $contenu ='<h2 class="mb-4" >Administration des trajets</h2>'
+		.'<button type="button" class="mb-4" onclick="location.href=\'/FormTrajet\'">Crée un trajet</button>'
+		.'<h3 class="mb-4" >Liste des trajet</h3>'
 		.'Aucun trajet n\'est prévu!!'
 		;
 	} else {
@@ -85,9 +85,9 @@ function AffichageTrajet() {
 					.'<td>'.actionButton($trajetInfo['id']).'</td>'
 				.'</tr>';
 			}
-			$contenu = '<h2>Administration des trajets</h2>'
-					.'<button type="button" class="mybtn" onclick="location.href=\'/FormTrajet\'">Crée un trajet</button>'
-					.'<h3>Liste des trajets</h3>'
+			$contenu = '<h2 class="mb-4" >Administration des trajets</h2>'
+					.'<button type="button" class="mybtn mb-4" onclick="location.href=\'/FormTrajet\'">Crée un trajet</button>'
+					.'<h3 class="mb-4" >Liste des trajets</h3>'
 						.'<table class="table">'
 						.'<thead>'
 							.'<tr>'
@@ -113,6 +113,6 @@ function AffichageTrajet() {
 }	
 		$content = AffichageTrajet();
 		
-$_SESSION['pages'] = ' Liste Trajet';
+$_SESSION['pages'] = ' - Liste Trajet';
 require __DIR__ . '/../Layout.php';
 ?>

@@ -57,7 +57,8 @@ $content = '<h2>Formulaires de gestion des agences</h2>'
             .'<fielset class="form form-medium">'
                 .'<legend>Modification/Suppression d\'une agence</legend>'
                 .'<form class="container-fluid mb-5" action="ValidFormAgence" method="POST">'
-                    .'<div class="row box">'
+
+                    .'<div class="row mb-4 box">'
                         .'<div class="col text-right">'
                             .'<label class="form-label" for="ville">Sélectionner une agence!</label>'
                         .'</div>'
@@ -65,12 +66,14 @@ $content = '<h2>Formulaires de gestion des agences</h2>'
                             .'<select class="form-select" name="ville" id="ville">'.$listeVille.'</select>'
                         .'</div>'
                     .'</div>'
-                    .'<div class="row box">'
+
+                    .'<div class="row mb-4 box">'
                         .'<div class="col text-center">'
                             .'<button type="submit" class="mybtn" name="action" value="delete">Supprimer une agence</button>'
                         .'</div>'
                     .'</div>'
-                    .'<div class="row box">'
+
+                    .'<div class="row mb-4 box">'
                         .'<div class="col text-center">'
                             .'<label class="form-label" for="nouveau_nom">Nouveau nom de la ville :</label>'
                         .'</div>'
@@ -84,7 +87,7 @@ $content = '<h2>Formulaires de gestion des agences</h2>'
                 .'</form>'
             .'</fielset>'
         ;
-$_SESSION['pages'] = ' Agence';
+$_SESSION['pages'] = ' - Agence';
 require __DIR__ . '/../Layout.php';
 
 ?>

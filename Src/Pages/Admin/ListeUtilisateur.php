@@ -35,7 +35,8 @@ foreach ($liste as $user) {
     ;
 }
 
-$content = '<table class="table">'
+$content = '<h2 class="mb-4">Liste des utilisateurs</h2>' 
+        .'<table class="table">'
             .'<thead>'
                 .'<th>Nom</th>'
                 .'<th>Prénom</th>'
@@ -47,7 +48,7 @@ $content = '<table class="table">'
             .'</tbody>'
         .'</table>' 
         ;
-$_SESSION['pages'] = ' Liste Utilisateur';
+$_SESSION['pages'] = ' - Liste Utilisateur';
 require __DIR__ . '/../Layout.php';
 
 ?>

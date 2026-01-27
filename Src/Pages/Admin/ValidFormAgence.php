@@ -70,7 +70,7 @@ function verifForm(array $post){
         updateVille($post['ville'], $post['nouveau_nom']);
     }
 }
-$_SESSION['pages'] = ' Agences';
+$_SESSION['pages'] = ' - Agences';
 
 verifForm($post);
 

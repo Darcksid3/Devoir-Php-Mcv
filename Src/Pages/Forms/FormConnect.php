@@ -14,6 +14,6 @@ $content = '<fieldset class="form">'
         .'</form>'
         .'</fieldset>'
     ;
-    $_SESSION['pages'] = ' Connexion';
+    $_SESSION['pages'] = ' - Connexion';
 require __DIR__ . '/../Layout.php';
 ?>
