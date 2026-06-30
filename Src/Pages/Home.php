@@ -78,7 +78,7 @@ function displayIsConnect(bool $is_connect){
 		$display = ['status' => false, 'titre' => '<h2>Pour obtenir plus d\'information sur un trajet, veuillez vous connecter</h2>', 'table' => '</tr>'];
 		return $display;
 	} else {
-		$display = ['status' => true, 'titre' => '<h2 class="mb-4" >Liste des trajets</h2>', 'table' => '<th></th></tr>'];
+		$display = ['status' => true, 'titre' => '<h2 class="mb-4" >Liste des trajets</h2>', 'table' => '<th></th>'];
 		return $display;
 	}
 }
@@ -142,7 +142,8 @@ $content = $display['titre']
 					.'<th>Heure</th>'
 					.'<th>Places</th>'
 					. $display['table']
-					.'</thead>'
+				.'</tr>'
+			.'</thead>'
 			.'<tbody>'
 				.$trElement	
 			.'</tbody>'

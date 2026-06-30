@@ -47,14 +47,21 @@ footer
         border-color: #c0c0c0 
         padding:0.5rem
         text-align: center
-        
+        transition: padding 0.3s ease, background-color 0.2s ease
     th
         color: $bgcolor
         background-color: $greycolor 
     tbody
-        tr
-            &:nth-child(odd)
-                background-color: #d3d3d3
+        tr  
+            &:hover td 
+                background-color: #2b088d !important
+                padding-top: 25px !important
+                padding-bottom: 25px !important
+                color: #000 !important
+        
+            /*&:nth-child(odd)
+                background-color: #d3d3d3*/
+            
 
 .option
     cursor: pointer

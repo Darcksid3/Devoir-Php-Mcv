@@ -45,13 +45,18 @@ footer {
   color: #f1f8fc;
   background-color: #384050;
 }
-.table tbody tr:nth-child(odd) {
-  background-color: #d3d3d3;
-}
 .table tbody tr:hover td {
+  background-color: #2b088d !important;
   padding-top: 25px !important;
   padding-bottom: 25px !important;
+  color: #000 !important;
 }
+/*
+.table tbody tr {
+  &:nth-child(odd)
+   background-color: #d3d3d3
+}/*
+
 .option {
   cursor: pointer;
   margin-right: 0.5rem;
