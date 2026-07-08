@@ -55,7 +55,7 @@ footer {
 .table tbody tr {
   &:nth-child(odd)
    background-color: #d3d3d3
-}/*
+}*/
 
 .option {
   cursor: pointer;

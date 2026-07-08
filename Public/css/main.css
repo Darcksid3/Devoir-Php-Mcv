@@ -45,6 +45,10 @@ footer {
   color: #f1f8fc;
   background-color: #384050;
 }
+
+.table th a {
+  color: #f1f8fc;
+}
 .table tbody tr:nth-child(odd) {
   background-color: #d3d3d3;
 }
@@ -59,12 +63,16 @@ footer {
 .option.option-trash {
   margin-right: 0;
 }
+.trash-selected {
+  color:red;
+}
 .option.option-view {
   margin-left: 0;
 }
 .option.option-edit {
   margin: 0;
 }
+
 
 /* Header */
 .logo {
