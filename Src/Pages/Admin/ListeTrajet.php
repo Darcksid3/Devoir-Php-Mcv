@@ -27,7 +27,7 @@ exit();
 * @return string
 */
 function actionButton(int $id) {
-	$btnSupp = '<a type="button" class="option option-trash" onclick="location.href=\'/DeleteTrajet/'.$id.'\'"><img src="/Public/asset/trash3.svg" alt="Supprimer le trajet"></a>';
+	$btnSupp = '<a type="button" id="trash-ico" class="option option-trash mx-2" onclick="location.href=\'/DeleteTrajet/'.$id.'\'"><img src="/Public/asset/trash3.svg" alt="Supprimer le trajet"></a>';
 
 	$affichageBouton = $btnSupp;
 	return $affichageBouton;
@@ -82,7 +82,7 @@ function AffichageTrajet() {
 					.'<td>'.$arriveDate['heure'].'</td>'
 					.'<td>'.$trajetInfo['place_totale'].'</td>'
 					.'<td>'.$trajetInfo['place_disponible'].'</td>'
-					.'<td>'.actionButton($trajetInfo['id']).'</td>'
+					.'<td><input type="checkbox" class="checkMulty" name="checkMulty" id="'.$trajetInfo['id'].'"/></td>'
 				.'</tr>';
 			}
 			$contenu = '<h2 class="mb-4" >Administration des trajets</h2>'
@@ -97,10 +97,10 @@ function AffichageTrajet() {
 								.'<th>Heure de départ</th>'
 								.'<th>Ville d\'arrivée</th>'
 								.'<th>Date d\'arrivée</th>'
-								.'<th>Heured\'arrivée</th>'
+								.'<th>Heure d\'arrivée</th>'
 								.'<th>Place Totale</th>'
 								.'<th>Place disponible</th>'
-								.'<th></th>'
+								.'<th><a href="/DeleteTrajet" id="deleteAll">Supprimer</a><input type="checkbox" name="checkAll" id="checkAll" /></th>'
 							.'</tr>'
 						.'</thead>'
 						.'<tbody>'
